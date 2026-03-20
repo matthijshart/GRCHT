@@ -344,17 +344,24 @@ let activeArea = null;
 let activeTag = null;
 
 // Area filters
-const allAreas = [...new Set(places.map(p => p.area))].sort();
+const areaGroups = {
+  'Jordaan': ['Jordaan'],
+  'De Pijp': ['De Pijp'],
+  'Zuid': ['Oud-Zuid'],
+  'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt'],
+};
+const overigAreas = [...new Set(places.map(p => p.area))].filter(a => !Object.values(areaGroups).flat().includes(a));
+areaGroups['Overig'] = overigAreas;
 const areaFiltersEl = document.getElementById('area-filters');
 const allAreaBtn = document.createElement('button');
 allAreaBtn.textContent = 'Alle wijken';
 allAreaBtn.className = 'active';
 allAreaBtn.onclick = () => { activeArea = null; applyFilters(); };
 areaFiltersEl.appendChild(allAreaBtn);
-allAreas.forEach(area => {
+['Jordaan','De Pijp','Zuid','Centrum','Overig'].forEach(label => {
   const btn = document.createElement('button');
-  btn.textContent = area;
-  btn.onclick = () => { activeArea = area; applyFilters(); };
+  btn.textContent = label;
+  btn.onclick = () => { activeArea = label; applyFilters(); };
   areaFiltersEl.appendChild(btn);
 });
 
@@ -393,7 +400,7 @@ function applyFilters() {
   }
   // Filter cards
   document.querySelectorAll('.card').forEach((card, i) => {
-    const matchArea = !activeArea || places[i].area === activeArea;
+    const matchArea = !activeArea || areaGroups[activeArea].includes(places[i].area);
     const matchTag = !activeTag || places[i].tags.includes(activeTag);
     card.classList.toggle('hidden', !(matchArea && matchTag));
   });
