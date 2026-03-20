@@ -252,6 +252,7 @@
   <p>Onze favoriete plekken in de stad</p>
 </div>
 <div class="map-wrap"><div id="map"></div></div>
+<div class="filters" id="area-filters"></div>
 <div class="filters" id="filters"></div>
 <div class="cards" id="cards"></div>
 <div class="footer">Amsterdam — met liefde samengesteld</div>
@@ -341,32 +342,62 @@ places.forEach((p, i) => {
 });
 map.fitBounds(bounds, { padding: [30, 30] });
 // ── Filters ──
+let activeArea = null;
+let activeTag = null;
+
+// Area filters
+const allAreas = [...new Set(places.map(p => p.area))].sort();
+const areaFiltersEl = document.getElementById('area-filters');
+const allAreaBtn = document.createElement('button');
+allAreaBtn.textContent = 'Alle wijken';
+allAreaBtn.className = 'active';
+allAreaBtn.onclick = () => { activeArea = null; applyFilters(); };
+areaFiltersEl.appendChild(allAreaBtn);
+allAreas.forEach(area => {
+  const btn = document.createElement('button');
+  btn.textContent = area;
+  btn.onclick = () => { activeArea = area; applyFilters(); };
+  areaFiltersEl.appendChild(btn);
+});
+
+// Tag filters
 const allTags = [...new Set(places.flatMap(p => p.tags))].sort();
 const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wijn', italiaans:'Italiaans', frans:'Frans', vis:'Vis', oesters:'Oesters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terras', borrel:'Borrel', ontbijt:'Ontbijt', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Kaas', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Chic' };
 const filtersEl = document.getElementById('filters');
 const allBtn = document.createElement('button');
 allBtn.textContent = 'Alles';
 allBtn.className = 'active';
-allBtn.onclick = () => filterCards(null);
+allBtn.onclick = () => { activeTag = null; applyFilters(); };
 filtersEl.appendChild(allBtn);
 const showTags = ['restaurant','bar','italiaans','frans','tapas','wijn','oesters','vis','cocktails','brunch','lunch','terras','steak','ontbijt','happy hour'];
 showTags.forEach(tag => {
   if (!allTags.includes(tag)) return;
   const btn = document.createElement('button');
   btn.textContent = tagLabels[tag] || tag;
-  btn.onclick = () => filterCards(tag);
+  btn.onclick = () => { activeTag = tag; applyFilters(); };
   filtersEl.appendChild(btn);
 });
-function filterCards(tag) {
-  document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
-  if (!tag) {
+
+function applyFilters() {
+  // Update area button states
+  [...areaFiltersEl.children].forEach(b => b.classList.remove('active'));
+  if (!activeArea) {
+    areaFiltersEl.children[0].classList.add('active');
+  } else {
+    [...areaFiltersEl.children].find(b => b.textContent === activeArea)?.classList.add('active');
+  }
+  // Update tag button states
+  [...filtersEl.children].forEach(b => b.classList.remove('active'));
+  if (!activeTag) {
     filtersEl.children[0].classList.add('active');
   } else {
-    [...filtersEl.children].find(b => b.textContent === (tagLabels[tag]||tag))?.classList.add('active');
+    [...filtersEl.children].find(b => b.textContent === (tagLabels[activeTag]||activeTag))?.classList.add('active');
   }
+  // Filter cards
   document.querySelectorAll('.card').forEach((card, i) => {
-    const show = !tag || places[i].tags.includes(tag);
-    card.classList.toggle('hidden', !show);
+    const matchArea = !activeArea || places[i].area === activeArea;
+    const matchTag = !activeTag || places[i].tags.includes(activeTag);
+    card.classList.toggle('hidden', !(matchArea && matchTag));
   });
 }
 // ── Cards ──
