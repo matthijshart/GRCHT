@@ -10,13 +10,14 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #f3f0ec;
+      --bg: #f5f0eb;
       --card: #ffffff;
       --ink: #1a1817;
       --ink-mid: #4a4540;
       --ink-light: #8a837a;
-      --accent: #d4627a;
-      --accent-soft: #e8a0b0;
+      --accent: #e88cb4;
+      --accent-soft: #f0b8d0;
+      --green: #1a8a5c;
       --border: #e5dfda;
       --shadow: rgba(26,24,23,0.06);
     }
@@ -25,7 +26,24 @@
       background: var(--bg);
       color: var(--ink);
       line-height: 1.6;
+      position: relative;
     }
+    .stripes-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        90deg,
+        #e88cb4 0px, #e88cb4 48px,
+        #1a8a5c 48px, #1a8a5c 96px
+      );
+      background-size: 96px 100%;
+      opacity: 0.10;
+      will-change: background-position;
+    }
+    .header, .map-wrap, .filters, .cards { position: relative; z-index: 1; }
     /* ── Header ── */
     .header {
       text-align: center;
@@ -71,7 +89,7 @@
       color: var(--ink-mid); cursor: pointer; transition: all 0.2s;
     }
     .filters button:hover, .filters button.active {
-      background: var(--ink); color: #fff; border-color: var(--ink);
+      background: var(--green); color: #fff; border-color: var(--green);
     }
     /* ── Cards ── */
     .cards {
@@ -120,13 +138,13 @@
       text-decoration: none; font-weight: 500;
       letter-spacing: 0.03em; transition: color 0.2s;
     }
-    .card .link:hover { color: var(--ink); }
+    .card .link:hover { color: var(--green); }
     .card.hidden { display: none; }
     /* ── Leaflet popup ── */
     .leaflet-popup-content-wrapper { border-radius: 6px !important; font-family: 'DM Sans', sans-serif; box-shadow: 0 3px 12px rgba(0,0,0,0.15) !important; }
     .leaflet-popup-content { margin: 10px 14px !important; line-height: 1.4 !important; }
     .p-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: #1a1817; }
-    .p-hearts { color: #d4627a; font-size: 0.8rem; }
+    .p-hearts { color: #e88cb4; font-size: 0.8rem; }
     .p-note { font-size: 0.78rem; color: #4a4540; margin-top: 2px; }
     @media (max-width: 600px) {
       #map { height: 380px; }
@@ -135,6 +153,7 @@
   </style>
 </head>
 <body>
+<div class="stripes-bg" id="stripes"></div>
 <div class="header">
   <!-- Grachtenpandjes -->
   <svg class="houses-row" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#1a1817" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
@@ -322,7 +341,7 @@ const markers = [];
 places.forEach((p, i) => {
   const hasHearts = p.hearts > 0;
   const size = hasHearts && p.hearts >= 4 ? 13 : 9;
-  const color = hasHearts ? '#d4627a' : '#1a1817';
+  const color = hasHearts ? '#e88cb4' : '#1a8a5c';
   const icon = L.divIcon({
     className: '',
     html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid #fff;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,0.3);"></div>`,
@@ -430,6 +449,12 @@ places.forEach((p, i) => {
   `;
   cardsEl.appendChild(card);
 });
+// ── Scroll stripes ──
+const stripesEl = document.getElementById('stripes');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  stripesEl.style.backgroundPosition = `${y * 0.3}px 0`;
+}, { passive: true });
 </script>
 </body>
 </html>
