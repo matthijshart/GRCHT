@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amsterdam — Onze Plekken</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #f3f0ec;
+      --card: #ffffff;
+      --ink: #1a1817;
+      --ink-mid: #4a4540;
+      --ink-light: #8a837a;
+      --accent: #d4627a;
+      --accent-soft: #e8a0b0;
+      --border: #e5dfda;
+      --shadow: rgba(26,24,23,0.06);
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      padding: 2.5rem 1.5rem 0.8rem;
+    }
+    .houses-row {
+      display: block;
+      max-width: 560px;
+      margin: 0 auto 0.8rem;
+      opacity: 0.22;
+    }
+    .header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+    .header p {
+      color: var(--ink-light);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+    }
+    /* ── Map ── */
+    .map-wrap { max-width: 1200px; margin: 0 auto 1.5rem; padding: 0 1rem; }
+    #map {
+      width: 100%; height: 520px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px var(--shadow);
+      z-index: 1;
+    }
+    /* ── Filter ── */
+    .filters {
+      max-width: 1200px; margin: 0 auto 1.5rem; padding: 0 1rem;
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .filters button {
+      padding: 0.4rem 1rem; border-radius: 20px;
+      border: 1px solid var(--border); background: var(--card);
+      font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+      color: var(--ink-mid); cursor: pointer; transition: all 0.2s;
+    }
+    .filters button:hover, .filters button.active {
+      background: var(--ink); color: #fff; border-color: var(--ink);
+    }
+    /* ── Cards ── */
+    .cards {
+      max-width: 1200px; margin: 0 auto; padding: 0 1rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: var(--card); border-radius: 8px;
+      padding: 1.25rem 1.4rem; cursor: pointer;
+      box-shadow: 0 1px 8px var(--shadow);
+      border: 1px solid transparent;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(26,24,23,0.1);
+      border-color: var(--border);
+    }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem; }
+    .card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: 1.25rem;
+      color: var(--ink); line-height: 1.3;
+    }
+    .card .hearts { color: var(--accent); font-size: 0.85rem; white-space: nowrap; margin-left: 0.5rem; flex-shrink: 0; }
+    .card .note {
+      font-size: 0.82rem; color: var(--ink-mid);
+      margin-bottom: 0.5rem; line-height: 1.45;
+      font-style: italic; font-family: 'Cormorant Garamond', serif;
+      font-size: 0.92rem;
+    }
+    .card .meta {
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+      font-size: 0.75rem; color: var(--ink-light);
+    }
+    .card .meta span { display: inline-flex; align-items: center; gap: 0.2rem; }
+    .card .tag {
+      display: inline-block; padding: 0.15rem 0.5rem; border-radius: 10px;
+      background: var(--bg); font-size: 0.7rem; color: var(--ink-mid);
+    }
+    .card .link {
+      display: inline-block; margin-top: 0.7rem;
+      font-size: 0.78rem; color: var(--accent);
+      text-decoration: none; font-weight: 500;
+      letter-spacing: 0.03em; transition: color 0.2s;
+    }
+    .card .link:hover { color: var(--ink); }
+    .card.hidden { display: none; }
+    /* ── Leaflet popup ── */
+    .leaflet-popup-content-wrapper { border-radius: 6px !important; font-family: 'DM Sans', sans-serif; box-shadow: 0 3px 12px rgba(0,0,0,0.15) !important; }
+    .leaflet-popup-content { margin: 10px 14px !important; line-height: 1.4 !important; }
+    .p-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: #1a1817; }
+    .p-hearts { color: #d4627a; font-size: 0.8rem; }
+    .p-note { font-size: 0.78rem; color: #4a4540; margin-top: 2px; }
+    .footer { text-align: center; padding: 1.5rem 1rem 2.5rem; font-size: 0.75rem; color: var(--ink-light); letter-spacing: 0.04em; }
+    @media (max-width: 600px) {
+      #map { height: 380px; }
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <!-- Grachtenpandjes -->
+  <svg class="houses-row" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#1a1817" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- House 1 - Halsgevel -->
+    <g transform="translate(0,0)">
+      <rect x="5" y="45" width="70" height="115" rx="1"/>
+      <path d="M15 45 L15 20 Q40 5 65 20 L65 45"/>
+      <rect x="15" y="55" width="18" height="22" rx="1"/><rect x="47" y="55" width="18" height="22" rx="1"/>
+      <rect x="15" y="85" width="18" height="22" rx="1"/><rect x="47" y="85" width="18" height="22" rx="1"/>
+      <rect x="25" y="120" width="30" height="40" rx="1"/>
+      <line x1="40" y1="120" x2="40" y2="160"/>
+      <circle cx="40" cy="12" r="3"/>
+    </g>
+    <!-- House 2 - Tall narrow -->
+    <g transform="translate(82,0)">
+      <rect x="5" y="30" width="60" height="130" rx="1"/>
+      <polygon points="5,30 35,5 65,30"/>
+      <rect x="14" y="42" width="14" height="18" rx="1"/><rect x="42" y="42" width="14" height="18" rx="1"/>
+      <rect x="14" y="68" width="14" height="18" rx="1"/><rect x="42" y="68" width="14" height="18" rx="1"/>
+      <rect x="14" y="94" width="14" height="18" rx="1"/><rect x="42" y="94" width="14" height="18" rx="1"/>
+      <rect x="22" y="125" width="26" height="35" rx="1"/>
+      <line x1="35" y1="125" x2="35" y2="160"/>
+    </g>
+    <!-- House 3 - Klokgevel -->
+    <g transform="translate(155,0)">
+      <rect x="5" y="40" width="80" height="120" rx="1"/>
+      <path d="M5 40 Q5 25 20 20 Q30 12 45 8 Q60 12 70 20 Q85 25 85 40"/>
+      <rect x="15" y="50" width="16" height="20" rx="1"/><rect x="37" y="50" width="16" height="20" rx="1"/><rect x="59" y="50" width="16" height="20" rx="1"/>
+      <rect x="15" y="78" width="16" height="20" rx="1"/><rect x="37" y="78" width="16" height="20" rx="1"/><rect x="59" y="78" width="16" height="20" rx="1"/>
+      <rect x="15" y="106" width="16" height="20" rx="1"/><rect x="59" y="106" width="16" height="20" rx="1"/>
+      <rect x="33" y="115" width="24" height="45" rx="1"/>
+      <line x1="45" y1="115" x2="45" y2="160"/>
+      <line x1="42" y1="5" x2="48" y2="5"/><line x1="45" y1="2" x2="45" y2="8"/>
+    </g>
+    <!-- House 4 - Wide trapgevel -->
+    <g transform="translate(248,0)">
+      <rect x="5" y="35" width="90" height="125" rx="1"/>
+      <path d="M5 35 L5 28 L18 28 L18 21 L31 21 L31 14 L50 8 L69 14 L69 21 L82 21 L82 28 L95 28 L95 35"/>
+      <rect x="14" y="46" width="18" height="22" rx="1"/><rect x="41" y="46" width="18" height="22" rx="1"/><rect x="68" y="46" width="18" height="22" rx="1"/>
+      <rect x="14" y="76" width="18" height="22" rx="1"/><rect x="41" y="76" width="18" height="22" rx="1"/><rect x="68" y="76" width="18" height="22" rx="1"/>
+      <rect x="14" y="106" width="18" height="22" rx="1"/><rect x="68" y="106" width="18" height="22" rx="1"/>
+      <rect x="36" y="115" width="28" height="45" rx="1"/>
+      <line x1="50" y1="115" x2="50" y2="160"/>
+    </g>
+    <!-- House 5 - Pointy narrow -->
+    <g transform="translate(350,0)">
+      <rect x="5" y="38" width="55" height="122" rx="1"/>
+      <polygon points="5,38 32,10 60,38"/>
+      <rect x="14" y="48" width="12" height="16" rx="1"/><rect x="38" y="48" width="12" height="16" rx="1"/>
+      <rect x="14" y="72" width="12" height="16" rx="1"/><rect x="38" y="72" width="12" height="16" rx="1"/>
+      <rect x="14" y="96" width="12" height="16" rx="1"/><rect x="38" y="96" width="12" height="16" rx="1"/>
+      <rect x="20" y="125" width="24" height="35" rx="1"/>
+      <line x1="32" y1="125" x2="32" y2="160"/>
+      <circle cx="32" cy="16" r="2.5"/>
+    </g>
+    <!-- House 6 - Pilaster gevel -->
+    <g transform="translate(418,0)">
+      <rect x="5" y="42" width="75" height="118" rx="1"/>
+      <rect x="10" y="32" width="65" height="10" rx="1"/>
+      <polygon points="15,32 42,15 70,32"/>
+      <rect x="16" y="52" width="14" height="20" rx="1"/><rect x="36" y="52" width="14" height="20" rx="1"/><rect x="56" y="52" width="14" height="20" rx="1"/>
+      <rect x="16" y="80" width="14" height="20" rx="1"/><rect x="36" y="80" width="14" height="20" rx="1"/><rect x="56" y="80" width="14" height="20" rx="1"/>
+      <rect x="28" y="118" width="28" height="42" rx="1"/>
+      <line x1="42" y1="118" x2="42" y2="160"/>
+      <circle cx="42" cy="20" r="3"/>
+    </g>
+    <!-- House 7 - Ornate halsgevel -->
+    <g transform="translate(502,0)">
+      <rect x="5" y="48" width="65" height="112" rx="1"/>
+      <path d="M12 48 L12 28 Q37 10 58 28 L58 48"/>
+      <path d="M8 48 L8 44 Q35 38 62 44 L62 48"/>
+      <rect x="14" y="56" width="14" height="18" rx="1"/><rect x="42" y="56" width="14" height="18" rx="1"/>
+      <rect x="14" y="82" width="14" height="18" rx="1"/><rect x="42" y="82" width="14" height="18" rx="1"/>
+      <rect x="14" y="108" width="14" height="18" rx="1"/><rect x="42" y="108" width="14" height="18" rx="1"/>
+      <rect x="22" y="128" width="24" height="32" rx="1"/>
+      <line x1="34" y1="128" x2="34" y2="160"/>
+    </g>
+    <!-- House 8 - Wide classic -->
+    <g transform="translate(576,0)">
+      <rect x="5" y="40" width="85" height="120" rx="1"/>
+      <rect x="5" y="32" width="85" height="8" rx="1"/>
+      <path d="M20 32 L20 18 L47 8 L75 18 L75 32"/>
+      <rect x="14" y="50" width="16" height="20" rx="1"/><rect x="37" y="50" width="16" height="20" rx="1"/><rect x="60" y="50" width="16" height="20" rx="1"/>
+      <rect x="14" y="78" width="16" height="20" rx="1"/><rect x="37" y="78" width="16" height="20" rx="1"/><rect x="60" y="78" width="16" height="20" rx="1"/>
+      <rect x="14" y="106" width="16" height="20" rx="1"/><rect x="60" y="106" width="16" height="20" rx="1"/>
+      <rect x="34" y="118" width="26" height="42" rx="1"/>
+      <line x1="47" y1="118" x2="47" y2="160"/>
+    </g>
+    <!-- House 9 - Small narrow -->
+    <g transform="translate(670,0)">
+      <rect x="5" y="52" width="50" height="108" rx="1"/>
+      <polygon points="5,52 30,28 55,52"/>
+      <rect x="12" y="62" width="12" height="16" rx="1"/><rect x="36" y="62" width="12" height="16" rx="1"/>
+      <rect x="12" y="86" width="12" height="16" rx="1"/><rect x="36" y="86" width="12" height="16" rx="1"/>
+      <rect x="12" y="110" width="12" height="16" rx="1"/><rect x="36" y="110" width="12" height="16" rx="1"/>
+      <rect x="18" y="132" width="22" height="28" rx="1"/>
+      <line x1="29" y1="132" x2="29" y2="160"/>
+    </g>
+    <!-- House 10 - Tall klokgevel -->
+    <g transform="translate(730,0)">
+      <rect x="5" y="35" width="70" height="125" rx="1"/>
+      <path d="M5 35 Q5 22 18 16 Q40 5 62 16 Q75 22 75 35"/>
+      <rect x="14" y="45" width="14" height="18" rx="1"/><rect x="52" y="45" width="14" height="18" rx="1"/>
+      <rect x="14" y="70" width="14" height="18" rx="1"/><rect x="52" y="70" width="14" height="18" rx="1"/>
+      <rect x="14" y="95" width="14" height="18" rx="1"/><rect x="52" y="95" width="14" height="18" rx="1"/>
+      <rect x="26" y="122" width="28" height="38" rx="1"/>
+      <line x1="40" y1="122" x2="40" y2="160"/>
+      <line x1="37" y1="3" x2="43" y2="3"/><line x1="40" y1="0" x2="40" y2="6"/>
+    </g>
+    <!-- Water line -->
+    <line x1="0" y1="160" x2="900" y2="160" stroke-width="0.8" opacity="0.4"/>
+  </svg>
+  <h1>Amsterdam</h1>
+  <p>Onze favoriete plekken in de stad</p>
+</div>
+<div class="map-wrap"><div id="map"></div></div>
+<div class="filters" id="filters"></div>
+<div class="cards" id="cards"></div>
+<div class="footer">Amsterdam — met liefde samengesteld</div>
+<script>
+const places = [
+  { name:"Caff\u00e8 Pico", area:"De Pijp", hearts:4, note:"", lat:52.3552,lng:4.8900, web:"https://www.caffepico.nl", tags:["restaurant"] },
+  { name:"Peps", area:"Oud-West", hearts:5, note:"Happy hour 16:00\u201318:00, letterlijk amaze", lat:52.3675,lng:4.8716, web:"https://www.peps-amsterdam.nl", tags:["tapas","happy hour"] },
+  { name:"Arie", area:"De Pijp", hearts:5, note:"", lat:52.3567,lng:4.8905, web:"https://www.arie-amsterdam.nl", tags:["restaurant","bar"] },
+  { name:"Caf\u00e9 Ent\u00e9", area:"Jordaan", hearts:5, note:"Suuuuper lekkere oesters en steak tartare!", lat:52.3804,lng:4.8869, web:"https://www.cafeente.nl", tags:["oesters","bistro"] },
+  { name:"De Branding", area:"Centrum", hearts:4, note:"Ambiance top op koude dag", lat:52.3737,lng:4.8760, web:"", tags:["bar"] },
+  { name:"Rayleigh & Ramsay", area:"De Pijp", hearts:0, note:"Wijn tap \u2014 self-serve wine experience", lat:52.3543,lng:4.9020, web:"https://www.rayleighramsay.nl", tags:["wijn"] },
+  { name:"Glouglou", area:"De Pijp", hearts:0, note:"Aanrader van Rickie", lat:52.3525,lng:4.8950, web:"", tags:["wijn","natural wine"] },
+  { name:"Libertine", area:"Jordaan", hearts:0, note:"", lat:52.3802,lng:4.8876, web:"", tags:["caf\u00e9","brunch"] },
+  { name:"Zum Barbarossa", area:"Centrum", hearts:4, note:"Speakeasy cocktail bar", lat:52.3686,lng:4.8906, web:"https://www.zumbarbarossa.com", tags:["cocktails","speakeasy"] },
+  { name:"Caf\u00e9 Sonneveld", area:"Jordaan", hearts:4, note:"Spareribs & appeltaart", lat:52.3763,lng:4.8823, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
+  { name:"Ceppi's", area:"Centrum", hearts:0, note:"Italiaans, goede pizza", lat:52.3628,lng:4.8851, web:"", tags:["italiaans"] },
+  { name:"Gertrude", area:"Oud-West", hearts:0, note:"Restaurant & Bar", lat:52.3657,lng:4.8761, web:"https://www.gertrudeamsterdam.nl", tags:["restaurant","wijn"] },
+  { name:"Caf\u00e9 Amsterdam (Cradam)", area:"West", hearts:4, note:"Aanrader van Rick", lat:52.3841,lng:4.8683, web:"", tags:["restaurant"] },
+  { name:"Cafe Tabac", area:"Jordaan", hearts:4, note:"Leuk voor borrelhap mandje met snacks!", lat:52.3802,lng:4.8885, web:"", tags:["borrel","indonesisch"] },
+  { name:"Bar Gui", area:"Centrum", hearts:0, note:"Restaurant, lekker eten", lat:52.3624,lng:4.8922, web:"", tags:["restaurant","frans"] },
+  { name:"A-Fusion", area:"Zeedijk", hearts:4, note:"Snel geholpen \u2014 Aziatisch fusion", lat:52.3732,lng:4.9001, web:"", tags:["aziatisch","sushi"] },
+  { name:"Pesca", area:"Jordaan", hearts:0, note:"Vis \u20ac\u20ac\u20ac \u2014 theatre of fish", lat:52.3728,lng:4.8788, web:"https://www.pesca-amsterdam.nl", tags:["vis","\u20ac\u20ac\u20ac"] },
+  { name:"Nando", area:"West", hearts:0, note:"Italiaans", lat:52.3846,lng:4.8618, web:"", tags:["italiaans"] },
+  { name:"Ela", area:"Jordaan", hearts:4, note:"Oesters! Op woensdag oyster night", lat:52.3695,lng:4.8809, web:"", tags:["oesters","bar"] },
+  { name:"Pata Negra", area:"Utrechtsestraat", hearts:4, note:"Tapas", lat:52.3614,lng:4.8991, web:"", tags:["tapas","spaans"] },
+  { name:"De Graafschap", area:"Amsterdam", hearts:0, note:"Terras", lat:52.3700,lng:4.8900, web:"", tags:["terras"] },
+  { name:"Troef", area:"Oost", hearts:0, note:"Eten \u2014 Frans bistro", lat:52.3492,lng:4.9137, web:"", tags:["restaurant","frans"] },
+  { name:"The Seafood Bar", area:"Oud-Zuid", hearts:4, note:"Happy hour 15:00\u201317:00 \u00b7 Van Baerle locatie", lat:52.3600,lng:4.8775, web:"https://www.theseafoodbar.nl", tags:["vis","happy hour"] },
+  { name:"Bitterballen Amsterdam", area:"Jordaan", hearts:0, note:"Bitterballen tasting!", lat:52.3731,lng:4.8788, web:"", tags:["snacks","hollands"] },
+  { name:"Casa di David", area:"Centrum", hearts:0, note:"Italiaans", lat:52.3683,lng:4.8877, web:"", tags:["italiaans"] },
+  { name:"Badcuyp", area:"De Pijp", hearts:4, note:"", lat:52.3566,lng:4.8971, web:"", tags:["restaurant"] },
+  { name:"L'Entrec\u00f4te et les Dames", area:"Oud-Zuid", hearts:4, note:"Biefstuk \u2014 vraag om extra refill!", lat:52.3557,lng:4.8805, web:"", tags:["steak","frans"] },
+  { name:"Bouwman", area:"Utrechtsestraat", hearts:3, note:"Vlakbij, leuk voor drankjes", lat:52.3623,lng:4.8988, web:"", tags:["borrel","bruin caf\u00e9"] },
+  { name:"Caf\u00e9 Marcella", area:"Amstelveld", hearts:4, note:"Aan de gracht \u2014 mooi terras", lat:52.3622,lng:4.8983, web:"", tags:["terras","caf\u00e9"] },
+  { name:"Parlotte", area:"Jordaan", hearts:2, note:"Frans, Jordaan", lat:52.3783,lng:4.8818, web:"", tags:["frans","wijn"] },
+  { name:"De Willem", area:"Haarlemmerplein", hearts:3, note:"Favo van Rick", lat:52.3849,lng:4.8829, web:"", tags:["restaurant"] },
+  { name:"De Wilde Zwijnen", area:"Oost", hearts:0, note:"Verrassingsmenu met seizoensproducten", lat:52.3636,lng:4.9404, web:"", tags:["restaurant","verrassing"] },
+  { name:"Cantine de Caron", area:"West", hearts:0, note:"Frans, heel leuk \u2014 oude warehouse", lat:52.3863,lng:4.8728, web:"", tags:["frans","restaurant"] },
+  { name:"Binnenvisser", area:"Oud-West", hearts:0, note:"Nog nooit geweest maar boven aan m'n lijst \u00d7 Rick", lat:52.3715,lng:4.8704, web:"", tags:["wijn","natural wine"] },
+  { name:"Bar Mimi", area:"Oud-West", hearts:0, note:"\ud83d\udc31", lat:52.3695,lng:4.8739, web:"", tags:["bar","bistro"] },
+  { name:"Restaurant Metro", area:"Noord", hearts:0, note:"Havermelkelite", lat:52.3911,lng:4.9040, web:"", tags:["restaurant"] },
+  { name:"Bar Bellini", area:"De Pijp", hearts:0, note:"Drankje doen \u2014 dan door naar Linguini", lat:52.3563,lng:4.8909, web:"", tags:["bar","italiaans"] },
+  { name:"Have a Roll", area:"De Pijp", hearts:0, note:"Ontbijt \u2014 vegan cinnamon rolls", lat:52.3563,lng:4.8997, web:"", tags:["ontbijt","vegan"] },
+  { name:"Kaas van Kef", area:"Noord", hearts:0, note:"Meeeega lekker! Zondagmiddag \u2192 kaasproeverij nemen", lat:52.3870,lng:4.9077, web:"", tags:["kaas","proeverij"] },
+  { name:"Caf\u00e9 Bern", area:"Nieuwmarkt", hearts:0, note:"Kaasfondue!!!! \ud83e\uddc0", lat:52.3725,lng:4.9010, web:"", tags:["fondue","zwitsers"] },
+  { name:"Bar Jules", area:"Oud-Zuid", hearts:3, note:"Lunch Oud-Zuid", lat:52.3530,lng:4.8634, web:"", tags:["lunch","bar"] },
+  { name:"Cecconi's", area:"Centrum", hearts:0, note:"Mo'tje \u2014 jazz, lobster spaghetti", lat:52.3721,lng:4.8892, web:"", tags:["italiaans","chic"] },
+  { name:"LoLo", area:"Centrum", hearts:0, note:"Italiaans bij Oude Kerk", lat:52.3741,lng:4.8971, web:"", tags:["italiaans"] },
+  { name:"Linguini", area:"De Pijp", hearts:0, note:"Eerst drankje bij Bellini, dan hierheen", lat:52.3575,lng:4.8897, web:"", tags:["italiaans","pasta"] },
+  { name:"Toscanini", area:"Jordaan", hearts:0, note:"Echt lekker italiaans, wel duur. Favo van Rihanna!", lat:52.3801,lng:4.8854, web:"", tags:["italiaans","\u20ac\u20ac\u20ac"] },
+  { name:"Amstel Hotel", area:"Centrum", hearts:4, note:"Alleen lunch! Vragen of je buiten kan zitten", lat:52.3603,lng:4.9050, web:"", tags:["lunch","chic"] },
+  { name:"Borello Aperitivo", area:"Zeedijk", hearts:0, note:"AMAAAAAZIE \u2014 cocktails & pizza", lat:52.3754,lng:4.9012, web:"", tags:["cocktails","bar"] },
+  { name:"Brasserie de Luwte", area:"Jordaan", hearts:0, note:"Aan de Leliegracht", lat:52.3753,lng:4.8869, web:"", tags:["frans","restaurant"] },
+  { name:"Polly Goudvis", area:"Noord", hearts:4, note:"Brunch bij de pont", lat:52.3825,lng:4.9033, web:"", tags:["brunch","bar"] },
+  { name:"Tia Rosa", area:"Centrum", hearts:0, note:"Tapas aan de Reguliersgracht", lat:52.3643,lng:4.8963, web:"", tags:["tapas","spaans"] },
+  { name:"Roest", area:"Oost", hearts:4, note:"Leuk binnen \u2014 industrieel", lat:52.3720,lng:4.9266, web:"", tags:["bar","industrieel"] },
+  { name:"No Nonsense", area:"Centrum", hearts:4, note:"Gezellig bruin caf\u00e9", lat:52.3759,lng:4.9027, web:"", tags:["bar","caf\u00e9"] },
+];
+// ── Map ──
+const map = L.map('map', { scrollWheelZoom: false }).setView([52.3676, 4.9041], 13);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://osm.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+  maxZoom: 18
+}).addTo(map);
+// Grayscale filter for that moody Amsterdam vibe
+document.querySelector('.leaflet-tile-pane').style.filter = 'saturate(0) contrast(1.1)';
+const bounds = [];
+const markers = [];
+places.forEach((p, i) => {
+  const hasHearts = p.hearts > 0;
+  const size = hasHearts && p.hearts >= 4 ? 13 : 9;
+  const color = hasHearts ? '#d4627a' : '#1a1817';
+  const icon = L.divIcon({
+    className: '',
+    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid #fff;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,0.3);"></div>`,
+    iconSize: [size, size], iconAnchor: [size/2, size/2]
+  });
+  const marker = L.marker([p.lat, p.lng], { icon }).addTo(map);
+  const heartStr = p.hearts > 0 ? '\ud83e\ude77'.repeat(p.hearts) : '';
+  marker.bindPopup(`
+    <div class="p-title">${p.name}</div>
+    ${heartStr ? `<div class="p-hearts">${heartStr}</div>` : ''}
+    ${p.note ? `<div class="p-note">${p.note}</div>` : ''}
+  `, { maxWidth: 220 });
+  markers.push(marker);
+  bounds.push([p.lat, p.lng]);
+});
+map.fitBounds(bounds, { padding: [30, 30] });
+// ── Filters ──
+const allTags = [...new Set(places.flatMap(p => p.tags))].sort();
+const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wijn', italiaans:'Italiaans', frans:'Frans', vis:'Vis', oesters:'Oesters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terras', borrel:'Borrel', ontbijt:'Ontbijt', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Kaas', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Chic' };
+const filtersEl = document.getElementById('filters');
+const allBtn = document.createElement('button');
+allBtn.textContent = 'Alles';
+allBtn.className = 'active';
+allBtn.onclick = () => filterCards(null);
+filtersEl.appendChild(allBtn);
+const showTags = ['restaurant','bar','italiaans','frans','tapas','wijn','oesters','vis','cocktails','brunch','lunch','terras','steak','ontbijt','happy hour'];
+showTags.forEach(tag => {
+  if (!allTags.includes(tag)) return;
+  const btn = document.createElement('button');
+  btn.textContent = tagLabels[tag] || tag;
+  btn.onclick = () => filterCards(tag);
+  filtersEl.appendChild(btn);
+});
+function filterCards(tag) {
+  document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+  if (!tag) {
+    filtersEl.children[0].classList.add('active');
+  } else {
+    [...filtersEl.children].find(b => b.textContent === (tagLabels[tag]||tag))?.classList.add('active');
+  }
+  document.querySelectorAll('.card').forEach((card, i) => {
+    const show = !tag || places[i].tags.includes(tag);
+    card.classList.toggle('hidden', !show);
+  });
+}
+// ── Cards ──
+const cardsEl = document.getElementById('cards');
+places.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.onclick = () => {
+    map.setView([p.lat, p.lng], 16, { animate: true });
+    markers[i].openPopup();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  const heartStr = p.hearts > 0 ? '\ud83e\ude77'.repeat(p.hearts) : '';
+  card.innerHTML = `
+    <div class="card-top">
+      <h3>${p.name}</h3>
+      ${heartStr ? `<span class="hearts">${heartStr}</span>` : ''}
+    </div>
+    ${p.note ? `<div class="note">${p.note}</div>` : ''}
+    <div class="meta">
+      <span>${p.area}</span>
+      ${p.tags.map(t => `<span class="tag">${tagLabels[t]||t}</span>`).join('')}
+    </div>
+    ${p.web ? `<a class="link" href="${p.web}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Website \u2192</a>` : ''}
+  `;
+  cardsEl.appendChild(card);
+});
+</script>
+</body>
+</html>
