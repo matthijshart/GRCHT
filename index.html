@@ -198,6 +198,8 @@ nav .links a:hover { opacity: 0.5; }
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gray);
+  text-decoration: none;
+  cursor: pointer;
   animation: pulse 2s infinite;
 }
 @keyframes overlayFadeIn {
@@ -792,7 +794,7 @@ nav .links a:hover { opacity: 0.5; }
     <span>in samenwerking met</span>
     <img src="https://www.brouwerijhetij.nl/media/images/logo.webp" alt="Brouwerij 't IJ" onerror="this.parentElement.style.display='none'">
   </div>
-  <div class="scroll-hint">&darr; Scroll</div>
+  <a class="scroll-hint" href="#plekken" onclick="event.preventDefault();document.getElementById('plekken').scrollIntoView({behavior:'smooth',block:'start'})">&darr; Scroll</a>
 </section>
 
 <!-- ═══ STRIPE BAND WITH SPOTIFY ═══ -->
