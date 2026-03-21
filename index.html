@@ -181,9 +181,9 @@ nav .links a:hover { opacity: 0.5; }
 }
 .band-spotify {
   position: absolute;
-  right: 1.5rem;
+  left: 50%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
   z-index: 3;
   border-radius: 12px;
   overflow: hidden;
@@ -344,25 +344,36 @@ nav .links a:hover { opacity: 0.5; }
 .p-note { font-size: 0.78rem; color: var(--ink-mid); margin-top: 2px; }
 
 /* ═══ GEEN IDEE SPINNER ═══ */
+.spinner-wrap {
+  background: repeating-linear-gradient(
+    90deg,
+    #f5c842 0px, #f5c842 50px,
+    #fffdf5 50px, #fffdf5 100px
+  );
+  padding: 3.5rem 1rem;
+  position: relative;
+}
 .spinner-section {
-  padding: 3rem 1rem;
   max-width: 700px;
   margin: 0 auto;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 .spinner-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.5rem, 7vw, 4.5rem);
-  color: var(--ink);
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  color: #1e2a5a;
   letter-spacing: 0.04em;
   line-height: 0.9;
   margin-bottom: 0.3rem;
 }
-.spinner-title span { color: var(--red); }
+.spinner-title span { color: #e63928; }
 .spinner-sub {
-  font-size: 0.9rem;
-  color: var(--gray);
+  font-size: 0.95rem;
+  color: #1e2a5a;
   margin-bottom: 2rem;
+  opacity: 0.7;
 }
 .spinner-persons {
   display: flex;
@@ -371,43 +382,39 @@ nav .links a:hover { opacity: 0.5; }
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
-.spinner-persons label {
-  font-size: 0.85rem;
-  color: var(--ink-mid);
-  font-weight: 400;
-}
 .spinner-persons .person-btns {
-  display: flex; gap: 0.3rem;
+  display: flex; gap: 0.4rem;
 }
 .spinner-persons .person-btns button {
-  width: 42px; height: 42px;
+  width: 44px; height: 44px;
   border-radius: 50%;
-  border: 2px solid var(--ink);
-  background: transparent;
+  border: 2.5px solid #1e2a5a;
+  background: rgba(255,255,255,0.7);
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.2rem;
-  color: var(--ink);
+  font-size: 1.3rem;
+  color: #1e2a5a;
   cursor: pointer;
   transition: all 0.2s;
 }
 .spinner-persons .person-btns button.selected {
-  background: var(--ink);
-  color: var(--cream);
+  background: #1e2a5a;
+  color: #f5c842;
 }
 .spinner-persons .person-btns button:hover {
-  background: var(--green);
-  color: var(--white);
-  border-color: var(--green);
+  background: #1e2a5a;
+  color: #fffdf5;
+  border-color: #1e2a5a;
 }
 /* Slot reel */
 .slot-wrapper {
   position: relative;
   height: 80px;
   overflow: hidden;
-  border-radius: 8px;
-  border: 2px solid var(--ink);
+  border-radius: 10px;
+  border: 3px solid #1e2a5a;
   margin-bottom: 1.5rem;
-  background: var(--white);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
 }
 .slot-wrapper::before, .slot-wrapper::after {
   content: '';
@@ -419,11 +426,11 @@ nav .links a:hover { opacity: 0.5; }
 }
 .slot-wrapper::before {
   top: 0;
-  background: linear-gradient(to bottom, var(--white), transparent);
+  background: linear-gradient(to bottom, rgba(255,253,245,0.9), transparent);
 }
 .slot-wrapper::after {
   bottom: 0;
-  background: linear-gradient(to top, var(--white), transparent);
+  background: linear-gradient(to top, rgba(255,253,245,0.9), transparent);
 }
 .slot-reel {
   position: absolute;
@@ -441,14 +448,15 @@ nav .links a:hover { opacity: 0.5; }
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2rem;
   letter-spacing: 0.06em;
-  color: var(--ink);
+  color: #1e2a5a;
   white-space: nowrap;
   flex-shrink: 0;
 }
 .slot-item .slot-area {
   font-family: 'Outfit', sans-serif;
   font-size: 0.75rem;
-  color: var(--gray);
+  color: #1e2a5a;
+  opacity: 0.5;
   margin-left: 0.6rem;
   font-weight: 400;
   letter-spacing: 0;
@@ -456,23 +464,24 @@ nav .links a:hover { opacity: 0.5; }
 /* Spin button */
 .spin-btn {
   display: inline-block;
-  padding: 0.8rem 2.5rem;
-  border-radius: 6px;
-  border: none;
-  background: var(--red);
-  color: var(--white);
+  padding: 0.9rem 3rem;
+  border-radius: 50px;
+  border: 3px solid #1e2a5a;
+  background: #1e2a5a;
+  color: #f5c842;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.6rem;
-  letter-spacing: 0.1em;
+  font-size: 1.8rem;
+  letter-spacing: 0.12em;
   cursor: pointer;
   transition: all 0.2s;
 }
 .spin-btn:hover {
-  background: var(--green);
+  background: #f5c842;
+  color: #1e2a5a;
   transform: scale(1.05);
 }
 .spin-btn:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 .spin-btn:disabled {
   opacity: 0.5;
@@ -488,13 +497,14 @@ nav .links a:hover { opacity: 0.5; }
 .spin-result.visible { opacity: 1; }
 .spin-result .result-name {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.2rem;
-  color: var(--green);
+  font-size: 2.4rem;
+  color: #1e2a5a;
   letter-spacing: 0.04em;
 }
 .spin-result .result-note {
   font-size: 0.85rem;
-  color: var(--ink-mid);
+  color: #1e2a5a;
+  opacity: 0.6;
   font-style: italic;
   margin: 0.3rem 0;
 }
@@ -505,33 +515,27 @@ nav .links a:hover { opacity: 0.5; }
   margin-top: 0.8rem;
 }
 .spin-result .result-actions a {
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  padding: 0.45rem 1.2rem;
+  border-radius: 25px;
+  font-size: 0.82rem;
   font-weight: 500;
   text-decoration: none;
   transition: all 0.2s;
 }
 .spin-result .result-nav {
-  background: var(--green);
-  color: var(--white);
+  background: #1e2a5a;
+  color: #f5c842;
 }
-.spin-result .result-nav:hover { background: var(--pink); }
+.spin-result .result-nav:hover { background: var(--green); color: var(--white); }
 .spin-result .result-retry {
-  background: transparent;
-  border: 1px solid var(--ink);
-  color: var(--ink);
+  background: rgba(255,255,255,0.6);
+  border: 2px solid #1e2a5a;
+  color: #1e2a5a;
   cursor: pointer;
 }
 .spin-result .result-retry:hover {
-  background: var(--ink);
-  color: var(--cream);
-}
-.spinner-divider {
-  max-width: 1200px;
-  margin: 0 auto;
-  border: none;
-  border-top: 1px solid #e0dbd5;
+  background: #1e2a5a;
+  color: #f5c842;
 }
 
 /* ═══ RESPONSIVE ═══ */
@@ -540,8 +544,7 @@ nav .links a:hover { opacity: 0.5; }
   .hero h1 { font-size: clamp(4rem, 18vw, 8rem); }
   .hero .sub { font-size: 1rem; padding: 0 1rem; }
   .stripe-band { height: 80px; }
-  .band-spotify { right: 0.5rem; }
-  .band-spotify iframe { width: 200px; height: 80px; }
+  .band-spotify iframe { width: 250px; height: 80px; }
   .stripe-band .band-text { font-size: 1.2rem; }
 }
 @media (max-width: 600px) {
@@ -551,8 +554,8 @@ nav .links a:hover { opacity: 0.5; }
   .filters-section { padding: 1.2rem 0.6rem 0; }
   .cards-section { padding: 1rem 0.6rem 2rem; }
   /* Spinner mobile */
-  .spinner-section { padding: 2rem 0.8rem; }
-  .spinner-title { font-size: clamp(2rem, 10vw, 3.5rem); }
+  .spinner-wrap { padding: 2.5rem 0.8rem; }
+  .spinner-title { font-size: clamp(2.2rem, 10vw, 3.5rem); }
   .slot-item {
     font-size: 1.3rem;
     height: 60px;
@@ -587,8 +590,7 @@ nav .links a:hover { opacity: 0.5; }
   .hero { padding: 5rem 1.5rem 3rem; min-height: 100svh; }
   .hero-label { font-size: 0.65rem; letter-spacing: 0.2em; }
   .scroll-hint { bottom: 2rem; }
-  .band-spotify { right: 50%; transform: translate(50%, -50%); }
-  .band-spotify iframe { width: 250px; }
+  .band-spotify iframe { width: 220px; }
 }
 </style>
 </head>
@@ -635,30 +637,30 @@ nav .links a:hover { opacity: 0.5; }
   </div>
 
   <!-- GEEN IDEE SPINNER -->
-  <hr class="spinner-divider">
-  <div class="spinner-section" id="geen-idee">
-    <div class="spinner-title">GEEN IDEE<span>?</span></div>
-    <p class="spinner-sub">Wij kiezen voor je. Hoeveel zijn jullie?</p>
-    <div class="spinner-persons">
-      <div class="person-btns" id="personBtns">
-        <button data-n="1">1</button>
-        <button data-n="2" class="selected">2</button>
-        <button data-n="3">3</button>
-        <button data-n="4">4</button>
-        <button data-n="5">5+</button>
+  <div class="spinner-wrap" id="geen-idee">
+    <div class="spinner-section">
+      <div class="spinner-title">GEEN IDEE<span>?</span></div>
+      <p class="spinner-sub">Wij kiezen voor je. Hoeveel zijn jullie?</p>
+      <div class="spinner-persons">
+        <div class="person-btns" id="personBtns">
+          <button data-n="1">1</button>
+          <button data-n="2" class="selected">2</button>
+          <button data-n="3">3</button>
+          <button data-n="4">4</button>
+          <button data-n="5">5+</button>
+        </div>
+      </div>
+      <div class="slot-wrapper">
+        <div class="slot-reel" id="slotReel"></div>
+      </div>
+      <button class="spin-btn" id="spinBtn">DRAAI</button>
+      <div class="spin-result" id="spinResult">
+        <div class="result-name" id="resultName"></div>
+        <div class="result-note" id="resultNote"></div>
+        <div class="result-actions" id="resultActions"></div>
       </div>
     </div>
-    <div class="slot-wrapper">
-      <div class="slot-reel" id="slotReel"></div>
-    </div>
-    <button class="spin-btn" id="spinBtn">DRAAI</button>
-    <div class="spin-result" id="spinResult">
-      <div class="result-name" id="resultName"></div>
-      <div class="result-note" id="resultNote"></div>
-      <div class="result-actions" id="resultActions"></div>
-    </div>
   </div>
-  <hr class="spinner-divider">
 
   <!-- FILTERS + CARDS -->
   <div class="filters-section" id="plekken">
