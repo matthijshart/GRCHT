@@ -754,7 +754,7 @@ nav .links a:hover { opacity: 0.5; }
   </div>
   <div class="partner-badge">
     <span>in samenwerking met</span>
-    <img src="https://www.brouwerijhetij.nl/wp-content/themes/flavor/img/logo.png" alt="Brouwerij 't IJ" onerror="this.parentElement.style.display='none'">
+    <img src="https://www.brouwerijhetij.nl/media/images/logo.webp" alt="Brouwerij 't IJ" onerror="this.parentElement.style.display='none'">
   </div>
   <div class="scroll-hint">&darr; Scroll</div>
 </section>
@@ -1023,6 +1023,10 @@ function applyFilters() {
   } else {
     map.fitBounds(bounds, { padding: [30, 30] });
   }
+  // Scroll naar kaart bij wijk selectie
+  if (activeArea) {
+    document.getElementById('kaart').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 // ═══ CARDS ═══
@@ -1033,7 +1037,7 @@ places.forEach((p, i) => {
   card.onclick = () => {
     map.setView([p.lat, p.lng], 16, { animate: true });
     markers[i].openPopup();
-    document.getElementById('kaart').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('kaart').scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
   card.innerHTML = `
     ${p.fav ? '<div class="fav-label">favorietje</div>' : ''}
