@@ -83,7 +83,8 @@ body {
   z-index: 1;
   pointer-events: none;
   background: rgba(10, 10, 10, 0.75);
-  transition: opacity 0.5s;
+  opacity: 0;
+  animation: overlayFadeIn 1s ease 1.8s forwards;
 }
 
 body > *:not(.stripes-bg):not(.stripes-overlay) {
@@ -168,6 +169,10 @@ nav .links a:hover { opacity: 0.5; }
   text-transform: uppercase;
   color: var(--gray);
   animation: pulse 2s infinite;
+}
+@keyframes overlayFadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 0.75; }
 }
 @keyframes fadeIn {
   0%   { opacity: 0; }
