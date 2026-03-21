@@ -423,6 +423,15 @@ nav .links a:hover { opacity: 0.5; }
   transition: background 0.2s;
 }
 .card .nav-btn:hover { background: var(--coral); }
+.card .fav-label {
+  font-size: 0.6rem;
+  color: var(--coral);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  opacity: 0.7;
+  margin-bottom: 0.2rem;
+}
 .card .actions { display: flex; align-items: center; flex-wrap: wrap; }
 .card.hidden { display: none; }
 
@@ -871,10 +880,10 @@ window.addEventListener('scroll', () => {
 
 // ═══ PLACES DATA ═══
 const places = [
-  { name:"Caff\u00e8 Pico", area:"De Pijp", hearts:0, note:"Goed eten, chill sfeertje", lat:52.3552,lng:4.8900, web:"https://www.caffepico.nl", tags:["restaurant"] },
+  { name:"Caff\u00e8 Pico", area:"De Pijp", fav:true, note:"Goed eten, chill sfeertje", lat:52.3552,lng:4.8900, web:"https://www.caffepico.nl", tags:["restaurant"] },
   { name:"Peps", area:"Oud-West", hearts:0, note:"Happy hour 16\u201318u, altijd gezellig", lat:52.3675,lng:4.8716, web:"https://www.peps-amsterdam.nl", tags:["tapas","happy hour"] },
-  { name:"Arie", area:"De Pijp", hearts:0, note:"Lekker eten en drinken", lat:52.3567,lng:4.8905, web:"https://www.arie-amsterdam.nl", tags:["restaurant","bar"] },
-  { name:"Caf\u00e9 Ent\u00e9", area:"Jordaan", hearts:0, note:"Warme Franse bistro, donkerrood interieur, oesters en steak tartare", lat:52.3804,lng:4.8869, web:"https://www.cafeente.nl", tags:["oesters","bistro"] },
+  { name:"Arie", area:"De Pijp", fav:true, note:"Lekker eten en drinken", lat:52.3567,lng:4.8905, web:"https://www.arie-amsterdam.nl", tags:["restaurant","bar"] },
+  { name:"Caf\u00e9 Ent\u00e9", area:"Jordaan", fav:true, note:"Warme Franse bistro, donkerrood interieur, oesters en steak tartare", lat:52.3804,lng:4.8869, web:"https://www.cafeente.nl", tags:["oesters","bistro"] },
   { name:"Libertine", area:"Jordaan", hearts:0, note:"Fijn voor brunch", lat:52.3802,lng:4.8876, web:"", tags:["caf\u00e9","brunch"] },
   { name:"Zum Barbarossa", area:"Centrum", hearts:0, note:"Speakeasy, goede cocktails", lat:52.3686,lng:4.8906, web:"https://www.zumbarbarossa.com", tags:["cocktails","speakeasy"] },
   { name:"Caf\u00e9 Sonneveld", area:"Jordaan", hearts:0, note:"Spareribs en appeltaart", lat:52.3763,lng:4.8823, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
@@ -901,15 +910,15 @@ const places = [
   { name:"Polly Goudvis", area:"Noord", hearts:0, note:"Brunch bij de pont", lat:52.3825,lng:4.9033, web:"", tags:["brunch","bar"] },
   { name:"Roest", area:"Oost", hearts:0, note:"Industrieel, altijd chill", lat:52.3720,lng:4.9266, web:"", tags:["bar","industrieel"] },
   { name:"No Nonsense", area:"Centrum", hearts:0, note:"Gezellig bruin caf\u00e9", lat:52.3759,lng:4.9027, web:"", tags:["bar","caf\u00e9"] },
-  { name:"Bar Grill Marathonweg", area:"Oud-Zuid", hearts:0, note:"Goed voor een hapje op de Marathonweg", lat:52.3460,lng:4.8650, web:"", tags:["bar","restaurant"] },
+  { name:"Bar Grill Marathonweg", area:"Oud-Zuid", fav:true, note:"Goed voor een hapje op de Marathonweg", lat:52.3460,lng:4.8650, web:"", tags:["bar","restaurant"] },
   { name:"Caf\u00e9 Kiebert", area:"Oud-Zuid", hearts:0, note:"Lekker op de Marathonweg", lat:52.3458,lng:4.8645, web:"", tags:["caf\u00e9","bar"] },
   { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"Gezellig", lat:52.3465,lng:4.8655, web:"", tags:["bar"] },
   { name:"'t Smalle", area:"Jordaan", hearts:0, note:"Biertje of broodje bal, altijd goed", lat:52.3758,lng:4.8838, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
-  { name:"Papeneiland", area:"Jordaan", hearts:0, note:"Terrasje als de zon schijnt", lat:52.3803,lng:4.8842, web:"", tags:["terras","caf\u00e9"] },
+  { name:"Papeneiland", area:"Jordaan", fav:true, note:"Terrasje als de zon schijnt", lat:52.3803,lng:4.8842, web:"", tags:["terras","caf\u00e9"] },
   { name:"Bistro Feline", area:"Jordaan", hearts:0, note:"Michelin gids, neem de kreeftenorzo", lat:52.3769,lng:4.8832, web:"", tags:["restaurant","frans"] },
   { name:"La Perla", area:"Jordaan", hearts:0, note:"Gewoon gezellig pizza aan de bar", lat:52.3737,lng:4.8810, web:"", tags:["italiaans","pizza"] },
   { name:"De Pizzakamer", area:"De Pijp", hearts:0, note:"Houtoven pizza, terras, altijd goed", lat:52.3543,lng:4.8933, web:"", tags:["italiaans","pizza"] },
-  { name:"Pilsvogel", area:"De Pijp", hearts:0, note:"Terras op het plein, lekker biertje", lat:52.3555,lng:4.8937, web:"", tags:["bar","terras"] },
+  { name:"Pilsvogel", area:"De Pijp", fav:true, note:"Terras op het plein, lekker biertje", lat:52.3555,lng:4.8937, web:"", tags:["bar","terras"] },
   { name:"Caf\u00e9 Sarphaat", area:"De Pijp", hearts:0, note:"Chill caf\u00e9 op de Ceintuurbaan", lat:52.3530,lng:4.8945, web:"", tags:["caf\u00e9","terras"] },
   { name:"Caf\u00e9-Restaurant Hesp", area:"Oost", hearts:0, note:"Terras aan het water, biertje en oesters", lat:52.3538,lng:4.9105, web:"", tags:["caf\u00e9","terras","oesters"] },
   { name:"Caf\u00e9 Wildschut", area:"Oud-Zuid", hearts:0, note:"Lunch, niet gek gewoon goed", lat:52.3537,lng:4.8830, web:"", tags:["caf\u00e9","lunch","terras"] },
@@ -1026,6 +1035,7 @@ places.forEach((p, i) => {
     document.getElementById('kaart').scrollIntoView({ behavior: 'smooth' });
   };
   card.innerHTML = `
+    ${p.fav ? '<div class="fav-label">onze favoriet</div>' : ''}
     <div class="card-top">
       <h3>${p.name}</h3>
     </div>
