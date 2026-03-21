@@ -41,13 +41,41 @@ body {
 }
 .stripes-bg .stripe {
   position: absolute;
-  top: -100%;
   width: calc(100% / 14);
-  height: 300%;
+  height: 100%;
   will-change: transform;
+  transform: translateY(-100%);
 }
-.stripes-bg .stripe:nth-child(odd)  { background: var(--pink); }
-.stripes-bg .stripe:nth-child(even) { background: var(--green); }
+.stripes-bg .stripe:nth-child(odd)  {
+  background: var(--pink);
+  animation: stripeInDown 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.stripes-bg .stripe:nth-child(even) {
+  background: var(--green);
+  animation: stripeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.stripes-bg .stripe:nth-child(1)  { animation-delay: 0.05s; }
+.stripes-bg .stripe:nth-child(2)  { animation-delay: 0.1s; }
+.stripes-bg .stripe:nth-child(3)  { animation-delay: 0.15s; }
+.stripes-bg .stripe:nth-child(4)  { animation-delay: 0.2s; }
+.stripes-bg .stripe:nth-child(5)  { animation-delay: 0.25s; }
+.stripes-bg .stripe:nth-child(6)  { animation-delay: 0.3s; }
+.stripes-bg .stripe:nth-child(7)  { animation-delay: 0.35s; }
+.stripes-bg .stripe:nth-child(8)  { animation-delay: 0.4s; }
+.stripes-bg .stripe:nth-child(9)  { animation-delay: 0.45s; }
+.stripes-bg .stripe:nth-child(10) { animation-delay: 0.5s; }
+.stripes-bg .stripe:nth-child(11) { animation-delay: 0.55s; }
+.stripes-bg .stripe:nth-child(12) { animation-delay: 0.6s; }
+.stripes-bg .stripe:nth-child(13) { animation-delay: 0.65s; }
+.stripes-bg .stripe:nth-child(14) { animation-delay: 0.7s; }
+@keyframes stripeInDown {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
+}
+@keyframes stripeInUp {
+  0%   { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
 
 .stripes-overlay {
   position: fixed;
@@ -97,6 +125,7 @@ nav .links a:hover { opacity: 0.5; }
 .hero {
   min-height: 100vh;
   min-height: 100svh;
+  animation: fadeIn 0.8s ease 1.5s both;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -139,6 +168,10 @@ nav .links a:hover { opacity: 0.5; }
   text-transform: uppercase;
   color: var(--gray);
   animation: pulse 2s infinite;
+}
+@keyframes fadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
 }
 @keyframes pulse {
   0%, 100% { opacity: 0.3; }
@@ -680,8 +713,8 @@ for (let i = 0; i < 14; i++) {
   const s = document.createElement('div');
   s.className = 'stripe';
   s.style.left = `${(i / 14) * 100}%`;
-  s.dataset.offset = i % 2 === 0 ? -50 : -150;
-  s.dataset.speed = (0.15 + Math.random() * 0.1).toFixed(3);
+  s.dataset.speed = (0.08 + Math.random() * 0.06).toFixed(3);
+  s.dataset.dir = i % 2 === 0 ? '1' : '-1';
   stripesBg.appendChild(s);
 }
 const bandEl = document.getElementById('bandInner1');
@@ -701,9 +734,9 @@ function onScroll() {
     const scrollY = window.scrollY;
     const vh = window.innerHeight;
     stripesBg.querySelectorAll('.stripe').forEach(s => {
-      const offset = parseFloat(s.dataset.offset);
       const speed = parseFloat(s.dataset.speed);
-      s.style.transform = `translateY(${offset + scrollY * speed}px)`;
+      const dir = parseFloat(s.dataset.dir);
+      s.style.transform = `translateY(${scrollY * speed * dir}px)`;
     });
     const heroEnd = vh * 0.8;
     if (scrollY < heroEnd) {
@@ -714,8 +747,20 @@ function onScroll() {
     ticking = false;
   });
 }
-window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
+// Wait for intro animation to finish before enabling parallax
+let introComplete = false;
+setTimeout(() => {
+  introComplete = true;
+  // Remove CSS animation so JS can take over transforms
+  stripesBg.querySelectorAll('.stripe').forEach(s => {
+    s.style.animation = 'none';
+    s.style.transform = 'translateY(0)';
+  });
+  onScroll();
+}, 2000);
+window.addEventListener('scroll', () => {
+  if (introComplete) onScroll();
+}, { passive: true });
 
 // ═══ PLACES DATA ═══
 const places = [
