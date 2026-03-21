@@ -83,7 +83,7 @@ body {
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 1;
   pointer-events: none;
-  background: rgba(10, 10, 10, 0.75);
+  background: rgba(10, 10, 10, 0.15);
   opacity: 0;
   animation: overlayFadeIn 1s ease 1.8s forwards;
 }
@@ -173,7 +173,7 @@ nav .links a:hover { opacity: 0.5; }
 }
 @keyframes overlayFadeIn {
   0%   { opacity: 0; }
-  100% { opacity: 0.75; }
+  100% { opacity: 0.15; }
 }
 @keyframes fadeIn {
   0%   { opacity: 0; }
@@ -785,9 +785,9 @@ function onScroll() {
     });
     const heroEnd = vh * 0.8;
     if (scrollY < heroEnd) {
-      overlay.style.opacity = 0.5 + (scrollY / heroEnd) * 0.42;
+      overlay.style.opacity = 0.1 + (scrollY / heroEnd) * 0.2;
     } else {
-      overlay.style.opacity = 0.92;
+      overlay.style.opacity = 0.3;
     }
     ticking = false;
   });
@@ -809,64 +809,65 @@ window.addEventListener('scroll', () => {
 
 // ═══ PLACES DATA ═══
 const places = [
-  { name:"Caff\u00e8 Pico", area:"De Pijp", hearts:4, note:"", lat:52.3552,lng:4.8900, web:"https://www.caffepico.nl", tags:["restaurant"] },
-  { name:"Peps", area:"Oud-West", hearts:5, note:"Happy hour 16:00\u201318:00, letterlijk amaze", lat:52.3675,lng:4.8716, web:"https://www.peps-amsterdam.nl", tags:["tapas","happy hour"] },
-  { name:"Arie", area:"De Pijp", hearts:5, note:"", lat:52.3567,lng:4.8905, web:"https://www.arie-amsterdam.nl", tags:["restaurant","bar"] },
-  { name:"Caf\u00e9 Ent\u00e9", area:"Jordaan", hearts:5, note:"Suuuuper lekkere oesters en steak tartare!", lat:52.3804,lng:4.8869, web:"https://www.cafeente.nl", tags:["oesters","bistro"] },
-  { name:"Rayleigh & Ramsay", area:"De Pijp", hearts:0, note:"Wijn tap \u2014 self-serve wine experience", lat:52.3543,lng:4.9020, web:"https://www.rayleighramsay.nl", tags:["wijn"] },
-  { name:"Glouglou", area:"De Pijp", hearts:0, note:"Aanrader van Rickie", lat:52.3525,lng:4.8950, web:"", tags:["wijn","natural wine"] },
-  { name:"Libertine", area:"Jordaan", hearts:0, note:"", lat:52.3802,lng:4.8876, web:"", tags:["caf\u00e9","brunch"] },
-  { name:"Zum Barbarossa", area:"Centrum", hearts:4, note:"Speakeasy cocktail bar", lat:52.3686,lng:4.8906, web:"https://www.zumbarbarossa.com", tags:["cocktails","speakeasy"] },
-  { name:"Caf\u00e9 Sonneveld", area:"Jordaan", hearts:4, note:"Spareribs & appeltaart", lat:52.3763,lng:4.8823, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
-  { name:"Ceppi's", area:"Centrum", hearts:0, note:"Italiaans, goede pizza", lat:52.3628,lng:4.8851, web:"", tags:["italiaans"] },
-  { name:"Gertrude", area:"Oud-West", hearts:0, note:"Restaurant & Bar", lat:52.3657,lng:4.8761, web:"https://www.gertrudeamsterdam.nl", tags:["restaurant","wijn"] },
-  { name:"Caf\u00e9 Amsterdam (Cradam)", area:"West", hearts:4, note:"Aanrader van Rick", lat:52.3841,lng:4.8683, web:"", tags:["restaurant"] },
-  { name:"Cafe Tabac", area:"Jordaan", hearts:4, note:"Leuk voor borrelhap mandje met snacks!", lat:52.3802,lng:4.8885, web:"", tags:["borrel","indonesisch"] },
-  { name:"Bar Gui", area:"Centrum", hearts:0, note:"Restaurant, lekker eten", lat:52.3624,lng:4.8922, web:"", tags:["restaurant","frans"] },
-  { name:"A-Fusion", area:"Zeedijk", hearts:4, note:"Snel geholpen \u2014 Aziatisch fusion", lat:52.3732,lng:4.9001, web:"", tags:["aziatisch","sushi"] },
-  { name:"Pesca", area:"Jordaan", hearts:0, note:"Vis \u20ac\u20ac\u20ac \u2014 theatre of fish", lat:52.3728,lng:4.8788, web:"https://www.pesca-amsterdam.nl", tags:["vis","\u20ac\u20ac\u20ac"] },
-  { name:"Nando", area:"West", hearts:0, note:"Italiaans", lat:52.3846,lng:4.8618, web:"", tags:["italiaans"] },
-  { name:"Ela", area:"Jordaan", hearts:4, note:"Oesters! Op woensdag oyster night", lat:52.3695,lng:4.8809, web:"", tags:["oesters","bar"] },
-  { name:"Pata Negra", area:"Utrechtsestraat", hearts:4, note:"Tapas", lat:52.3614,lng:4.8991, web:"", tags:["tapas","spaans"] },
-  { name:"De Graafschap", area:"Amsterdam", hearts:0, note:"Terras", lat:52.3700,lng:4.8900, web:"", tags:["terras"] },
-  { name:"Troef", area:"Oost", hearts:0, note:"Eten \u2014 Frans bistro", lat:52.3492,lng:4.9137, web:"", tags:["restaurant","frans"] },
-  { name:"The Seafood Bar", area:"Oud-Zuid", hearts:4, note:"Happy hour 15:00\u201317:00 \u00b7 Van Baerle locatie", lat:52.3600,lng:4.8775, web:"https://www.theseafoodbar.nl", tags:["vis","happy hour"] },
-  { name:"Bitterballen Amsterdam", area:"Jordaan", hearts:0, note:"Bitterballen tasting!", lat:52.3731,lng:4.8788, web:"", tags:["snacks","hollands"] },
-  { name:"Casa di David", area:"Centrum", hearts:0, note:"Italiaans", lat:52.3683,lng:4.8877, web:"", tags:["italiaans"] },
-  { name:"Badcuyp", area:"De Pijp", hearts:4, note:"", lat:52.3566,lng:4.8971, web:"", tags:["restaurant"] },
-  { name:"L'Entrec\u00f4te et les Dames", area:"Oud-Zuid", hearts:4, note:"Biefstuk \u2014 vraag om extra refill!", lat:52.3557,lng:4.8805, web:"", tags:["steak","frans"] },
-  { name:"Bouwman", area:"Utrechtsestraat", hearts:3, note:"Vlakbij, leuk voor drankjes", lat:52.3623,lng:4.8988, web:"", tags:["borrel","bruin caf\u00e9"] },
-  { name:"Caf\u00e9 Marcella", area:"Amstelveld", hearts:4, note:"Aan de gracht \u2014 mooi terras", lat:52.3622,lng:4.8983, web:"", tags:["terras","caf\u00e9"] },
-  { name:"Parlotte", area:"Jordaan", hearts:2, note:"Frans, Jordaan", lat:52.3783,lng:4.8818, web:"", tags:["frans","wijn"] },
-  { name:"De Willem", area:"Haarlemmerplein", hearts:3, note:"Favo van Rick", lat:52.3849,lng:4.8829, web:"", tags:["restaurant"] },
-  { name:"De Wilde Zwijnen", area:"Oost", hearts:0, note:"Verrassingsmenu met seizoensproducten", lat:52.3636,lng:4.9404, web:"", tags:["restaurant","verrassing"] },
-  { name:"Cantine de Caron", area:"West", hearts:0, note:"Frans, heel leuk \u2014 oude warehouse", lat:52.3863,lng:4.8728, web:"", tags:["frans","restaurant"] },
-  { name:"Binnenvisser", area:"Oud-West", hearts:0, note:"Nog nooit geweest maar boven aan m'n lijst \u00d7 Rick", lat:52.3715,lng:4.8704, web:"", tags:["wijn","natural wine"] },
-  { name:"Bar Mimi", area:"Oud-West", hearts:0, note:"\ud83d\udc31", lat:52.3695,lng:4.8739, web:"", tags:["bar","bistro"] },
-  { name:"Restaurant Metro", area:"Noord", hearts:0, note:"Havermelkelite", lat:52.3911,lng:4.9040, web:"", tags:["restaurant"] },
-  { name:"Bar Bellini", area:"De Pijp", hearts:0, note:"Drankje doen \u2014 dan door naar Linguini", lat:52.3563,lng:4.8909, web:"", tags:["bar","italiaans"] },
-  { name:"Have a Roll", area:"De Pijp", hearts:0, note:"Ontbijt \u2014 vegan cinnamon rolls", lat:52.3563,lng:4.8997, web:"", tags:["ontbijt","vegan"] },
-  { name:"Kaas van Kef", area:"Noord", hearts:0, note:"Meeeega lekker! Zondagmiddag \u2192 kaasproeverij nemen", lat:52.3870,lng:4.9077, web:"", tags:["kaas","proeverij"] },
-  { name:"Caf\u00e9 Bern", area:"Nieuwmarkt", hearts:0, note:"Kaasfondue!!!! \ud83e\uddc0", lat:52.3725,lng:4.9010, web:"", tags:["fondue","zwitsers"] },
-  { name:"Bar Jules", area:"Oud-Zuid", hearts:3, note:"Lunch Oud-Zuid", lat:52.3530,lng:4.8634, web:"", tags:["lunch","bar"] },
-  { name:"Cecconi's", area:"Centrum", hearts:0, note:"Mo'tje \u2014 jazz, lobster spaghetti", lat:52.3721,lng:4.8892, web:"", tags:["italiaans","chic"] },
-  { name:"LoLo", area:"Centrum", hearts:0, note:"Italiaans bij Oude Kerk", lat:52.3741,lng:4.8971, web:"", tags:["italiaans"] },
-  { name:"Linguini", area:"De Pijp", hearts:0, note:"Eerst drankje bij Bellini, dan hierheen", lat:52.3575,lng:4.8897, web:"", tags:["italiaans","pasta"] },
-  { name:"Toscanini", area:"Jordaan", hearts:0, note:"Echt lekker italiaans, wel duur. Favo van Rihanna!", lat:52.3801,lng:4.8854, web:"", tags:["italiaans","\u20ac\u20ac\u20ac"] },
-  { name:"Amstel Hotel", area:"Centrum", hearts:4, note:"Alleen lunch! Vragen of je buiten kan zitten", lat:52.3603,lng:4.9050, web:"", tags:["lunch","chic"] },
-  { name:"Borello Aperitivo", area:"Zeedijk", hearts:0, note:"AMAAAAAZIE \u2014 cocktails & pizza", lat:52.3754,lng:4.9012, web:"", tags:["cocktails","bar"] },
+  { name:"Caff\u00e8 Pico", area:"De Pijp", hearts:0, note:"Goed eten, chill sfeertje", lat:52.3552,lng:4.8900, web:"https://www.caffepico.nl", tags:["restaurant"] },
+  { name:"Peps", area:"Oud-West", hearts:0, note:"Happy hour 16\u201318u, altijd gezellig", lat:52.3675,lng:4.8716, web:"https://www.peps-amsterdam.nl", tags:["tapas","happy hour"] },
+  { name:"Arie", area:"De Pijp", hearts:0, note:"Lekker eten en drinken", lat:52.3567,lng:4.8905, web:"https://www.arie-amsterdam.nl", tags:["restaurant","bar"] },
+  { name:"Caf\u00e9 Ent\u00e9", area:"Jordaan", hearts:0, note:"Oesters en steak tartare, gewoon goed", lat:52.3804,lng:4.8869, web:"https://www.cafeente.nl", tags:["oesters","bistro"] },
+  { name:"Rayleigh & Ramsay", area:"De Pijp", hearts:0, note:"Zelf wijn tappen, leuk concept", lat:52.3543,lng:4.9020, web:"https://www.rayleighramsay.nl", tags:["wijn"] },
+  { name:"Glouglou", area:"De Pijp", hearts:0, note:"Natural wine, tip van Rickie", lat:52.3525,lng:4.8950, web:"", tags:["wijn","natural wine"] },
+  { name:"Libertine", area:"Jordaan", hearts:0, note:"Fijn voor brunch", lat:52.3802,lng:4.8876, web:"", tags:["caf\u00e9","brunch"] },
+  { name:"Zum Barbarossa", area:"Centrum", hearts:0, note:"Speakeasy, goede cocktails", lat:52.3686,lng:4.8906, web:"https://www.zumbarbarossa.com", tags:["cocktails","speakeasy"] },
+  { name:"Caf\u00e9 Sonneveld", area:"Jordaan", hearts:0, note:"Spareribs en appeltaart", lat:52.3763,lng:4.8823, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
+  { name:"Ceppi's", area:"Centrum", hearts:0, note:"Goede pizza, niks mis mee", lat:52.3628,lng:4.8851, web:"", tags:["italiaans"] },
+  { name:"Gertrude", area:"Oud-West", hearts:0, note:"Lekker eten, fijne wijnkaart", lat:52.3657,lng:4.8761, web:"https://www.gertrudeamsterdam.nl", tags:["restaurant","wijn"] },
+  { name:"Caf\u00e9 Amsterdam (Cradam)", area:"West", hearts:0, note:"Tip van Rick", lat:52.3841,lng:4.8683, web:"", tags:["restaurant"] },
+  { name:"Cafe Tabac", area:"Jordaan", hearts:0, note:"Borrelhap mandje, gezellig", lat:52.3802,lng:4.8885, web:"", tags:["borrel","indonesisch"] },
+  { name:"Bar Gui", area:"Centrum", hearts:0, note:"Gewoon lekker eten", lat:52.3624,lng:4.8922, web:"", tags:["restaurant","frans"] },
+  { name:"A-Fusion", area:"Zeedijk", hearts:0, note:"Aziatisch, snel en lekker", lat:52.3732,lng:4.9001, web:"", tags:["aziatisch","sushi"] },
+  { name:"Pesca", area:"Jordaan", hearts:0, note:"Vis, niet goedkoop maar wel goed", lat:52.3728,lng:4.8788, web:"https://www.pesca-amsterdam.nl", tags:["vis","\u20ac\u20ac\u20ac"] },
+  { name:"Nando", area:"West", hearts:0, note:"Chill italiaans", lat:52.3846,lng:4.8618, web:"", tags:["italiaans"] },
+  { name:"Ela", area:"Jordaan", hearts:0, note:"Woensdag is oyster night", lat:52.3695,lng:4.8809, web:"", tags:["oesters","bar"] },
+  { name:"Pata Negra", area:"Utrechtsestraat", hearts:0, note:"Tapas, altijd druk maar goed", lat:52.3614,lng:4.8991, web:"", tags:["tapas","spaans"] },
+  { name:"De Graafschap", area:"Amsterdam", hearts:0, note:"Lekker terras", lat:52.3700,lng:4.8900, web:"", tags:["terras"] },
+  { name:"Troef", area:"Oost", hearts:0, note:"Frans bistro, rustig", lat:52.3492,lng:4.9137, web:"", tags:["restaurant","frans"] },
+  { name:"The Seafood Bar", area:"Oud-Zuid", hearts:0, note:"Happy hour 15\u201317u, Van Baerle", lat:52.3600,lng:4.8775, web:"https://www.theseafoodbar.nl", tags:["vis","happy hour"] },
+  { name:"Bitterballen Amsterdam", area:"Jordaan", hearts:0, note:"Bitterballen proeven, leuk", lat:52.3731,lng:4.8788, web:"", tags:["snacks","hollands"] },
+  { name:"Casa di David", area:"Centrum", hearts:0, note:"Simpel goed italiaans", lat:52.3683,lng:4.8877, web:"", tags:["italiaans"] },
+  { name:"Badcuyp", area:"De Pijp", hearts:0, note:"Fijn buurtrestaurant", lat:52.3566,lng:4.8971, web:"", tags:["restaurant"] },
+  { name:"L'Entrec\u00f4te et les Dames", area:"Oud-Zuid", hearts:0, note:"Biefstuk, vraag om extra refill", lat:52.3557,lng:4.8805, web:"", tags:["steak","frans"] },
+  { name:"Bouwman", area:"Utrechtsestraat", hearts:0, note:"Makkelijk drankje doen", lat:52.3623,lng:4.8988, web:"", tags:["borrel","bruin caf\u00e9"] },
+  { name:"Caf\u00e9 Marcella", area:"Amstelveld", hearts:0, note:"Mooi terras aan de gracht", lat:52.3622,lng:4.8983, web:"", tags:["terras","caf\u00e9"] },
+  { name:"Parlotte", area:"Jordaan", hearts:0, note:"Frans, lekker wijntje erbij", lat:52.3783,lng:4.8818, web:"", tags:["frans","wijn"] },
+  { name:"De Willem", area:"Haarlemmerplein", hearts:0, note:"Favo van Rick", lat:52.3849,lng:4.8829, web:"", tags:["restaurant"] },
+  { name:"De Wilde Zwijnen", area:"Oost", hearts:0, note:"Verrassingsmenu, seizoensgebonden", lat:52.3636,lng:4.9404, web:"", tags:["restaurant","verrassing"] },
+  { name:"Cantine de Caron", area:"West", hearts:0, note:"Frans in een oud pakhuis, tof", lat:52.3863,lng:4.8728, web:"", tags:["frans","restaurant"] },
+  { name:"Binnenvisser", area:"Oud-West", hearts:0, note:"Staat hoog op de lijst, tip van Rick", lat:52.3715,lng:4.8704, web:"", tags:["wijn","natural wine"] },
+  { name:"Bar Mimi", area:"Oud-West", hearts:0, note:"Klein en gezellig", lat:52.3695,lng:4.8739, web:"", tags:["bar","bistro"] },
+  { name:"Restaurant Metro", area:"Noord", hearts:0, note:"Relaxed eten in Noord", lat:52.3911,lng:4.9040, web:"", tags:["restaurant"] },
+  { name:"Bar Bellini", area:"De Pijp", hearts:0, note:"Drankje doen, dan door naar Linguini", lat:52.3563,lng:4.8909, web:"", tags:["bar","italiaans"] },
+  { name:"Have a Roll", area:"De Pijp", hearts:0, note:"Vegan cinnamon rolls, lekker ontbijt", lat:52.3563,lng:4.8997, web:"", tags:["ontbijt","vegan"] },
+  { name:"Kaas van Kef", area:"Noord", hearts:0, note:"Op zondag kaasproeverij doen", lat:52.3870,lng:4.9077, web:"", tags:["kaas","proeverij"] },
+  { name:"Caf\u00e9 Bern", area:"Nieuwmarkt", hearts:0, note:"Kaasfondue, gezellig", lat:52.3725,lng:4.9010, web:"", tags:["fondue","zwitsers"] },
+  { name:"Bar Jules", area:"Oud-Zuid", hearts:0, note:"Fijn voor lunch", lat:52.3530,lng:4.8634, web:"", tags:["lunch","bar"] },
+  { name:"Cecconi's", area:"Centrum", hearts:0, note:"Jazz en lobster spaghetti", lat:52.3721,lng:4.8892, web:"", tags:["italiaans","chic"] },
+  { name:"LoLo", area:"Centrum", hearts:0, note:"Italiaans bij de Oude Kerk", lat:52.3741,lng:4.8971, web:"", tags:["italiaans"] },
+  { name:"Linguini", area:"De Pijp", hearts:0, note:"Eerst Bellini, dan hierheen", lat:52.3575,lng:4.8897, web:"", tags:["italiaans","pasta"] },
+  { name:"Toscanini", area:"Jordaan", hearts:0, note:"Goed italiaans, wel prijzig", lat:52.3801,lng:4.8854, web:"", tags:["italiaans","\u20ac\u20ac\u20ac"] },
+  { name:"Amstel Hotel", area:"Centrum", hearts:0, note:"Alleen voor lunch, vraag om buiten", lat:52.3603,lng:4.9050, web:"", tags:["lunch","chic"] },
+  { name:"Borello Aperitivo", area:"Zeedijk", hearts:0, note:"Cocktails en pizza, top sfeertje", lat:52.3754,lng:4.9012, web:"", tags:["cocktails","bar"] },
   { name:"Brasserie de Luwte", area:"Jordaan", hearts:0, note:"Aan de Leliegracht", lat:52.3753,lng:4.8869, web:"", tags:["frans","restaurant"] },
-  { name:"Polly Goudvis", area:"Noord", hearts:4, note:"Brunch bij de pont", lat:52.3825,lng:4.9033, web:"", tags:["brunch","bar"] },
+  { name:"Polly Goudvis", area:"Noord", hearts:0, note:"Brunch bij de pont", lat:52.3825,lng:4.9033, web:"", tags:["brunch","bar"] },
   { name:"Tia Rosa", area:"Centrum", hearts:0, note:"Tapas aan de Reguliersgracht", lat:52.3643,lng:4.8963, web:"", tags:["tapas","spaans"] },
-  { name:"Roest", area:"Oost", hearts:4, note:"Leuk binnen \u2014 industrieel", lat:52.3720,lng:4.9266, web:"", tags:["bar","industrieel"] },
-  { name:"No Nonsense", area:"Centrum", hearts:4, note:"Gezellig bruin caf\u00e9", lat:52.3759,lng:4.9027, web:"", tags:["bar","caf\u00e9"] },
-  { name:"Bar Grill Marathonweg", area:"Oud-Zuid", hearts:0, note:"Marathonweg", lat:52.3460,lng:4.8650, web:"", tags:["bar","restaurant"] },
-  { name:"Caf\u00e9 Kiebert", area:"Oud-Zuid", hearts:0, note:"Marathonweg", lat:52.3458,lng:4.8645, web:"", tags:["caf\u00e9","bar"] },
-  { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"", lat:52.3465,lng:4.8655, web:"", tags:["bar"] },
-  { name:"'t Smalle", area:"Jordaan", hearts:0, note:"Altijd goed voor een biertje \u2014 bruin caf\u00e9 of makkelijke hap broodje bal", lat:52.3758,lng:4.8838, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
-  { name:"Papeneiland", area:"Jordaan", hearts:0, note:"Mijn favoriete terrasje als de zon schijnt", lat:52.3803,lng:4.8842, web:"", tags:["terras","caf\u00e9"] },
-  { name:"Bistro Feline", area:"Jordaan", hearts:0, note:"Heerlijk eten, Michelin gids \u2014 neem de kreeftenorzo", lat:52.3769,lng:4.8832, web:"", tags:["restaurant","frans"] },
-  { name:"La Perla", area:"Jordaan", hearts:0, note:"Even gezellig aan de bar pizza eten, niks geks gewoon prima", lat:52.3737,lng:4.8810, web:"", tags:["italiaans","pizza"] },
+  { name:"Roest", area:"Oost", hearts:0, note:"Industrieel, altijd chill", lat:52.3720,lng:4.9266, web:"", tags:["bar","industrieel"] },
+  { name:"No Nonsense", area:"Centrum", hearts:0, note:"Gezellig bruin caf\u00e9", lat:52.3759,lng:4.9027, web:"", tags:["bar","caf\u00e9"] },
+  { name:"Bar Grill Marathonweg", area:"Oud-Zuid", hearts:0, note:"Goed voor een hapje op de Marathonweg", lat:52.3460,lng:4.8650, web:"", tags:["bar","restaurant"] },
+  { name:"Caf\u00e9 Kiebert", area:"Oud-Zuid", hearts:0, note:"Lekker op de Marathonweg", lat:52.3458,lng:4.8645, web:"", tags:["caf\u00e9","bar"] },
+  { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"Gezellig", lat:52.3465,lng:4.8655, web:"", tags:["bar"] },
+  { name:"'t Smalle", area:"Jordaan", hearts:0, note:"Biertje of broodje bal, altijd goed", lat:52.3758,lng:4.8838, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
+  { name:"Papeneiland", area:"Jordaan", hearts:0, note:"Terrasje als de zon schijnt", lat:52.3803,lng:4.8842, web:"", tags:["terras","caf\u00e9"] },
+  { name:"Bistro Feline", area:"Jordaan", hearts:0, note:"Michelin gids, neem de kreeftenorzo", lat:52.3769,lng:4.8832, web:"", tags:["restaurant","frans"] },
+  { name:"La Perla", area:"Jordaan", hearts:0, note:"Gewoon gezellig pizza aan de bar", lat:52.3737,lng:4.8810, web:"", tags:["italiaans","pizza"] },
+  { name:"De Pizzakamer", area:"De Pijp", hearts:0, note:"Houtoven pizza, terras, altijd goed", lat:52.3543,lng:4.8933, web:"", tags:["italiaans","pizza"] },
 ];
 
 // ═══ MAP ═══
