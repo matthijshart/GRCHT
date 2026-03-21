@@ -888,9 +888,10 @@ function slowScroll(target) {
   const start = window.scrollY;
   const end = target.getBoundingClientRect().top + start;
   const distance = end - start;
-  const duration = Math.min(1500 + Math.abs(distance) * 0.8, 6000);
+  const speed = 0.6; // pixels per ms
+  const duration = Math.abs(distance) / speed;
   let startTime = null;
-  function ease(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2) / 2; }
+  function ease(t) { return t; }
   function step(timestamp) {
     if (!startTime) startTime = timestamp;
     const progress = Math.min((timestamp - startTime) / duration, 1);
