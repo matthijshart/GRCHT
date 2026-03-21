@@ -335,6 +335,197 @@ nav .links a:hover { opacity: 0.5; }
 .p-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); letter-spacing: 0.04em; }
 .p-note { font-size: 0.78rem; color: var(--ink-mid); margin-top: 2px; }
 
+/* ═══ GEEN IDEE SPINNER ═══ */
+.spinner-section {
+  padding: 3rem 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.spinner-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  line-height: 0.9;
+  margin-bottom: 0.3rem;
+}
+.spinner-title span { color: var(--red); }
+.spinner-sub {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin-bottom: 2rem;
+}
+.spinner-persons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.spinner-persons label {
+  font-size: 0.85rem;
+  color: var(--ink-mid);
+  font-weight: 400;
+}
+.spinner-persons .person-btns {
+  display: flex; gap: 0.3rem;
+}
+.spinner-persons .person-btns button {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: transparent;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.spinner-persons .person-btns button.selected {
+  background: var(--ink);
+  color: var(--cream);
+}
+.spinner-persons .person-btns button:hover {
+  background: var(--green);
+  color: var(--white);
+  border-color: var(--green);
+}
+/* Slot reel */
+.slot-wrapper {
+  position: relative;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 2px solid var(--ink);
+  margin-bottom: 1.5rem;
+  background: var(--white);
+}
+.slot-wrapper::before, .slot-wrapper::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 20px;
+  z-index: 2;
+  pointer-events: none;
+}
+.slot-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--white), transparent);
+}
+.slot-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--white), transparent);
+}
+.slot-reel {
+  position: absolute;
+  left: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.1s linear;
+}
+.slot-item {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.slot-item .slot-area {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  color: var(--gray);
+  margin-left: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+/* Spin button */
+.spin-btn {
+  display: inline-block;
+  padding: 0.8rem 2.5rem;
+  border-radius: 6px;
+  border: none;
+  background: var(--red);
+  color: var(--white);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.spin-btn:hover {
+  background: var(--green);
+  transform: scale(1.05);
+}
+.spin-btn:active {
+  transform: scale(0.98);
+}
+.spin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+/* Result */
+.spin-result {
+  margin-top: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.spin-result.visible { opacity: 1; }
+.spin-result .result-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  color: var(--green);
+  letter-spacing: 0.04em;
+}
+.spin-result .result-note {
+  font-size: 0.85rem;
+  color: var(--ink-mid);
+  font-style: italic;
+  margin: 0.3rem 0;
+}
+.spin-result .result-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+.spin-result .result-actions a {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.spin-result .result-nav {
+  background: var(--green);
+  color: var(--white);
+}
+.spin-result .result-nav:hover { background: var(--pink); }
+.spin-result .result-retry {
+  background: transparent;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  cursor: pointer;
+}
+.spin-result .result-retry:hover {
+  background: var(--ink);
+  color: var(--cream);
+}
+.spinner-divider {
+  max-width: 1200px;
+  margin: 0 auto;
+  border: none;
+  border-top: 1px solid #e0dbd5;
+}
+
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 768px) {
   nav .links { display: none; }
@@ -356,6 +547,7 @@ nav .links a:hover { opacity: 0.5; }
 <nav>
   <a class="logo" href="#">WETEN WAAR.</a>
   <div class="links">
+    <a href="#geen-idee">Geen Idee?</a>
     <a href="#kaart">Kaart</a>
     <a href="#plekken">Plekken</a>
   </div>
@@ -386,6 +578,32 @@ nav .links a:hover { opacity: 0.5; }
   <div class="map-section" id="kaart">
     <div id="map"></div>
   </div>
+
+  <!-- GEEN IDEE SPINNER -->
+  <hr class="spinner-divider">
+  <div class="spinner-section" id="geen-idee">
+    <div class="spinner-title">GEEN IDEE<span>?</span></div>
+    <p class="spinner-sub">Wij kiezen voor je. Hoeveel zijn jullie?</p>
+    <div class="spinner-persons">
+      <div class="person-btns" id="personBtns">
+        <button data-n="1">1</button>
+        <button data-n="2" class="selected">2</button>
+        <button data-n="3">3</button>
+        <button data-n="4">4</button>
+        <button data-n="5">5+</button>
+      </div>
+    </div>
+    <div class="slot-wrapper">
+      <div class="slot-reel" id="slotReel"></div>
+    </div>
+    <button class="spin-btn" id="spinBtn">DRAAI</button>
+    <div class="spin-result" id="spinResult">
+      <div class="result-name" id="resultName"></div>
+      <div class="result-note" id="resultNote"></div>
+      <div class="result-actions" id="resultActions"></div>
+    </div>
+  </div>
+  <hr class="spinner-divider">
 
   <!-- FILTERS + CARDS -->
   <div class="filters-section" id="plekken">
@@ -630,6 +848,99 @@ places.forEach((p, i) => {
   `;
   cardsEl.appendChild(card);
 });
+
+// ═══ GEEN IDEE SPINNER ═══
+let selectedPersons = 2;
+const personBtns = document.querySelectorAll('#personBtns button');
+personBtns.forEach(btn => {
+  btn.onclick = () => {
+    personBtns.forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedPersons = parseInt(btn.dataset.n);
+  };
+});
+
+const slotReel = document.getElementById('slotReel');
+const spinBtn = document.getElementById('spinBtn');
+const spinResult = document.getElementById('spinResult');
+const resultName = document.getElementById('resultName');
+const resultNote = document.getElementById('resultNote');
+const resultActions = document.getElementById('resultActions');
+
+// Build reel with shuffled names
+function buildReel() {
+  slotReel.innerHTML = '';
+  const shuffled = [...places].sort(() => Math.random() - 0.5);
+  // Repeat list 3x for smooth scrolling effect
+  const reelPlaces = [...shuffled, ...shuffled, ...shuffled];
+  reelPlaces.forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'slot-item';
+    item.innerHTML = `${p.name} <span class="slot-area">${p.area}</span>`;
+    slotReel.appendChild(item);
+  });
+  slotReel.style.transform = 'translateY(0)';
+  return shuffled;
+}
+
+let isSpinning = false;
+buildReel();
+
+spinBtn.onclick = () => {
+  if (isSpinning) return;
+  isSpinning = true;
+  spinBtn.disabled = true;
+  spinResult.classList.remove('visible');
+
+  const shuffled = buildReel();
+  const winnerIndex = Math.floor(Math.random() * places.length);
+  const winner = shuffled[winnerIndex];
+
+  // Target position: land on winner in the second set (for smooth scroll)
+  const itemHeight = 80;
+  const targetIndex = places.length + winnerIndex;
+  const targetY = -(targetIndex * itemHeight);
+
+  // Animate: fast start, ease out
+  let startTime = null;
+  const duration = 3000 + Math.random() * 1000;
+  const startY = 0;
+
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animate(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeOutCubic(progress);
+    const currentY = startY + (targetY - startY) * eased;
+    slotReel.style.transform = `translateY(${currentY}px)`;
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      // Done!
+      isSpinning = false;
+      spinBtn.disabled = false;
+      resultName.textContent = winner.name;
+      resultNote.textContent = winner.note || winner.area;
+      resultActions.innerHTML = `
+        <a class="result-nav" href="https://www.google.com/maps/dir/?api=1&destination=${winner.lat},${winner.lng}" target="_blank" rel="noopener">\u2794 Breng me hier</a>
+        <button class="result-retry" onclick="document.getElementById('spinBtn').click()">Nee, opnieuw</button>
+      `;
+      spinResult.classList.add('visible');
+
+      // Zoom map
+      map.setView([winner.lat, winner.lng], 16, { animate: true });
+      const idx = places.indexOf(winner);
+      if (idx >= 0) markers[idx].openPopup();
+    }
+  }
+
+  requestAnimationFrame(animate);
+};
 </script>
 </body>
 </html>
