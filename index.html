@@ -884,18 +884,24 @@ nav .links a:hover { opacity: 0.5; }
 
 <script>
 // ═══ SLOW SCROLL ═══
+let scrollCancelled = false;
 function slowScroll(target) {
+  scrollCancelled = false;
+  const cancel = () => { scrollCancelled = true; };
+  window.addEventListener('wheel', cancel, { once: true, passive: true });
+  window.addEventListener('touchstart', cancel, { once: true, passive: true });
+  window.addEventListener('keydown', cancel, { once: true, passive: true });
   const start = window.scrollY;
   const end = target.getBoundingClientRect().top + start;
   const distance = end - start;
   const speed = 2.5; // pixels per ms
   const duration = Math.abs(distance) / speed;
   let startTime = null;
-  function ease(t) { return t; }
   function step(timestamp) {
+    if (scrollCancelled) return;
     if (!startTime) startTime = timestamp;
     const progress = Math.min((timestamp - startTime) / duration, 1);
-    window.scrollTo(0, start + distance * ease(progress));
+    window.scrollTo(0, start + distance * progress);
     if (progress < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
