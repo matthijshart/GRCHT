@@ -194,13 +194,23 @@ nav .links a:hover { opacity: 0.5; }
 .hero .scroll-hint {
   position: absolute;
   bottom: 2.5rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
   text-decoration: none;
   cursor: pointer;
+  color: var(--gray);
   animation: pulse 2s infinite;
+}
+.hero .scroll-hint svg {
+  opacity: 0.7;
+}
+.hero .scroll-hint span {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  font-style: italic;
+  opacity: 0.6;
 }
 @keyframes overlayFadeIn {
   0%   { opacity: 0; }
@@ -794,7 +804,10 @@ nav .links a:hover { opacity: 0.5; }
     <span>in samenwerking met</span>
     <img src="https://www.brouwerijhetij.nl/media/images/logo.webp" alt="Brouwerij 't IJ" onerror="this.parentElement.style.display='none'">
   </div>
-  <a class="scroll-hint" href="#plekken" onclick="event.preventDefault();slowScroll(document.getElementById('plekken'))">&darr; Scroll</a>
+  <a class="scroll-hint" href="#plekken" onclick="event.preventDefault();slowScroll(document.getElementById('plekken'))">
+    <svg width="20" height="28" viewBox="0 0 20 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 1 C8 6, 4 10, 6 16 C8 22, 10 24, 10 27"/><path d="M5 22 L10 27 L14 21"/></svg>
+    <span>scroll &mdash; en lees onderaan wat je niet wist</span>
+  </a>
 </section>
 
 <!-- ═══ STRIPE BAND WITH SPOTIFY ═══ -->
