@@ -130,6 +130,15 @@ nav .links a:hover { opacity: 0.5; }
   max-width: 400px;
   line-height: 1.6;
 }
+.spotify-player {
+  margin-top: 2.5rem;
+  border-radius: 12px;
+  overflow: hidden;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+.spotify-player:hover { opacity: 1; }
+.spotify-player iframe { display: block; border-radius: 12px; }
 .hero .scroll-hint {
   position: absolute;
   bottom: 2.5rem;
@@ -331,6 +340,9 @@ nav .links a:hover { opacity: 0.5; }
 <section class="hero">
   <h1>WETEN<span>WAAR.</span></h1>
   <p class="sub">Geen algoritme. Geen influencers. Gewoon plekken waar wij &eacute;cht komen.</p>
+  <div class="spotify-player">
+    <iframe src="https://open.spotify.com/embed/track/4Tzw9IdZbVyzmpWrvsGaNX?utm_source=generator&theme=0" width="300" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media" loading="lazy"></iframe>
+  </div>
   <div class="scroll-hint">&darr; Scroll</div>
 </section>
 
