@@ -888,7 +888,7 @@ function slowScroll(target) {
   const start = window.scrollY;
   const end = target.getBoundingClientRect().top + start;
   const distance = end - start;
-  const speed = 0.6; // pixels per ms
+  const speed = 2.5; // pixels per ms
   const duration = Math.abs(distance) / speed;
   let startTime = null;
   function ease(t) { return t; }
