@@ -131,15 +131,6 @@ nav .links a:hover { opacity: 0.5; }
   max-width: 400px;
   line-height: 1.6;
 }
-.spotify-player {
-  margin-top: 2.5rem;
-  border-radius: 12px;
-  overflow: hidden;
-  opacity: 0.85;
-  transition: opacity 0.3s;
-}
-.spotify-player:hover { opacity: 1; }
-.spotify-player iframe { display: block; border-radius: 12px; }
 .hero .scroll-hint {
   position: absolute;
   bottom: 2.5rem;
@@ -156,7 +147,7 @@ nav .links a:hover { opacity: 0.5; }
 
 /* ═══ STRIPE BAND MARQUEE ═══ */
 .stripe-band {
-  height: 100px;
+  height: 90px;
   overflow: hidden;
   position: relative;
 }
@@ -187,6 +178,22 @@ nav .links a:hover { opacity: 0.5; }
 .stripe-band .band-text span {
   display: inline-block;
   animation: marquee 12s linear infinite;
+}
+.band-spotify {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.band-spotify iframe {
+  display: block;
+  border-radius: 12px;
+  height: 80px;
+  width: 300px;
 }
 @keyframes marquee {
   0%   { transform: translateX(0); }
@@ -532,7 +539,10 @@ nav .links a:hover { opacity: 0.5; }
   nav .links { display: none; }
   .hero h1 { font-size: clamp(4rem, 18vw, 8rem); }
   .hero .sub { font-size: 1rem; padding: 0 1rem; }
-  .stripe-band { height: 70px; }
+  .stripe-band { height: 80px; }
+  .band-spotify { right: 0.5rem; }
+  .band-spotify iframe { width: 200px; height: 80px; }
+  .stripe-band .band-text { font-size: 1.2rem; }
 }
 @media (max-width: 600px) {
   #map { height: 280px; border-radius: 8px; }
@@ -576,8 +586,9 @@ nav .links a:hover { opacity: 0.5; }
   /* Hero mobile */
   .hero { padding: 5rem 1.5rem 3rem; min-height: 100svh; }
   .hero-label { font-size: 0.65rem; letter-spacing: 0.2em; }
-  .spotify-player iframe { width: 260px; }
   .scroll-hint { bottom: 2rem; }
+  .band-spotify { right: 50%; transform: translate(50%, -50%); }
+  .band-spotify iframe { width: 250px; }
 }
 </style>
 </head>
@@ -601,17 +612,17 @@ nav .links a:hover { opacity: 0.5; }
 <section class="hero">
   <h1>WETEN<span>WAAR.</span></h1>
   <p class="sub">Geen algoritme. Geen influencers. Gewoon plekken waar wij &eacute;cht komen.</p>
-  <div class="spotify-player">
-    <iframe src="https://open.spotify.com/embed/track/4Tzw9IdZbVyzmpWrvsGaNX?utm_source=generator&theme=0" width="300" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media" loading="lazy"></iframe>
-  </div>
   <div class="scroll-hint">&darr; Scroll</div>
 </section>
 
-<!-- ═══ STRIPE BAND MARQUEE ═══ -->
+<!-- ═══ STRIPE BAND WITH SPOTIFY ═══ -->
 <div class="stripe-band">
   <div class="band-inner" id="bandInner1"></div>
   <div class="band-text">
     <span>ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; </span>
+  </div>
+  <div class="band-spotify">
+    <iframe src="https://open.spotify.com/embed/track/4Tzw9IdZbVyzmpWrvsGaNX?utm_source=generator&theme=0" width="300" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media" loading="lazy"></iframe>
   </div>
 </div>
 
