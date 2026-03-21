@@ -669,6 +669,42 @@ nav .links a:hover { opacity: 0.5; }
   color: #f5c842;
 }
 
+/* ═══ ANECDOTE FOOTER ═══ */
+.anecdote-wrap {
+  background: repeating-linear-gradient(
+    90deg,
+    #e63928 0px, #e63928 45px,
+    #fffdf5 45px, #fffdf5 90px
+  );
+  background-size: 90px 100%;
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  position: relative;
+}
+.anecdote-inner {
+  max-width: 500px;
+  margin: 0 auto;
+  background: rgba(255,253,245,0.88);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  padding: 2rem 2rem;
+}
+.anecdote-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e63928;
+  margin-bottom: 0.8rem;
+  opacity: 0.7;
+}
+.anecdote-text {
+  font-size: 0.95rem;
+  color: #1a1817;
+  line-height: 1.6;
+  font-style: italic;
+}
+
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 768px) {
   nav .links { display: none; }
@@ -821,7 +857,34 @@ nav .links a:hover { opacity: 0.5; }
     <div class="cards" id="cards"></div>
   </div>
 
+  <!-- ANECDOTE FOOTER -->
+  <div class="anecdote-wrap">
+    <div class="anecdote-inner">
+      <div class="anecdote-label">Wist je dat</div>
+      <div class="anecdote-text" id="anecdoteText"></div>
+    </div>
+  </div>
+
 </div>
+
+<script>
+// ═══ ANECDOTES ═══
+const anecdotes = [
+  "De Jordaan dankt zijn naam niet aan de rivier de Jordaan, maar aan een 17e-eeuwse kaashandelaar genaamd Hendrik de Jordaan die er als eerste een winkel opende.",
+  "Amsterdam heeft meer bruggen dan Veneti\u00eb, maar de gemeente telt er officieel maar 1.281 omdat ze br\u00fcggetjes onder de drie meter niet meetellen.",
+  "De scheefste grachtenpanden staan niet scheef door verzakking, maar werden expres zo gebouwd zodat bewoners hun meubels makkelijker naar binnen konden takelen.",
+  "Het woord \u2018gezellig\u2019 werd in 1978 officieel onvertaalbaar verklaard door de Koninklijke Nederlandse Akademie van Wetenschappen.",
+  "De eerste espressobar van Amsterdam opende in 1957 op de Zeedijk en serveerde per ongeluk filterkoffie met opgeschuimde melk \u2014 wat ze daar \u2018een verkeerd kopje\u2019 noemden.",
+  "Fietsers in Amsterdam leggen gezamenlijk per dag genoeg kilometers af om 4,7 keer rond de aarde te fietsen. De meeste daarvan zijn op de Ceintuurbaan.",
+  "De Amstel is technisch gezien geen rivier maar een \u2018getijdengeul\u2019. Amsterdammers weigeren dit te accepteren.",
+  "In de 18e eeuw was het bij wet verboden om na middernacht op de grachten te fluiten. Deze wet is nooit officieel ingetrokken.",
+  "De gemiddelde Amsterdammer bestelt 3,2 keer per week eten, maar beweert in gesprekken altijd zelf te koken.",
+  "Het Vondelpark heette oorspronkelijk \u2018Nieuw Park\u2019 maar werd hernoemd omdat niemand dat kon onthouden.",
+  "De kleur van de Amsterdamse straatklinkers is geen toeval \u2014 ze worden speciaal gebakken op 1.180 graden voor die specifieke tint donkerrood.",
+  "Er zijn meer koffietentjes per vierkante kilometer in De Pijp dan in heel Milaan. Dit is nooit feitelijk onderzocht.",
+];
+document.getElementById('anecdoteText').textContent = anecdotes[Math.floor(Math.random() * anecdotes.length)];
+</script>
 
 <script>
 // ═══ GENERATE STRIPES ═══
