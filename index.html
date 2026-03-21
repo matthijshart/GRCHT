@@ -794,7 +794,7 @@ nav .links a:hover { opacity: 0.5; }
     <span>in samenwerking met</span>
     <img src="https://www.brouwerijhetij.nl/media/images/logo.webp" alt="Brouwerij 't IJ" onerror="this.parentElement.style.display='none'">
   </div>
-  <a class="scroll-hint" href="#plekken" onclick="event.preventDefault();document.getElementById('plekken').scrollIntoView({behavior:'smooth',block:'start'})">&darr; Scroll</a>
+  <a class="scroll-hint" href="#plekken" onclick="event.preventDefault();slowScroll(document.getElementById('plekken'))">&darr; Scroll</a>
 </section>
 
 <!-- ═══ STRIPE BAND WITH SPOTIFY ═══ -->
@@ -870,6 +870,23 @@ nav .links a:hover { opacity: 0.5; }
 </div>
 
 <script>
+// ═══ SLOW SCROLL ═══
+function slowScroll(target) {
+  const start = window.scrollY;
+  const end = target.getBoundingClientRect().top + start;
+  const distance = end - start;
+  const duration = 2500;
+  let startTime = null;
+  function ease(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3) / 2; }
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    window.scrollTo(0, start + distance * ease(progress));
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
 // ═══ ANECDOTES ═══
 const anecdotes = [
   "De Jordaan dankt zijn naam niet aan de rivier de Jordaan, maar aan een 17e-eeuwse kaashandelaar genaamd Hendrik de Jordaan die er als eerste een winkel opende.",
