@@ -82,7 +82,7 @@ body {
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 1;
   pointer-events: none;
-  background: rgba(10, 10, 10, 0.88);
+  background: rgba(10, 10, 10, 0.75);
   transition: opacity 0.5s;
 }
 
@@ -212,21 +212,17 @@ nav .links a:hover { opacity: 0.5; }
   display: inline-block;
   animation: marquee 12s linear infinite;
 }
-.band-spotify {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
+.hero-spotify {
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 400px;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
-.band-spotify iframe {
+.hero-spotify iframe {
   display: block;
   border-radius: 12px;
-  height: 80px;
-  width: 300px;
+  width: 100%;
 }
 @keyframes marquee {
   0%   { transform: translateX(0); }
@@ -383,8 +379,14 @@ nav .links a:hover { opacity: 0.5; }
     #f5c842 0px, #f5c842 50px,
     #fffdf5 50px, #fffdf5 100px
   );
+  background-size: 100px 100%;
+  animation: yellowStripeScroll 8s linear infinite;
   padding: 3.5rem 1rem;
   position: relative;
+}
+@keyframes yellowStripeScroll {
+  0%   { background-position: 0 0; }
+  100% { background-position: 100px 0; }
 }
 .spinner-section {
   max-width: 700px;
@@ -408,17 +410,23 @@ nav .links a:hover { opacity: 0.5; }
   margin-bottom: 2rem;
   opacity: 0.7;
 }
-.spinner-persons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
+.spinner-question {
   margin-bottom: 1.5rem;
 }
-.spinner-persons .person-btns {
-  display: flex; gap: 0.4rem;
+.spinner-q-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: #1e2a5a;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  opacity: 0.6;
 }
-.spinner-persons .person-btns button {
+.person-btns, .wijk-btns {
+  display: flex; gap: 0.4rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.person-btns button {
   width: 44px; height: 44px;
   border-radius: 50%;
   border: 2.5px solid #1e2a5a;
@@ -429,11 +437,31 @@ nav .links a:hover { opacity: 0.5; }
   cursor: pointer;
   transition: all 0.2s;
 }
-.spinner-persons .person-btns button.selected {
+.wijk-btns button {
+  padding: 0.4rem 1rem;
+  border-radius: 25px;
+  border: 2px solid #1e2a5a;
+  background: rgba(255,255,255,0.7);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  color: #1e2a5a;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 400;
+}
+.wijk-btns button.selected {
   background: #1e2a5a;
   color: #f5c842;
 }
-.spinner-persons .person-btns button:hover {
+.wijk-btns button:hover {
+  background: #1e2a5a;
+  color: #fffdf5;
+}
+.person-btns button.selected {
+  background: #1e2a5a;
+  color: #f5c842;
+}
+.person-btns button:hover {
   background: #1e2a5a;
   color: #fffdf5;
   border-color: #1e2a5a;
@@ -577,7 +605,6 @@ nav .links a:hover { opacity: 0.5; }
   .hero h1 { font-size: clamp(4rem, 18vw, 8rem); }
   .hero .sub { font-size: 1rem; padding: 0 1rem; }
   .stripe-band { height: 80px; }
-  .band-spotify iframe { width: 250px; height: 80px; }
   .stripe-band .band-text { font-size: 1.2rem; }
 }
 @media (max-width: 600px) {
@@ -595,10 +622,11 @@ nav .links a:hover { opacity: 0.5; }
   }
   .slot-wrapper { height: 60px; }
   .slot-item .slot-area { font-size: 0.65rem; margin-left: 0.4rem; }
-  .spinner-persons .person-btns button {
+  .person-btns button {
     width: 38px; height: 38px;
     font-size: 1.1rem;
   }
+  .wijk-btns button { font-size: 0.75rem; padding: 0.3rem 0.8rem; }
   .spin-btn { font-size: 1.4rem; padding: 0.7rem 2rem; }
   .spin-result .result-name { font-size: 1.7rem; }
   /* Filter buttons mobile */
@@ -623,7 +651,7 @@ nav .links a:hover { opacity: 0.5; }
   .hero { padding: 5rem 1.5rem 3rem; min-height: 100svh; }
   .hero-label { font-size: 0.65rem; letter-spacing: 0.2em; }
   .scroll-hint { bottom: 2rem; }
-  .band-spotify iframe { width: 220px; }
+  .hero-spotify { max-width: 300px; }
 }
 </style>
 </head>
@@ -647,6 +675,9 @@ nav .links a:hover { opacity: 0.5; }
 <section class="hero">
   <h1>WETEN<span>WAAR.</span></h1>
   <p class="sub">Geen algoritme. Geen influencers. Gewoon plekken waar wij &eacute;cht komen.</p>
+  <div class="hero-spotify">
+    <iframe src="https://open.spotify.com/embed/track/4Tzw9IdZbVyzmpWrvsGaNX?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media" loading="lazy"></iframe>
+  </div>
   <div class="scroll-hint">&darr; Scroll</div>
 </section>
 
@@ -655,9 +686,6 @@ nav .links a:hover { opacity: 0.5; }
   <div class="band-inner" id="bandInner1"></div>
   <div class="band-text">
     <span>ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; </span>
-  </div>
-  <div class="band-spotify">
-    <iframe src="https://open.spotify.com/embed/track/4Tzw9IdZbVyzmpWrvsGaNX?utm_source=generator&theme=0" width="300" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media" loading="lazy"></iframe>
   </div>
 </div>
 
@@ -673,14 +701,25 @@ nav .links a:hover { opacity: 0.5; }
   <div class="spinner-wrap" id="geen-idee">
     <div class="spinner-section">
       <div class="spinner-title">GEEN IDEE<span>?</span></div>
-      <p class="spinner-sub">Wij kiezen voor je. Hoeveel zijn jullie?</p>
-      <div class="spinner-persons">
+      <p class="spinner-sub">Wij kiezen voor je.</p>
+      <div class="spinner-question">
+        <div class="spinner-q-label">Hoeveel zijn jullie?</div>
         <div class="person-btns" id="personBtns">
           <button data-n="1">1</button>
           <button data-n="2" class="selected">2</button>
           <button data-n="3">3</button>
           <button data-n="4">4</button>
           <button data-n="5">5+</button>
+        </div>
+      </div>
+      <div class="spinner-question">
+        <div class="spinner-q-label">Welke wijk?</div>
+        <div class="wijk-btns" id="wijkBtns">
+          <button class="selected" data-wijk="">Alle wijken vind ik leuk</button>
+          <button data-wijk="Jordaan">Jordaan</button>
+          <button data-wijk="De Pijp">De Pijp</button>
+          <button data-wijk="Zuid">Zuid</button>
+          <button data-wijk="Centrum">Centrum</button>
         </div>
       </div>
       <div class="slot-wrapper">
@@ -953,14 +992,37 @@ places.forEach((p, i) => {
 
 // ═══ GEEN IDEE SPINNER ═══
 let selectedPersons = 2;
-const personBtns = document.querySelectorAll('#personBtns button');
-personBtns.forEach(btn => {
+let selectedWijk = '';
+const spinPersonBtns = document.querySelectorAll('#personBtns button');
+spinPersonBtns.forEach(btn => {
   btn.onclick = () => {
-    personBtns.forEach(b => b.classList.remove('selected'));
+    spinPersonBtns.forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedPersons = parseInt(btn.dataset.n);
   };
 });
+const wijkBtns = document.querySelectorAll('#wijkBtns button');
+wijkBtns.forEach(btn => {
+  btn.onclick = () => {
+    wijkBtns.forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedWijk = btn.dataset.wijk;
+  };
+});
+
+const spinnerAreaGroups = {
+  'Jordaan': ['Jordaan'],
+  'De Pijp': ['De Pijp'],
+  'Zuid': ['Oud-Zuid'],
+  'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt'],
+};
+
+function getFilteredPlaces() {
+  if (!selectedWijk) return places;
+  const areas = spinnerAreaGroups[selectedWijk];
+  if (!areas) return places;
+  return places.filter(p => areas.includes(p.area));
+}
 
 const slotReel = document.getElementById('slotReel');
 const spinBtn = document.getElementById('spinBtn');
@@ -972,7 +1034,8 @@ const resultActions = document.getElementById('resultActions');
 // Build reel with shuffled names
 function buildReel() {
   slotReel.innerHTML = '';
-  const shuffled = [...places].sort(() => Math.random() - 0.5);
+  const pool = getFilteredPlaces();
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
   // Repeat list 3x for smooth scrolling effect
   const reelPlaces = [...shuffled, ...shuffled, ...shuffled];
   reelPlaces.forEach(p => {
@@ -995,12 +1058,13 @@ spinBtn.onclick = () => {
   spinResult.classList.remove('visible');
 
   const shuffled = buildReel();
-  const winnerIndex = Math.floor(Math.random() * places.length);
+  const pool = getFilteredPlaces();
+  const winnerIndex = Math.floor(Math.random() * pool.length);
   const winner = shuffled[winnerIndex];
 
   // Target position: land on winner in the second set (for smooth scroll)
   const itemHeight = window.innerWidth <= 600 ? 60 : 80;
-  const targetIndex = places.length + winnerIndex;
+  const targetIndex = pool.length + winnerIndex;
   const targetY = -(targetIndex * itemHeight);
 
   // Animate: fast start, ease out
