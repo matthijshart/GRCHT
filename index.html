@@ -16,8 +16,9 @@
   --white: #fafaf8;
   --gray: #6b6660;
   --gray-light: #a39e96;
-  --pink: #e88cb4;
-  --green: #1a8a5c;
+  --blue: #8badc4;
+  --stripe-white: #f5f0e8;
+  --coral: #ef5043;
   --ink: #1a1817;
   --ink-mid: #4a4540;
 }
@@ -47,11 +48,11 @@ body {
   transform: translateY(-100%);
 }
 .stripes-bg .stripe:nth-child(odd)  {
-  background: var(--pink);
+  background: var(--blue);
   animation: stripeInDown 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 .stripes-bg .stripe:nth-child(even) {
-  background: var(--green);
+  background: var(--stripe-white);
   animation: stripeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 .stripes-bg .stripe:nth-child(1)  { animation-delay: 0.05s; }
@@ -139,7 +140,7 @@ nav .links a:hover { opacity: 0.5; }
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--coral);
   margin-bottom: 1.5rem;
   font-weight: 500;
 }
@@ -151,7 +152,7 @@ nav .links a:hover { opacity: 0.5; }
   color: var(--cream);
 }
 .hero h1 span {
-  color: var(--red);
+  color: var(--coral);
   display: block;
 }
 .hero .sub {
@@ -198,8 +199,8 @@ nav .links a:hover { opacity: 0.5; }
   flex: 0 0 calc(100% / 28);
   height: 100%;
 }
-.stripe-band .band-stripe:nth-child(odd)  { background: var(--pink); }
-.stripe-band .band-stripe:nth-child(even) { background: var(--green); }
+.stripe-band .band-stripe:nth-child(odd)  { background: var(--blue); }
+.stripe-band .band-stripe:nth-child(even) { background: var(--stripe-white); }
 .stripe-band .band-text {
   position: absolute;
   inset: 0;
@@ -281,7 +282,7 @@ nav .links a:hover { opacity: 0.5; }
   font-weight: 400;
 }
 .filter-row button:hover, .filter-row button.active {
-  background: var(--green); color: var(--white); border-color: var(--green);
+  background: var(--blue); color: var(--white); border-color: var(--blue);
 }
 /* Wijk filters — groot en bold */
 .filter-row.area-row {
@@ -305,9 +306,9 @@ nav .links a:hover { opacity: 0.5; }
   border-color: var(--ink);
 }
 .filter-row.area-row button.active {
-  background: var(--green);
+  background: var(--blue);
   color: var(--white);
-  border-color: var(--green);
+  border-color: var(--blue);
 }
 
 /* ═══ CARDS ═══ */
@@ -353,21 +354,21 @@ nav .links a:hover { opacity: 0.5; }
 }
 .card .link {
   display: inline-block; margin-top: 0.5rem;
-  font-size: 0.75rem; color: var(--green);
+  font-size: 0.75rem; color: var(--blue);
   text-decoration: none; font-weight: 500;
   letter-spacing: 0.03em; transition: color 0.2s;
 }
-.card .link:hover { color: var(--pink); }
+.card .link:hover { color: var(--coral); }
 .card .nav-btn {
   display: inline-flex; align-items: center; gap: 0.3rem;
   margin-top: 0.5rem; margin-left: 0.5rem;
   padding: 0.3rem 0.7rem; border-radius: 14px;
-  background: var(--green); color: var(--white);
+  background: var(--blue); color: var(--white);
   font-size: 0.72rem; font-weight: 500; font-family: 'Outfit', sans-serif;
   text-decoration: none; letter-spacing: 0.02em;
   transition: background 0.2s;
 }
-.card .nav-btn:hover { background: var(--pink); }
+.card .nav-btn:hover { background: var(--coral); }
 .card .actions { display: flex; align-items: center; flex-wrap: wrap; }
 .card.hidden { display: none; }
 
@@ -592,7 +593,7 @@ nav .links a:hover { opacity: 0.5; }
   background: #1e2a5a;
   color: #f5c842;
 }
-.spin-result .result-nav:hover { background: var(--green); color: var(--white); }
+.spin-result .result-nav:hover { background: var(--blue); color: var(--white); }
 .spin-result .result-retry {
   background: rgba(255,255,255,0.6);
   border: 2px solid #1e2a5a;
@@ -879,7 +880,7 @@ const bounds = [];
 const markers = [];
 places.forEach((p, i) => {
   const size = 10;
-  const color = '#1a8a5c';
+  const color = '#8badc4';
   const icon = L.divIcon({
     className: '',
     html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid #fff;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,0.25);"></div>`,
