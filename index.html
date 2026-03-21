@@ -96,6 +96,7 @@ nav .links a:hover { opacity: 0.5; }
 /* ═══ HERO ═══ */
 .hero {
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -529,11 +530,54 @@ nav .links a:hover { opacity: 0.5; }
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 768px) {
   nav .links { display: none; }
+  .hero h1 { font-size: clamp(4rem, 18vw, 8rem); }
+  .hero .sub { font-size: 1rem; padding: 0 1rem; }
+  .stripe-band { height: 70px; }
 }
 @media (max-width: 600px) {
-  #map { height: 300px; }
+  #map { height: 280px; border-radius: 8px; }
   .cards { grid-template-columns: 1fr; }
-  .map-section { padding-top: 1.5rem; }
+  .map-section { padding: 1.5rem 0.6rem 1rem; }
+  .filters-section { padding: 1.2rem 0.6rem 0; }
+  .cards-section { padding: 1rem 0.6rem 2rem; }
+  /* Spinner mobile */
+  .spinner-section { padding: 2rem 0.8rem; }
+  .spinner-title { font-size: clamp(2rem, 10vw, 3.5rem); }
+  .slot-item {
+    font-size: 1.3rem;
+    height: 60px;
+  }
+  .slot-wrapper { height: 60px; }
+  .slot-item .slot-area { font-size: 0.65rem; margin-left: 0.4rem; }
+  .spinner-persons .person-btns button {
+    width: 38px; height: 38px;
+    font-size: 1.1rem;
+  }
+  .spin-btn { font-size: 1.4rem; padding: 0.7rem 2rem; }
+  .spin-result .result-name { font-size: 1.7rem; }
+  /* Filter buttons mobile */
+  .filter-row.area-row button {
+    font-size: 1.2rem;
+    padding: 0.25rem 1rem;
+  }
+  .filter-row button {
+    font-size: 0.72rem;
+    padding: 0.3rem 0.7rem;
+  }
+  /* Cards mobile */
+  .card { padding: 1rem; }
+  .card h3 { font-size: 1.1rem; }
+  .card .note { font-size: 0.78rem; }
+  .card .nav-btn { font-size: 0.68rem; padding: 0.25rem 0.6rem; }
+  .card .actions { gap: 0.3rem; }
+  /* Nav mobile */
+  nav { padding: 1rem 1.2rem; }
+  nav .logo { font-size: 1.4rem; }
+  /* Hero mobile */
+  .hero { padding: 5rem 1.5rem 3rem; min-height: 100svh; }
+  .hero-label { font-size: 0.65rem; letter-spacing: 0.2em; }
+  .spotify-player iframe { width: 260px; }
+  .scroll-hint { bottom: 2rem; }
 }
 </style>
 </head>
@@ -815,7 +859,7 @@ function applyFilters() {
     const areaPlaces = places.filter(p => areaGroups[activeArea].includes(p.area));
     if (areaPlaces.length) {
       const areaBounds = areaPlaces.map(p => [p.lat, p.lng]);
-      map.fitBounds(areaBounds, { padding: [50, 50], maxZoom: 15 });
+      map.fitBounds(areaBounds, { padding: [60, 60], maxZoom: 15 });
     }
   } else {
     map.fitBounds(bounds, { padding: [30, 30] });
@@ -897,7 +941,7 @@ spinBtn.onclick = () => {
   const winner = shuffled[winnerIndex];
 
   // Target position: land on winner in the second set (for smooth scroll)
-  const itemHeight = 80;
+  const itemHeight = window.innerWidth <= 600 ? 60 : 80;
   const targetIndex = places.length + winnerIndex;
   const targetY = -(targetIndex * itemHeight);
 
