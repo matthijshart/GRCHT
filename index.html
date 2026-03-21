@@ -281,6 +281,17 @@ nav .links a:hover { opacity: 0.5; }
   letter-spacing: 0.03em; transition: color 0.2s;
 }
 .card .link:hover { color: var(--pink); }
+.card .nav-btn {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  margin-top: 0.5rem; margin-left: 0.5rem;
+  padding: 0.3rem 0.7rem; border-radius: 14px;
+  background: var(--green); color: var(--white);
+  font-size: 0.72rem; font-weight: 500; font-family: 'Outfit', sans-serif;
+  text-decoration: none; letter-spacing: 0.02em;
+  transition: background 0.2s;
+}
+.card .nav-btn:hover { background: var(--pink); }
+.card .actions { display: flex; align-items: center; flex-wrap: wrap; }
 .card.hidden { display: none; }
 
 /* ═══ LEAFLET POPUP ═══ */
@@ -563,7 +574,10 @@ places.forEach((p, i) => {
       <span>${p.area}</span>
       ${p.tags.map(t => `<span class="tag">${tagLabels[t]||t}</span>`).join('')}
     </div>
-    ${p.web ? `<a class="link" href="${p.web}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Website \u2192</a>` : ''}
+    <div class="actions">
+      ${p.web ? `<a class="link" href="${p.web}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Website \u2192</a>` : ''}
+      <a class="nav-btn" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}" target="_blank" rel="noopener" onclick="event.stopPropagation()">\u2794 Breng me hier</a>
+    </div>
   `;
   cardsEl.appendChild(card);
 });
