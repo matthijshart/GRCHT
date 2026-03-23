@@ -493,6 +493,66 @@ nav .links a:hover { opacity: 0.5; }
 .p-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); letter-spacing: 0.04em; }
 .p-note { font-size: 0.78rem; color: var(--ink-mid); margin-top: 2px; }
 
+/* ═══ SWIPE & DINE BANNER ═══ */
+.swipe-banner {
+  background: var(--coral);
+  padding: 3rem 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.swipe-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 40px,
+    transparent 40px, transparent 80px
+  );
+  pointer-events: none;
+}
+.swipe-banner-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.swipe-banner-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 10vw, 6rem);
+  color: var(--white);
+  letter-spacing: 0.04em;
+  line-height: 0.9;
+  margin-bottom: 0.5rem;
+}
+.swipe-banner-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+.swipe-banner-btn {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  border-radius: 50px;
+  background: var(--white);
+  color: var(--coral);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.swipe-banner-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 30px rgba(0,0,0,0.15);
+}
+.swipe-banner-btn:active {
+  transform: scale(0.97);
+}
+
 /* ═══ GEEN IDEE SPINNER ═══ */
 .spinner-wrap {
   background: repeating-linear-gradient(
@@ -895,6 +955,15 @@ nav .links a:hover { opacity: 0.5; }
   <!-- KAART -->
   <div class="map-section" id="kaart">
     <div id="map"></div>
+  </div>
+
+  <!-- SWIPE & DINE BANNER -->
+  <div class="swipe-banner">
+    <div class="swipe-banner-inner">
+      <div class="swipe-banner-title">SWIPE &amp; DINE</div>
+      <p class="swipe-banner-sub">Samen kiezen waar je eet. Swipe, match, boek.</p>
+      <a class="swipe-banner-btn" href="duo.html">START SESSIE &rarr;</a>
+    </div>
   </div>
 
   <!-- GEEN IDEE SPINNER -->
