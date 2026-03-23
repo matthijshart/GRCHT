@@ -715,6 +715,35 @@ nav .links a:hover { opacity: 0.5; }
   color: #1a1817;
   line-height: 1.6;
   font-style: italic;
+  transition: opacity 0.3s;
+}
+.anecdote-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.2rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(230,57,40,0.25);
+  border-radius: 20px;
+  background: transparent;
+  color: #e63928;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.3s;
+  opacity: 0.6;
+}
+.anecdote-btn:hover {
+  opacity: 1;
+  background: rgba(230,57,40,0.08);
+  border-color: rgba(230,57,40,0.4);
+}
+.anecdote-btn svg {
+  transition: transform 0.4s;
+}
+.anecdote-btn:active svg {
+  transform: rotate(360deg);
 }
 
 /* ═══ RESPONSIVE ═══ */
@@ -877,6 +906,14 @@ nav .links a:hover { opacity: 0.5; }
     <div class="anecdote-inner">
       <div class="anecdote-label">Wist je dat</div>
       <div class="anecdote-text" id="anecdoteText"></div>
+      <button class="anecdote-btn" id="anecdoteBtn" aria-label="Nieuw weetje">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M1 8a7 7 0 0 1 13.4-2.8M15 8a7 7 0 0 1-13.4 2.8"/>
+          <path d="M14.4 1v4.2h-4.2"/>
+          <path d="M1.6 15v-4.2h4.2"/>
+        </svg>
+        <span>nog eentje</span>
+      </button>
     </div>
   </div>
 
@@ -944,7 +981,20 @@ const anecdotes = [
   "De pont naar Noord vaart sinds 1924 gratis omdat een wethouder per ongeluk de verkeerde motie indiende. Niemand heeft het ooit teruggedraaid.",
   "In de Jordaan werden straatnamen oorspronkelijk vernoemd naar bloemen. De Rozenstraat is de enige die zijn oorspronkelijke naam heeft behouden.",
 ];
-document.getElementById('anecdoteText').textContent = anecdotes[Math.floor(Math.random() * anecdotes.length)];
+let lastAnecdoteIndex = -1;
+function showRandomAnecdote() {
+  let idx;
+  do { idx = Math.floor(Math.random() * anecdotes.length); } while (idx === lastAnecdoteIndex && anecdotes.length > 1);
+  lastAnecdoteIndex = idx;
+  const el = document.getElementById('anecdoteText');
+  el.style.opacity = '0';
+  setTimeout(() => {
+    el.textContent = anecdotes[idx];
+    el.style.opacity = '1';
+  }, 250);
+}
+showRandomAnecdote();
+document.getElementById('anecdoteBtn').addEventListener('click', showRandomAnecdote);
 </script>
 
 <script>
