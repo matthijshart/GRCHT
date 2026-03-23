@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>DUO MODE — (W)ETEN WAAR.</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%238badc4'/><rect width='4' height='32' x='4' fill='%23f5f0e8'/><rect width='4' height='32' x='8' fill='%238badc4'/><rect width='4' height='32' x='12' fill='%23f5f0e8'/><rect width='4' height='32' x='16' fill='%238badc4'/><rect width='4' height='32' x='20' fill='%23f5f0e8'/><rect width='4' height='32' x='24' fill='%238badc4'/><rect width='4' height='32' x='28' fill='%23f5f0e8'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black: #0a0a0a;
+  --red: #e63928;
+  --cream: #f0ebe3;
+  --white: #fafaf8;
+  --gray: #6b6660;
+  --gray-light: #a39e96;
+  --blue: #8badc4;
+  --stripe-white: #f5f0e8;
+  --coral: #ef5043;
+  --ink: #1a1817;
+  --ink-mid: #4a4540;
+}
+html { scroll-behavior: auto; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  font-weight: 300;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+::selection { background: var(--red); color: var(--white); }
+
+/* ═══ STRIPES BACKGROUND ═══ */
+.stripes-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.stripes-bg .stripe {
+  position: absolute;
+  width: calc(100% / 14);
+  height: 100%;
+  will-change: transform;
+  transform: translateY(-100%);
+}
+.stripes-bg .stripe:nth-child(odd) {
+  background: var(--blue);
+  opacity: 0.12;
+  animation: stripeInDown 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.stripes-bg .stripe:nth-child(even) {
+  background: var(--stripe-white);
+  opacity: 0.5;
+  animation: stripeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.stripes-bg .stripe:nth-child(1)  { left: calc(0 * 100% / 14); animation-delay: 0.05s; }
+.stripes-bg .stripe:nth-child(2)  { left: calc(1 * 100% / 14); animation-delay: 0.1s; }
+.stripes-bg .stripe:nth-child(3)  { left: calc(2 * 100% / 14); animation-delay: 0.15s; }
+.stripes-bg .stripe:nth-child(4)  { left: calc(3 * 100% / 14); animation-delay: 0.2s; }
+.stripes-bg .stripe:nth-child(5)  { left: calc(4 * 100% / 14); animation-delay: 0.25s; }
+.stripes-bg .stripe:nth-child(6)  { left: calc(5 * 100% / 14); animation-delay: 0.3s; }
+.stripes-bg .stripe:nth-child(7)  { left: calc(6 * 100% / 14); animation-delay: 0.35s; }
+.stripes-bg .stripe:nth-child(8)  { left: calc(7 * 100% / 14); animation-delay: 0.4s; }
+.stripes-bg .stripe:nth-child(9)  { left: calc(8 * 100% / 14); animation-delay: 0.45s; }
+.stripes-bg .stripe:nth-child(10) { left: calc(9 * 100% / 14); animation-delay: 0.5s; }
+.stripes-bg .stripe:nth-child(11) { left: calc(10 * 100% / 14); animation-delay: 0.55s; }
+.stripes-bg .stripe:nth-child(12) { left: calc(11 * 100% / 14); animation-delay: 0.6s; }
+.stripes-bg .stripe:nth-child(13) { left: calc(12 * 100% / 14); animation-delay: 0.65s; }
+.stripes-bg .stripe:nth-child(14) { left: calc(13 * 100% / 14); animation-delay: 0.7s; }
+@keyframes stripeInDown {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
+}
+@keyframes stripeInUp {
+  0%   { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
+
+/* ═══ LAYOUT ═══ */
+.app {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══ TOP BAR ═══ */
+.top-bar {
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.top-bar a {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  color: var(--ink-mid);
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+.top-bar a:hover { opacity: 1; }
+
+/* ═══ SCREENS ═══ */
+.screen {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+.screen.active {
+  display: flex;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══ LANDING ═══ */
+.landing-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 18vw, 10rem);
+  line-height: 0.9;
+  color: var(--coral);
+  letter-spacing: -0.02em;
+}
+.landing-subtitle {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: var(--ink-mid);
+  max-width: 300px;
+  line-height: 1.5;
+}
+.btn-group {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+  max-width: 280px;
+}
+.btn {
+  display: block;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 60px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+}
+.btn-primary {
+  background: var(--coral);
+  color: var(--white);
+}
+.btn-primary:hover { background: var(--red); transform: scale(1.03); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-secondary {
+  background: var(--ink);
+  color: var(--cream);
+}
+.btn-secondary:hover { background: var(--ink-mid); transform: scale(1.03); }
+.btn-secondary:active { transform: scale(0.98); }
+
+/* ═══ CREATE / JOIN ═══ */
+.session-code {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 20vw, 9rem);
+  color: var(--coral);
+  letter-spacing: 0.15em;
+  line-height: 1;
+}
+.session-msg {
+  font-size: 0.95rem;
+  color: var(--ink-mid);
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+.waiting-dots::after {
+  content: '';
+  animation: dots 1.5s steps(4, end) infinite;
+}
+@keyframes dots {
+  0%   { content: ''; }
+  25%  { content: '.'; }
+  50%  { content: '..'; }
+  75%  { content: '...'; }
+}
+.code-input {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 0.3em;
+  text-align: center;
+  width: 220px;
+  padding: 0.5rem 1rem;
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  background: var(--white);
+  color: var(--ink);
+  outline: none;
+  text-transform: uppercase;
+  margin-top: 1.5rem;
+  transition: border-color 0.2s;
+}
+.code-input:focus { border-color: var(--coral); }
+.code-input::placeholder {
+  color: var(--gray-light);
+  letter-spacing: 0.3em;
+}
+.error-msg {
+  color: var(--red);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  min-height: 1.2em;
+}
+.small-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.btn-back {
+  margin-top: 1.5rem;
+  background: none;
+  border: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: var(--gray);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.btn-back:hover { color: var(--ink); }
+
+.share-row {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.6rem;
+}
+.btn-share {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--ink);
+  border-radius: 40px;
+  background: var(--white);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--ink);
+}
+.btn-share:hover { background: var(--ink); color: var(--white); }
+.btn-share:active { transform: scale(0.95); }
+
+/* ═══ SWIPE MODE ═══ */
+.swipe-screen {
+  justify-content: flex-start;
+  padding-top: 1rem;
+}
+.progress-bar {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.progress-track {
+  width: 100%;
+  max-width: 340px;
+  height: 4px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--coral);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.card-container {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  height: 380px;
+  perspective: 800px;
+}
+.card {
+  position: absolute;
+  inset: 0;
+  background: var(--white);
+  border-radius: 24px;
+  padding: 2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
+  transition: box-shadow 0.2s;
+  will-change: transform;
+}
+.card:active { cursor: grabbing; }
+.card-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.card-area {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--coral);
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+.card-note {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+.card-tags {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.card-tag {
+  padding: 0.3rem 0.8rem;
+  background: var(--cream);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  color: var(--gray);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+.card-stamp {
+  position: absolute;
+  top: 1.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.8rem;
+  border-radius: 8px;
+  border: 4px solid;
+  transform: rotate(-15deg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.stamp-ja {
+  right: 1.5rem;
+  color: #2ecc71;
+  border-color: #2ecc71;
+}
+.stamp-nee {
+  left: 1.5rem;
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.swipe-buttons {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.swipe-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+.swipe-btn:active { transform: scale(0.9); }
+.swipe-btn-nee {
+  background: var(--white);
+  color: var(--red);
+}
+.swipe-btn-nee:hover { background: #ffeaea; transform: scale(1.08); }
+.swipe-btn-ja {
+  background: var(--white);
+  color: #2ecc71;
+}
+.swipe-btn-ja:hover { background: #e8faf0; transform: scale(1.08); }
+
+.waiting-status {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--gray);
+  min-height: 1.5em;
+  transition: opacity 0.3s;
+}
+
+/* ═══ MATCH POPUP ═══ */
+.match-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10,10,10,0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+.match-overlay.active { display: flex; }
+.match-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 16vw, 8rem);
+  color: var(--coral);
+  line-height: 0.9;
+  animation: matchBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes matchBounce {
+  0% { transform: scale(0.3); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.match-place {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--white);
+  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+}
+.match-area-label {
+  font-size: 0.85rem;
+  color: var(--gray-light);
+  margin-top: 0.3rem;
+}
+.match-actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: 100%;
+  max-width: 260px;
+}
+.btn-maps {
+  display: block;
+  padding: 0.9rem 1.5rem;
+  background: var(--white);
+  color: var(--ink);
+  border-radius: 50px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s;
+}
+.btn-maps:hover { transform: scale(1.03); background: var(--cream); }
+.btn-dismiss {
+  background: none;
+  border: none;
+  color: var(--gray-light);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.btn-dismiss:hover { color: var(--white); }
+
+/* ═══ CONFETTI ═══ */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  pointer-events: none;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  animation: confettiFall 2.5s ease-in forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
+}
+
+/* ═══ RESULTS ═══ */
+.results-screen {
+  justify-content: flex-start;
+  padding-top: 2rem;
+}
+.results-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: var(--coral);
+  margin-bottom: 0.3rem;
+}
+.results-sub {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin-bottom: 2rem;
+}
+.results-list {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.result-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+.result-info h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.result-info span {
+  font-size: 0.75rem;
+  color: var(--gray);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.result-link {
+  padding: 0.5rem 1rem;
+  background: var(--coral);
+  color: var(--white);
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.result-link:hover { background: var(--red); transform: scale(1.05); }
+
+.no-matches {
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  color: var(--gray);
+}
+
+.btn-restart {
+  margin-top: 2rem;
+}
+
+/* ═══ MOBILE ═══ */
+@media (max-width: 420px) {
+  .card-container { height: 340px; }
+  .card { padding: 1.5rem; }
+  .card-name { font-size: 2.3rem; }
+  .swipe-btn { width: 64px; height: 64px; font-size: 1.5rem; }
+}
+@media (max-height: 700px) {
+  .card-container { height: 300px; }
+  .card-name { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Striped background -->
+<div class="stripes-bg">
+  <div class="stripe"></div><div class="stripe"></div>
+  <div class="stripe"></div><div class="stripe"></div>
+  <div class="stripe"></div><div class="stripe"></div>
+  <div class="stripe"></div><div class="stripe"></div>
+  <div class="stripe"></div><div class="stripe"></div>
+  <div class="stripe"></div><div class="stripe"></div>
+  <div class="stripe"></div><div class="stripe"></div>
+</div>
+
+<div class="app">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <a href="index.html">&larr; Terug naar (W)ETEN WAAR.</a>
+  </div>
+
+  <!-- SCREEN: Landing -->
+  <div id="screen-landing" class="screen active">
+    <div class="landing-title">DUO<br>MODE</div>
+    <p class="landing-subtitle">Swipe samen door de beste plekken van Amsterdam. Match = date night besloten.</p>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="showScreen('create')">START SESSIE</button>
+      <button class="btn btn-secondary" onclick="showScreen('join')">JOIN SESSIE</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Create Session -->
+  <div id="screen-create" class="screen">
+    <div class="small-label">JOUW SESSIE CODE</div>
+    <div class="session-code" id="session-code-display">----</div>
+    <p class="session-msg">Deel deze code met je date<span class="waiting-dots"></span></p>
+    <div class="share-row">
+      <button class="btn-share" onclick="copyCode()">Kopieer code</button>
+      <button class="btn-share" onclick="shareCode()">Delen</button>
+    </div>
+    <p class="session-msg" id="waiting-msg" style="margin-top:1.5rem;">Wacht op speler 2<span class="waiting-dots"></span></p>
+    <button class="btn-back" onclick="cancelSession()">Annuleren</button>
+  </div>
+
+  <!-- SCREEN: Join Session -->
+  <div id="screen-join" class="screen">
+    <div class="small-label">VOER DE CODE IN</div>
+    <input class="code-input" id="join-input" type="text" maxlength="4" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    <p class="error-msg" id="join-error">&nbsp;</p>
+    <button class="btn btn-primary" style="margin-top:1rem;max-width:220px;" onclick="joinSession()">JOIN</button>
+    <button class="btn-back" onclick="showScreen('landing')">Terug</button>
+  </div>
+
+  <!-- SCREEN: Swipe -->
+  <div id="screen-swipe" class="screen swipe-screen">
+    <div class="progress-bar" id="progress-text">1 / 43 plekken</div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="card-container" id="card-container">
+      <div class="card" id="swipe-card">
+        <div class="card-stamp stamp-ja" id="stamp-ja">JA!</div>
+        <div class="card-stamp stamp-nee" id="stamp-nee">NEE</div>
+        <div class="card-name" id="card-name"></div>
+        <div class="card-area" id="card-area"></div>
+        <div class="card-note" id="card-note"></div>
+        <div class="card-tags" id="card-tags"></div>
+      </div>
+    </div>
+    <div class="swipe-buttons">
+      <button class="swipe-btn swipe-btn-nee" onclick="vote(false)">&#10060;</button>
+      <button class="swipe-btn swipe-btn-ja" onclick="vote(true)">&#128154;</button>
+    </div>
+    <div class="waiting-status" id="waiting-status">&nbsp;</div>
+  </div>
+
+  <!-- SCREEN: Results -->
+  <div id="screen-results" class="screen results-screen">
+    <div class="results-title">JULLIE MATCHES</div>
+    <p class="results-sub" id="results-sub"></p>
+    <div class="results-list" id="results-list"></div>
+    <button class="btn btn-primary btn-restart" onclick="location.reload()">OPNIEUW</button>
+  </div>
+</div>
+
+<!-- Match Overlay -->
+<div class="match-overlay" id="match-overlay">
+  <div class="match-title">IT'S A<br>MATCH!</div>
+  <div class="match-place" id="match-place-name"></div>
+  <div class="match-area-label" id="match-area-label"></div>
+  <div class="match-actions">
+    <a class="btn-maps" id="match-maps-link" href="#" target="_blank">BRENG ME HIER &rarr;</a>
+    <button class="btn-dismiss" onclick="dismissMatch()">Verder swipen</button>
+  </div>
+</div>
+
+<!-- Confetti container -->
+<div class="confetti-container" id="confetti-container"></div>
+
+<script>
+// ═══ FIREBASE ═══
+const firebaseConfig = {
+  apiKey: "AIzaSyCNLPc4FyjJiBnDdnPaMddkW38Kj9I0Olo",
+  authDomain: "grcht-c8bed.firebaseapp.com",
+  databaseURL: "https://grcht-c8bed-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "grcht-c8bed",
+  storageBucket: "grcht-c8bed.firebasestorage.app",
+  messagingSenderId: "421176637079",
+  appId: "1:421176637079:web:54e91b720f012247875bd2"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// ═══ PLACES DATA ═══
+const places = [
+  { name:"Caffe Pico", area:"De Pijp", note:"Goed eten, chill sfeertje", lat:52.3552,lng:4.8900, tags:["restaurant"] },
+  { name:"Peps", area:"Oud-West", note:"Happy hour 16\u201318u, altijd gezellig", lat:52.3675,lng:4.8716, tags:["tapas","happy hour"] },
+  { name:"Arie", area:"De Pijp", note:"Lekker eten en drinken", lat:52.3567,lng:4.8905, tags:["restaurant","bar"] },
+  { name:"Cafe Ente", area:"Jordaan", note:"Warme Franse bistro, donkerrood interieur, leuk goed kaartje", lat:52.3804,lng:4.8869, tags:["oesters","bistro"] },
+  { name:"Libertine", area:"Jordaan", note:"Fijn voor brunch", lat:52.3802,lng:4.8876, tags:["cafe","brunch"] },
+  { name:"Zum Barbarossa", area:"Centrum", note:"Speakeasy, goede cocktails", lat:52.3686,lng:4.8906, tags:["cocktails","speakeasy"] },
+  { name:"Cafe Sonneveld", area:"Jordaan", note:"Spareribs en appeltaart", lat:52.3763,lng:4.8823, tags:["cafe","bruin cafe"] },
+  { name:"Cafe Amsterdam (Cradam)", area:"West", note:"Tip van Rick", lat:52.3841,lng:4.8683, tags:["restaurant"] },
+  { name:"Cafe Tabac", area:"Jordaan", note:"Borrelhap mandje, maar ook verrassend goed rijsttafeltje", lat:52.3802,lng:4.8885, tags:["borrel","indonesisch"] },
+  { name:"A-Fusion", area:"Zeedijk", note:"Aziatisch, snel en lekker", lat:52.3732,lng:4.9001, tags:["aziatisch","sushi"] },
+  { name:"Ela", area:"Jordaan", note:"Lekker zitten, heel klein, goed eten", lat:52.3695,lng:4.8809, tags:["oesters","bar"] },
+  { name:"Pata Negra", area:"Utrechtsestraat", note:"Tapas, altijd druk maar goed", lat:52.3614,lng:4.8991, tags:["tapas","spaans"] },
+  { name:"Troef", area:"Oost", note:"Frans bistro, rustig", lat:52.3492,lng:4.9137, tags:["restaurant","frans"] },
+  { name:"The Seafood Bar", area:"Oud-Zuid", note:"Happy hour 15\u201317u, Van Baerle", lat:52.3600,lng:4.8775, tags:["vis","happy hour"] },
+  { name:"Badcuyp", area:"De Pijp", note:"Fijn buurtrestaurant", lat:52.3566,lng:4.8971, tags:["restaurant"] },
+  { name:"L'Entrecote et les Dames", area:"Oud-Zuid", note:"Biefstuk, vraag om extra refill", lat:52.3557,lng:4.8805, tags:["steak","frans"] },
+  { name:"Bouwman", area:"Utrechtsestraat", note:"Makkelijk drankje doen", lat:52.3623,lng:4.8988, tags:["borrel","bruin cafe"] },
+  { name:"Cafe Marcella", area:"Amstelveld", note:"Mooi terras aan de gracht", lat:52.3622,lng:4.8983, tags:["terras","cafe"] },
+  { name:"Parlotte", area:"Jordaan", note:"Frans, lekker wijntje erbij", lat:52.3783,lng:4.8818, tags:["frans","wijn"] },
+  { name:"De Willem", area:"Haarlemmerplein", note:"Favo van Rick", lat:52.3849,lng:4.8829, tags:["restaurant"] },
+  { name:"Cantine de Caron", area:"West", note:"Frans in een oud pakhuis, tof", lat:52.3863,lng:4.8728, tags:["frans","restaurant"] },
+  { name:"Binnenvisser", area:"Oud-West", note:"Staat hoog op de lijst, tip van Rick", lat:52.3715,lng:4.8704, tags:["wijn","natural wine"] },
+  { name:"Cafe Bern", area:"Nieuwmarkt", note:"Kaasfondue, gezellig", lat:52.3725,lng:4.9010, tags:["fondue","zwitsers"] },
+  { name:"Bar Jules", area:"Oud-Zuid", note:"Fijn voor lunch", lat:52.3530,lng:4.8634, tags:["lunch","bar"] },
+  { name:"Toscanini", area:"Jordaan", note:"Goed italiaans, wel prijzig", lat:52.3801,lng:4.8854, tags:["italiaans","\u20ac\u20ac\u20ac"] },
+  { name:"Amstel Hotel", area:"Centrum", note:"Alleen voor lunch, vraag om buiten", lat:52.3603,lng:4.9050, tags:["lunch","chic"] },
+  { name:"Borello Aperitivo", area:"Zeedijk", note:"Cocktails en pizza, top sfeertje", lat:52.3754,lng:4.9012, tags:["cocktails","bar"] },
+  { name:"Polly Goudvis", area:"Noord", note:"Brunch bij de pont", lat:52.3825,lng:4.9033, tags:["brunch","bar"] },
+  { name:"Roest", area:"Oost", note:"Industrieel, altijd chill", lat:52.3720,lng:4.9266, tags:["bar","industrieel"] },
+  { name:"No Nonsense", area:"Centrum", note:"Gezellig bruin cafe", lat:52.3759,lng:4.9027, tags:["bar","cafe"] },
+  { name:"Bar Grill Marathonweg", area:"Oud-Zuid", note:"Goed voor een hapje op de Marathonweg", lat:52.3460,lng:4.8650, tags:["bar","restaurant"] },
+  { name:"Cafe Kiebert", area:"Oud-Zuid", note:"Open haard, gezellig op de Marathonweg", lat:52.3458,lng:4.8645, tags:["cafe","restaurant"] },
+  { name:"Bar Bonnie", area:"Oud-Zuid", note:"Gezellig", lat:52.3465,lng:4.8655, tags:["bar"] },
+  { name:"'t Smalle", area:"Jordaan", note:"Biertje of broodje bal, altijd goed", lat:52.3758,lng:4.8838, tags:["cafe","bruin cafe"] },
+  { name:"Papeneiland", area:"Jordaan", note:"Terrasje als de zon schijnt", lat:52.3803,lng:4.8842, tags:["terras","cafe"] },
+  { name:"Bistro Feline", area:"Jordaan", note:"Michelin gids, neem de kreeftenorzo", lat:52.3769,lng:4.8832, tags:["restaurant","frans"] },
+  { name:"La Perla", area:"Jordaan", note:"Gewoon gezellig pizza aan de bar", lat:52.3737,lng:4.8810, tags:["italiaans","pizza"] },
+  { name:"De Pizzakamer", area:"De Pijp", note:"Houtoven pizza, terras, altijd goed", lat:52.3543,lng:4.8933, tags:["italiaans","pizza"] },
+  { name:"Pilsvogel", area:"De Pijp", note:"Terras op het plein, lekker biertje", lat:52.3555,lng:4.8937, tags:["bar","terras"] },
+  { name:"Cafe Sarphaat", area:"De Pijp", note:"Chill cafe op de Ceintuurbaan", lat:52.3530,lng:4.8945, tags:["cafe","terras"] },
+  { name:"Cafe-Restaurant Hesp", area:"Oost", note:"Terras aan het water, biertje en oesters", lat:52.3538,lng:4.9105, tags:["cafe","terras","oesters"] },
+  { name:"Cafe Wildschut", area:"Oud-Zuid", note:"Lunch, niet gek gewoon goed", lat:52.3537,lng:4.8830, tags:["cafe","lunch","terras"] },
+  { name:"Cafe Thijssen", area:"Jordaan", note:"Gemoedelijk, koffie of biertje aan de Brouwersgracht", lat:52.3820,lng:4.8848, tags:["cafe","brunch"] },
+];
+
+// Shuffle places consistently per session using a seeded random
+function shufflePlaces(seed) {
+  const arr = [...places];
+  let s = seed;
+  function seededRandom() {
+    s = (s * 16807) % 2147483647;
+    return (s - 1) / 2147483646;
+  }
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(seededRandom() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ═══ STATE ═══
+let sessionCode = null;
+let playerId = null; // 'player1' or 'player2'
+let otherPlayerId = null;
+let currentIndex = 0;
+let shuffledPlaces = [];
+let matches = [];
+let sessionRef = null;
+let votesRef = null;
+let isDragging = false;
+let startX = 0, startY = 0, currentX = 0;
+let matchQueue = [];
+let showingMatch = false;
+let swipeLocked = false;
+
+// ═══ FUN SESSION CODES ═══
+const funCodes = [
+  'PIJP','GROG','BIER','WIJN','ETEN','GEIT','KAAS','SOEP',
+  'BROOD','SAUS','TAART','KRAB','STOK','PLAK','GEUR','GOUD',
+  'STER','ZOET','ZOUT','WARM','KOEL','ROOK','GRIL','KLAP',
+  'PRIK','SCHUIM','DORP','STAD','FEEST','BOOT','TAFEL'
+];
+
+function generateCode() {
+  // Try a fun code first, fall back to random
+  const code = funCodes[Math.floor(Math.random() * funCodes.length)];
+  // Ensure 4 chars
+  return code.substring(0, 4).toUpperCase();
+}
+
+function generateSeed(code) {
+  let hash = 0;
+  for (let i = 0; i < code.length; i++) {
+    hash = ((hash << 5) - hash) + code.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash) || 1;
+}
+
+// ═══ SCREEN MANAGEMENT ═══
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + name);
+  if (el) {
+    el.classList.add('active');
+    // Re-trigger animation
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = '';
+  }
+  if (name === 'join') {
+    setTimeout(() => document.getElementById('join-input').focus(), 100);
+  }
+}
+
+// ═══ CREATE SESSION ═══
+async function createSession() {
+  const code = generateCode();
+  sessionCode = code;
+  playerId = 'player1';
+  otherPlayerId = 'player2';
+
+  sessionRef = db.ref('sessions/' + code);
+
+  // Check if code already exists and is less than 24h old
+  const snap = await sessionRef.once('value');
+  if (snap.exists()) {
+    const data = snap.val();
+    if (data.created && Date.now() - data.created < 86400000) {
+      // Code in use, try again
+      return createSession();
+    }
+  }
+
+  await sessionRef.set({
+    created: Date.now(),
+    players: { player1: true }
+  });
+
+  document.getElementById('session-code-display').textContent = code;
+  showScreen('create');
+
+  // Listen for player2 joining
+  sessionRef.child('players/player2').on('value', (snap) => {
+    if (snap.val() === true) {
+      startSwipeMode();
+    }
+  });
+}
+
+document.querySelector('[onclick="showScreen(\'create\')"]').onclick = function() {
+  createSession();
+};
+
+// ═══ JOIN SESSION ═══
+async function joinSession() {
+  const input = document.getElementById('join-input');
+  const code = input.value.trim().toUpperCase();
+  const errorEl = document.getElementById('join-error');
+
+  if (code.length !== 4) {
+    errorEl.textContent = 'Voer een code van 4 letters in';
+    return;
+  }
+
+  sessionRef = db.ref('sessions/' + code);
+  const snap = await sessionRef.once('value');
+
+  if (!snap.exists()) {
+    errorEl.textContent = 'Sessie niet gevonden';
+    return;
+  }
+
+  const data = snap.val();
+
+  // Check if expired
+  if (data.created && Date.now() - data.created > 86400000) {
+    errorEl.textContent = 'Sessie is verlopen';
+    return;
+  }
+
+  // Check if already full
+  if (data.players && data.players.player2) {
+    errorEl.textContent = 'Sessie is al vol';
+    return;
+  }
+
+  sessionCode = code;
+  playerId = 'player2';
+  otherPlayerId = 'player1';
+
+  await sessionRef.child('players/player2').set(true);
+  startSwipeMode();
+}
+
+// Enter key on input
+document.getElementById('join-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') joinSession();
+});
+
+// Auto-uppercase
+document.getElementById('join-input').addEventListener('input', (e) => {
+  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, '');
+  document.getElementById('join-error').textContent = '\u00a0';
+});
+
+// ═══ COPY / SHARE ═══
+function copyCode() {
+  navigator.clipboard.writeText(sessionCode).then(() => {
+    const btns = document.querySelectorAll('.btn-share');
+    btns[0].textContent = 'Gekopieerd!';
+    setTimeout(() => btns[0].textContent = 'Kopieer code', 1500);
+  });
+}
+
+function shareCode() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'DUO MODE - (W)ETEN WAAR.',
+      text: `Join mijn sessie met code: ${sessionCode}`,
+      url: window.location.href
+    });
+  } else {
+    copyCode();
+  }
+}
+
+// ═══ CANCEL SESSION ═══
+function cancelSession() {
+  if (sessionRef) {
+    sessionRef.off();
+    if (playerId === 'player1') sessionRef.remove();
+  }
+  sessionCode = null;
+  playerId = null;
+  sessionRef = null;
+  showScreen('landing');
+}
+
+// ═══ START SWIPE MODE ═══
+function startSwipeMode() {
+  const seed = generateSeed(sessionCode);
+  shuffledPlaces = shufflePlaces(seed);
+  currentIndex = 0;
+  matches = [];
+  matchQueue = [];
+
+  votesRef = db.ref('sessions/' + sessionCode + '/votes');
+
+  showScreen('swipe');
+  renderCard();
+  setupTouch();
+  listenForMatches();
+}
+
+// ═══ RENDER CARD ═══
+function renderCard() {
+  if (currentIndex >= shuffledPlaces.length) {
+    showResults();
+    return;
+  }
+
+  const place = shuffledPlaces[currentIndex];
+  document.getElementById('card-name').textContent = place.name;
+  document.getElementById('card-area').textContent = place.area;
+  document.getElementById('card-note').textContent = place.note;
+
+  const tagsEl = document.getElementById('card-tags');
+  tagsEl.innerHTML = place.tags.map(t => `<span class="card-tag">${t}</span>`).join('');
+
+  document.getElementById('progress-text').textContent = `${currentIndex + 1} / ${shuffledPlaces.length} plekken`;
+  document.getElementById('progress-fill').style.width = `${((currentIndex) / shuffledPlaces.length) * 100}%`;
+
+  // Reset card position
+  const card = document.getElementById('swipe-card');
+  card.style.transition = 'none';
+  card.style.transform = 'translateX(0) rotate(0deg)';
+  card.style.opacity = '1';
+
+  document.getElementById('stamp-ja').style.opacity = '0';
+  document.getElementById('stamp-nee').style.opacity = '0';
+
+  document.getElementById('waiting-status').innerHTML = '&nbsp;';
+
+  swipeLocked = false;
+}
+
+// ═══ VOTE ═══
+async function vote(liked) {
+  if (swipeLocked) return;
+  swipeLocked = true;
+
+  const place = shuffledPlaces[currentIndex];
+  const placeKey = place.name.replace(/[.#$/\[\]]/g, '_');
+
+  // Animate card off screen
+  animateCardOff(liked);
+
+  // Save vote
+  await votesRef.child(playerId).child(placeKey).set(liked);
+
+  // Move to next
+  setTimeout(() => {
+    currentIndex++;
+    renderCard();
+  }, 350);
+}
+
+function animateCardOff(liked) {
+  const card = document.getElementById('swipe-card');
+  const dir = liked ? 1 : -1;
+  card.style.transition = 'transform 0.35s ease, opacity 0.35s ease';
+  card.style.transform = `translateX(${dir * 120}%) rotate(${dir * 20}deg)`;
+  card.style.opacity = '0';
+}
+
+// ═══ TOUCH SWIPE ═══
+function setupTouch() {
+  const card = document.getElementById('swipe-card');
+  const container = document.getElementById('card-container');
+
+  // Touch events
+  card.addEventListener('touchstart', onPointerDown, { passive: true });
+  card.addEventListener('touchmove', onPointerMove, { passive: false });
+  card.addEventListener('touchend', onPointerUp);
+
+  // Mouse events for desktop
+  card.addEventListener('mousedown', onPointerDown);
+  document.addEventListener('mousemove', onPointerMove);
+  document.addEventListener('mouseup', onPointerUp);
+}
+
+function getX(e) {
+  return e.touches ? e.touches[0].clientX : e.clientX;
+}
+
+function onPointerDown(e) {
+  if (swipeLocked) return;
+  isDragging = true;
+  startX = getX(e);
+  currentX = 0;
+  const card = document.getElementById('swipe-card');
+  card.style.transition = 'none';
+}
+
+function onPointerMove(e) {
+  if (!isDragging || swipeLocked) return;
+  if (e.cancelable) e.preventDefault();
+
+  currentX = getX(e) - startX;
+  const card = document.getElementById('swipe-card');
+  const rotation = currentX * 0.08;
+  card.style.transform = `translateX(${currentX}px) rotate(${rotation}deg)`;
+
+  // Show stamps
+  const threshold = 40;
+  const opacity = Math.min(Math.abs(currentX) / 100, 1);
+  if (currentX > threshold) {
+    document.getElementById('stamp-ja').style.opacity = opacity;
+    document.getElementById('stamp-nee').style.opacity = '0';
+  } else if (currentX < -threshold) {
+    document.getElementById('stamp-nee').style.opacity = opacity;
+    document.getElementById('stamp-ja').style.opacity = '0';
+  } else {
+    document.getElementById('stamp-ja').style.opacity = '0';
+    document.getElementById('stamp-nee').style.opacity = '0';
+  }
+}
+
+function onPointerUp(e) {
+  if (!isDragging || swipeLocked) return;
+  isDragging = false;
+
+  const swipeThreshold = 80;
+  if (currentX > swipeThreshold) {
+    vote(true);
+  } else if (currentX < -swipeThreshold) {
+    vote(false);
+  } else {
+    // Snap back
+    const card = document.getElementById('swipe-card');
+    card.style.transition = 'transform 0.3s ease';
+    card.style.transform = 'translateX(0) rotate(0deg)';
+    document.getElementById('stamp-ja').style.opacity = '0';
+    document.getElementById('stamp-nee').style.opacity = '0';
+  }
+}
+
+// ═══ LISTEN FOR MATCHES (REALTIME) ═══
+function listenForMatches() {
+  // Listen to the other player's votes
+  votesRef.child(otherPlayerId).on('child_added', (snap) => {
+    const placeKey = snap.key;
+    const otherVote = snap.val();
+
+    // Check if we also voted on this place
+    checkForMatch(placeKey, otherVote);
+  });
+
+  votesRef.child(otherPlayerId).on('child_changed', (snap) => {
+    const placeKey = snap.key;
+    const otherVote = snap.val();
+    checkForMatch(placeKey, otherVote);
+  });
+
+  // Also check our own votes against theirs
+  votesRef.child(playerId).on('child_added', (snap) => {
+    const placeKey = snap.key;
+    const myVote = snap.val();
+
+    votesRef.child(otherPlayerId).child(placeKey).once('value', (otherSnap) => {
+      if (otherSnap.exists() && otherSnap.val() === true && myVote === true) {
+        triggerMatch(placeKey);
+      }
+    });
+  });
+
+  // Show waiting status
+  votesRef.on('value', (snap) => {
+    if (!snap.exists()) return;
+    const data = snap.val();
+    updateWaitingStatus(data);
+  });
+}
+
+function checkForMatch(placeKey, otherVote) {
+  if (!otherVote) return;
+
+  votesRef.child(playerId).child(placeKey).once('value', (mySnap) => {
+    if (mySnap.exists() && mySnap.val() === true) {
+      triggerMatch(placeKey);
+    }
+  });
+}
+
+function triggerMatch(placeKey) {
+  // Avoid duplicate matches
+  if (matches.includes(placeKey)) return;
+  matches.push(placeKey);
+
+  const place = places.find(p => p.name.replace(/[.#$/\[\]]/g, '_') === placeKey);
+  if (!place) return;
+
+  matchQueue.push(place);
+  if (!showingMatch) showNextMatch();
+}
+
+function showNextMatch() {
+  if (matchQueue.length === 0) {
+    showingMatch = false;
+    return;
+  }
+  showingMatch = true;
+  const place = matchQueue.shift();
+
+  document.getElementById('match-place-name').textContent = place.name;
+  document.getElementById('match-area-label').textContent = place.area;
+  document.getElementById('match-maps-link').href =
+    `https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}`;
+
+  document.getElementById('match-overlay').classList.add('active');
+  spawnConfetti();
+}
+
+function dismissMatch() {
+  document.getElementById('match-overlay').classList.remove('active');
+  setTimeout(showNextMatch, 200);
+}
+
+function updateWaitingStatus(data) {
+  const statusEl = document.getElementById('waiting-status');
+  if (currentIndex >= shuffledPlaces.length) return;
+
+  const currentPlace = shuffledPlaces[currentIndex];
+  const placeKey = currentPlace.name.replace(/[.#$/\[\]]/g, '_');
+
+  const myVotes = data[playerId] || {};
+  const otherVotes = data[otherPlayerId] || {};
+
+  // Count how many the other has swiped total
+  const otherCount = Object.keys(otherVotes).length;
+  const myCount = Object.keys(myVotes).length;
+
+  if (myCount > otherCount + 5) {
+    statusEl.textContent = 'Je partner is nog aan het swipen...';
+  } else {
+    statusEl.innerHTML = '&nbsp;';
+  }
+}
+
+// ═══ CONFETTI ═══
+function spawnConfetti() {
+  const container = document.getElementById('confetti-container');
+  container.innerHTML = '';
+  const colors = ['#ef5043', '#8badc4', '#f0ebe3', '#e63928', '#2ecc71', '#f5f0e8', '#FFD700'];
+
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.animationDelay = (Math.random() * 0.8) + 's';
+    piece.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+    const size = 6 + Math.random() * 8;
+    piece.style.width = size + 'px';
+    piece.style.height = size + 'px';
+
+    if (Math.random() > 0.5) {
+      piece.style.borderRadius = '50%';
+    } else {
+      piece.style.borderRadius = '2px';
+    }
+
+    container.appendChild(piece);
+  }
+
+  // Clean up after animation
+  setTimeout(() => container.innerHTML = '', 3500);
+}
+
+// ═══ RESULTS ═══
+function showResults() {
+  // Wait a moment for any final matches
+  setTimeout(() => {
+    showScreen('results');
+    const list = document.getElementById('results-list');
+    list.innerHTML = '';
+
+    if (matches.length === 0) {
+      document.getElementById('results-sub').textContent = 'Geen matches deze keer... Probeer het nog eens!';
+      list.innerHTML = '<div class="no-matches">Misschien volgende keer meer geluk samen.</div>';
+      return;
+    }
+
+    document.getElementById('results-sub').textContent =
+      `${matches.length} ${matches.length === 1 ? 'match' : 'matches'} gevonden!`;
+
+    matches.forEach(placeKey => {
+      const place = places.find(p => p.name.replace(/[.#$/\[\]]/g, '_') === placeKey);
+      if (!place) return;
+
+      const card = document.createElement('div');
+      card.className = 'result-card';
+      card.innerHTML = `
+        <div class="result-info">
+          <h3>${place.name}</h3>
+          <span>${place.area}</span>
+        </div>
+        <a class="result-link" href="https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}" target="_blank">Breng me hier</a>
+      `;
+      list.appendChild(card);
+    });
+  }, 500);
+}
+
+// ═══ AUTO-CLEANUP (24h) ═══
+// On page load, clean old sessions if we happen to find them
+async function cleanOldSessions() {
+  try {
+    const sessionsSnap = await db.ref('sessions').orderByChild('created')
+      .endAt(Date.now() - 86400000).limitToFirst(10).once('value');
+    sessionsSnap.forEach(child => {
+      child.ref.remove();
+    });
+  } catch(e) {
+    // Silently fail - not critical
+  }
+}
+cleanOldSessions();
+</script>
+</body>
+</html>
