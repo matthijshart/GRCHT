@@ -384,21 +384,54 @@ nav .links a:hover { opacity: 0.5; }
   border-color: var(--blue);
 }
 
-/* ═══ CARDS ═══ */
-.cards-section {
-  max-width: 1200px; margin: 0 auto; padding: 1.2rem 1rem 3rem;
+/* ═══ CAROUSEL LAYOUT ═══ */
+.carousels-section {
+  max-width: 1400px; margin: 0 auto; padding: 1rem 0 3rem;
 }
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+.carousel-row {
+  margin-bottom: 2rem;
+}
+.carousel-row.hidden { display: none; }
+.carousel-header {
+  display: flex;
+  align-items: baseline;
   gap: 0.8rem;
+  padding: 0 1rem;
+  margin-bottom: 0.6rem;
 }
+.carousel-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--ink);
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+.carousel-header .count {
+  font-size: 0.75rem;
+  color: var(--gray-light);
+  font-weight: 400;
+}
+.carousel-track {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.3rem 1rem 1rem;
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+/* ═══ CARDS ═══ */
 .card {
+  flex: 0 0 280px;
   background: var(--white);
-  border-radius: 8px;
-  padding: 1rem 1.2rem; cursor: pointer;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  cursor: pointer;
   border: 1px solid #e8e3dd;
   transition: transform 0.2s, box-shadow 0.2s;
+  scroll-snap-align: start;
 }
 .card:hover {
   transform: translateY(-2px);
@@ -762,10 +795,11 @@ nav .links a:hover { opacity: 0.5; }
 }
 @media (max-width: 600px) {
   #map { height: 280px; border-radius: 8px; }
-  .cards { grid-template-columns: 1fr; }
   .map-section { padding: 1.5rem 0.6rem 1rem; }
   .filters-section { padding: 1.2rem 0.6rem 0; }
-  .cards-section { padding: 1rem 0.6rem 2rem; }
+  .card { flex: 0 0 250px; }
+  .carousel-header { padding: 0 0.6rem; }
+  .carousel-track { padding: 0.3rem 0.6rem 1rem; }
   /* Spinner mobile */
   .spinner-wrap { padding: 2.5rem 0.8rem; }
   .spinner-title { font-size: clamp(2.2rem, 10vw, 3.5rem); }
@@ -792,11 +826,12 @@ nav .links a:hover { opacity: 0.5; }
     padding: 0.3rem 0.7rem;
   }
   /* Cards mobile */
-  .card { padding: 1rem; }
+  .card { flex: 0 0 240px; padding: 1rem; }
   .card h3 { font-size: 1.1rem; }
   .card .note { font-size: 0.78rem; }
   .card .nav-btn { font-size: 0.68rem; padding: 0.25rem 0.6rem; }
   .card .actions { gap: 0.3rem; }
+  .carousel-header h2 { font-size: 1.6rem; }
   /* Nav mobile */
   nav { padding: 1rem 1.2rem; }
   nav .logo { font-size: 1.4rem; }
@@ -904,9 +939,7 @@ nav .links a:hover { opacity: 0.5; }
     <div class="filter-row area-row" id="area-filters"></div>
     <div class="filter-row" id="filters"></div>
   </div>
-  <div class="cards-section">
-    <div class="cards" id="cards"></div>
-  </div>
+  <div class="carousels-section" id="carousels"></div>
 
   <!-- ANECDOTE FOOTER -->
   <div class="anecdote-wrap" id="anecdotes">
@@ -1189,10 +1222,22 @@ function applyFilters() {
   } else {
     [...filtersEl.children].find(b => b.textContent === (tagLabels[activeTag]||activeTag))?.classList.add('active');
   }
-  document.querySelectorAll('.card').forEach((card, i) => {
-    const matchArea = !activeArea || areaGroups[activeArea].includes(places[i].area);
-    const matchTag = !activeTag || places[i].tags.includes(activeTag);
-    card.classList.toggle('hidden', !(matchArea && matchTag));
+  // Show/hide carousel rows based on area filter
+  document.querySelectorAll('.carousel-row').forEach(row => {
+    const wijk = row.dataset.wijk;
+    const areaMatch = !activeArea || activeArea === wijk;
+    row.classList.toggle('hidden', !areaMatch);
+    // Within visible rows, filter cards by tag
+    row.querySelectorAll('.card').forEach(card => {
+      const tags = card.dataset.tags.split(',');
+      const tagMatch = !activeTag || tags.includes(activeTag);
+      card.classList.toggle('hidden', !tagMatch);
+    });
+    // Hide row if all cards are hidden
+    if (areaMatch) {
+      const visibleCards = row.querySelectorAll('.card:not(.hidden)');
+      row.classList.toggle('hidden', visibleCards.length === 0);
+    }
   });
   // Zoom kaart naar geselecteerde wijk
   if (activeArea) {
@@ -1210,32 +1255,59 @@ function applyFilters() {
   }
 }
 
-// ═══ CARDS ═══
-const cardsEl = document.getElementById('cards');
-places.forEach((p, i) => {
-  const card = document.createElement('div');
-  card.className = 'card';
-  card.onclick = () => {
-    map.setView([p.lat, p.lng], 16, { animate: true });
-    markers[i].openPopup();
-    document.getElementById('kaart').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-  card.innerHTML = `
-    ${p.fav ? '<div class="fav-label">favorietje</div>' : ''}
-    <div class="card-top">
-      <h3>${p.name}</h3>
-    </div>
-    ${p.note ? `<div class="note">${p.note}</div>` : ''}
-    <div class="meta">
-      <span>${p.area}</span>
-      ${p.tags.map(t => `<span class="tag">${tagLabels[t]||t}</span>`).join('')}
-    </div>
-    <div class="actions">
-      ${p.web ? `<a class="link" href="${p.web}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Website \u2192</a>` : ''}
-      <a class="nav-btn" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}" target="_blank" rel="noopener" onclick="event.stopPropagation()">\u2794 Breng me hier</a>
-    </div>
-  `;
-  cardsEl.appendChild(card);
+// ═══ CAROUSELS PER WIJK ═══
+const carouselsEl = document.getElementById('carousels');
+const wijkOrder = ['Jordaan','De Pijp','Zuid','Centrum','Overig'];
+const carouselRows = {};
+
+wijkOrder.forEach(wijk => {
+  const areas = areaGroups[wijk];
+  const wijkPlaces = places.map((p, i) => ({ ...p, originalIndex: i })).filter(p => areas.includes(p.area));
+  if (!wijkPlaces.length) return;
+
+  const row = document.createElement('div');
+  row.className = 'carousel-row';
+  row.dataset.wijk = wijk;
+
+  const header = document.createElement('div');
+  header.className = 'carousel-header';
+  header.innerHTML = `<h2>${wijk}</h2><span class="count">${wijkPlaces.length} plekken</span>`;
+
+  const track = document.createElement('div');
+  track.className = 'carousel-track';
+
+  wijkPlaces.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.originalIndex = p.originalIndex;
+    card.dataset.tags = p.tags.join(',');
+    card.onclick = () => {
+      map.setView([p.lat, p.lng], 16, { animate: true });
+      markers[p.originalIndex].openPopup();
+      document.getElementById('kaart').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    card.innerHTML = `
+      ${p.fav ? '<div class="fav-label">favorietje</div>' : ''}
+      <div class="card-top">
+        <h3>${p.name}</h3>
+      </div>
+      ${p.note ? `<div class="note">${p.note}</div>` : ''}
+      <div class="meta">
+        <span>${p.area}</span>
+        ${p.tags.map(t => `<span class="tag">${tagLabels[t]||t}</span>`).join('')}
+      </div>
+      <div class="actions">
+        ${p.web ? `<a class="link" href="${p.web}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Website \u2192</a>` : ''}
+        <a class="nav-btn" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}" target="_blank" rel="noopener" onclick="event.stopPropagation()">\u2794 Breng me hier</a>
+      </div>
+    `;
+    track.appendChild(card);
+  });
+
+  row.appendChild(header);
+  row.appendChild(track);
+  carouselsEl.appendChild(row);
+  carouselRows[wijk] = row;
 });
 
 // ═══ GEEN IDEE SPINNER ═══
