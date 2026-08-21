@@ -17,17 +17,19 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --black: #0a0a0a;
-  --red: #e63928;
-  --cream: #f0ebe3;
-  --white: #fafaf8;
-  --gray: #6b6660;
-  --gray-light: #a39e96;
-  --blue: #8badc4;
-  --stripe-white: #f5f0e8;
-  --coral: #ef5043;
-  --ink: #1a1817;
-  --ink-mid: #4a4540;
+  /* Oud-mediterraan palet: cipres, salie, zongebleekt pleisterwerk, terracotta */
+  --black: #101a12;
+  --red: #93381f;
+  --cream: #ece3d1;
+  --white: #f8f3e8;
+  --gray: #6f6a5b;
+  --gray-light: #a79f8c;
+  --blue: #9db69a;
+  --olive: #3d6b4f;
+  --stripe-white: #efe6d4;
+  --coral: #b8502e;
+  --ink: #1f2a1e;
+  --ink-mid: #4e564a;
 }
 html { scroll-behavior: auto; }
 body {
@@ -380,8 +382,8 @@ body {
 }
 .stamp-ja {
   right: 1.5rem;
-  color: #2ecc71;
-  border-color: #2ecc71;
+  color: #4e8f63;
+  border-color: #4e8f63;
 }
 .stamp-nee {
   left: 1.5rem;
@@ -412,12 +414,12 @@ body {
   background: var(--white);
   color: var(--red);
 }
-.swipe-btn-nee:hover { background: #ffeaea; transform: scale(1.08); }
+.swipe-btn-nee:hover { background: #f3e0d7; transform: scale(1.08); }
 .swipe-btn-ja {
   background: var(--white);
-  color: #2ecc71;
+  color: #4e8f63;
 }
-.swipe-btn-ja:hover { background: #e8faf0; transform: scale(1.08); }
+.swipe-btn-ja:hover { background: #e2ecdf; transform: scale(1.08); }
 
 .waiting-status {
   margin-top: 1rem;
@@ -1216,7 +1218,7 @@ function updateWaitingStatus(data) {
 function spawnConfetti() {
   const container = document.getElementById('confetti-container');
   container.innerHTML = '';
-  const colors = ['#ef5043', '#8badc4', '#f0ebe3', '#e63928', '#2ecc71', '#f5f0e8', '#FFD700'];
+  const colors = ['#b8502e', '#9db69a', '#ece3d1', '#93381f', '#4e8f63', '#efe6d4', '#c9a227'];
 
   for (let i = 0; i < 60; i++) {
     const piece = document.createElement('div');
