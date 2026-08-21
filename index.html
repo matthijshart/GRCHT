@@ -17,17 +17,19 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --black: #0a0a0a;
-  --red: #e63928;
-  --cream: #f0ebe3;
-  --white: #fafaf8;
-  --gray: #6b6660;
-  --gray-light: #a39e96;
-  --blue: #8badc4;
-  --stripe-white: #f5f0e8;
-  --coral: #ef5043;
-  --ink: #1a1817;
-  --ink-mid: #4a4540;
+  /* Oud-mediterraan palet: cipres, salie, zongebleekt pleisterwerk, terracotta */
+  --black: #101a12;
+  --red: #93381f;
+  --cream: #ece3d1;
+  --white: #f8f3e8;
+  --gray: #6f6a5b;
+  --gray-light: #a79f8c;
+  --blue: #9db69a;
+  --olive: #3d6b4f;
+  --stripe-white: #efe6d4;
+  --coral: #b8502e;
+  --ink: #1f2a1e;
+  --ink-mid: #4e564a;
 }
 html { scroll-behavior: auto; }
 body {
@@ -90,7 +92,7 @@ body {
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 1;
   pointer-events: none;
-  background: rgba(10, 10, 10, 0.15);
+  background: rgba(16, 26, 18, 0.15);
   opacity: 0;
   animation: overlayFadeIn 1s ease 1.8s forwards;
 }
@@ -170,9 +172,28 @@ nav .links a:hover { opacity: 0.5; }
 .hero .sub {
   margin-top: 2rem;
   font-size: 1.1rem;
-  color: #3a3a3a;
+  color: #38342a;
   max-width: 400px;
   line-height: 1.6;
+}
+.hero .updated {
+  margin-top: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #38342a;
+  opacity: 0.65;
+  font-weight: 500;
+}
+.hero .updated::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--coral);
 }
 .partner-badge {
   margin-top: 2.5rem;
@@ -185,7 +206,7 @@ nav .links a:hover { opacity: 0.5; }
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #3a3a3a;
+  color: #38342a;
   opacity: 0.6;
 }
 .partner-badge img {
@@ -320,8 +341,17 @@ nav .links a:hover { opacity: 0.5; }
 .map-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2.5rem 1rem 1.5rem;
+  padding: clamp(3.5rem, 8vw, 6rem) 1rem clamp(3.5rem, 8vw, 5.5rem);
 }
+/* sectiekop erft de padding van de sectie zelf */
+.map-section .section-head,
+.filters-section .section-head {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 2rem;
+}
+.map-section .stats { padding-left: 0; padding-right: 0; max-width: none; margin-top: 2.5rem; }
 .map-section .section-label {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.6rem;
@@ -330,9 +360,9 @@ nav .links a:hover { opacity: 0.5; }
   margin-bottom: 1rem;
 }
 #map {
-  width: 100%; height: 420px;
+  width: 100%; height: 460px;
   border-radius: 10px;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 24px rgba(0,0,0,0.07);
 }
 .leaflet-control-attribution { display: none !important; }
 .leaflet-control-zoom { display: none !important; }
@@ -341,7 +371,7 @@ nav .links a:hover { opacity: 0.5; }
 .filters-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem 0;
+  padding: clamp(3.5rem, 8vw, 6rem) 1rem 0;
 }
 .filter-row {
   display: flex; gap: 0.5rem; flex-wrap: wrap;
@@ -349,13 +379,16 @@ nav .links a:hover { opacity: 0.5; }
 }
 .filter-row button {
   padding: 0.35rem 0.9rem; border-radius: 20px;
-  border: 1px solid #d5d0ca; background: var(--white);
+  border: 1px solid #d8cdb6; background: var(--white);
   font-family: 'Outfit', sans-serif; font-size: 0.78rem;
   color: var(--ink-mid); cursor: pointer; transition: all 0.2s;
   font-weight: 400;
 }
-.filter-row button:hover, .filter-row button.active {
-  background: var(--blue); color: var(--white); border-color: var(--blue);
+.filter-row button:hover {
+  background: var(--ink); color: var(--cream); border-color: var(--ink);
+}
+.filter-row button.active {
+  background: var(--coral); color: var(--white); border-color: var(--coral);
 }
 /* Wijk filters — groot en bold */
 .filter-row.area-row {
@@ -379,9 +412,9 @@ nav .links a:hover { opacity: 0.5; }
   border-color: var(--ink);
 }
 .filter-row.area-row button.active {
-  background: var(--blue);
+  background: var(--coral);
   color: var(--white);
-  border-color: var(--blue);
+  border-color: var(--coral);
 }
 
 /* ═══ CAROUSEL LAYOUT ═══ */
@@ -429,7 +462,7 @@ nav .links a:hover { opacity: 0.5; }
   border-radius: 10px;
   padding: 1rem 1.2rem;
   cursor: pointer;
-  border: 1px solid #e8e3dd;
+  border: 1px solid #e2d8c2;
   transition: transform 0.2s, box-shadow 0.2s;
   scroll-snap-align: start;
 }
@@ -456,11 +489,11 @@ nav .links a:hover { opacity: 0.5; }
 .card .meta span { display: inline-flex; align-items: center; gap: 0.2rem; }
 .card .tag {
   display: inline-block; padding: 0.12rem 0.45rem; border-radius: 10px;
-  background: #f0ebe3; font-size: 0.68rem; color: var(--ink-mid);
+  background: #e6dcc7; font-size: 0.68rem; color: var(--ink-mid);
 }
 .card .link {
   display: inline-block; margin-top: 0.5rem;
-  font-size: 0.75rem; color: var(--blue);
+  font-size: 0.75rem; color: var(--olive);
   text-decoration: none; font-weight: 500;
   letter-spacing: 0.03em; transition: color 0.2s;
 }
@@ -469,7 +502,7 @@ nav .links a:hover { opacity: 0.5; }
   display: inline-flex; align-items: center; gap: 0.3rem;
   margin-top: 0.5rem; margin-left: 0.5rem;
   padding: 0.3rem 0.7rem; border-radius: 14px;
-  background: var(--blue); color: var(--white);
+  background: var(--olive); color: var(--white);
   font-size: 0.72rem; font-weight: 500; font-family: 'Outfit', sans-serif;
   text-decoration: none; letter-spacing: 0.02em;
   transition: background 0.2s;
@@ -493,76 +526,72 @@ nav .links a:hover { opacity: 0.5; }
 .p-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); letter-spacing: 0.04em; }
 .p-note { font-size: 0.78rem; color: var(--ink-mid); margin-top: 2px; }
 
-/* ═══ SWIPE & DINE BANNER ═══ */
+/* ═══ SWIPE & DINE — SLOTSECTIE ═══ */
 .swipe-banner {
-  background: var(--coral);
-  padding: 3rem 1.5rem;
+  background: var(--ink);
+  color: var(--cream);
+  padding: clamp(4rem, 10vw, 7rem) 1.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
 }
-.swipe-banner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 40px,
-    transparent 40px, transparent 80px
-  );
-  pointer-events: none;
-}
 .swipe-banner-inner {
   position: relative;
   z-index: 1;
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto;
 }
 .swipe-banner-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3rem, 10vw, 6rem);
-  color: var(--white);
-  letter-spacing: 0.04em;
-  line-height: 0.9;
-  margin-bottom: 0.5rem;
+  font-size: clamp(3rem, 11vw, 7rem);
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  line-height: 0.88;
+  margin-bottom: 0.8rem;
+}
+.swipe-banner-title em {
+  font-style: normal;
+  color: var(--coral);
 }
 .swipe-banner-sub {
   font-size: 1rem;
-  color: rgba(255,255,255,0.8);
-  margin-bottom: 2rem;
-  line-height: 1.5;
+  color: rgba(236, 227, 209, 0.62);
+  margin-bottom: 2.4rem;
+  line-height: 1.6;
+  max-width: 34ch;
+  margin-left: auto;
+  margin-right: auto;
 }
 .swipe-banner-btn {
   display: inline-block;
-  padding: 0.9rem 2.5rem;
+  padding: 1rem 2.6rem;
   border-radius: 50px;
-  background: var(--white);
-  color: var(--coral);
+  background: var(--coral);
+  color: var(--white);
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.5rem;
   letter-spacing: 0.1em;
   text-decoration: none;
-  transition: all 0.2s;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s;
 }
 .swipe-banner-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 30px rgba(0,0,0,0.15);
+  transform: translateY(-3px);
+  background: var(--red);
 }
 .swipe-banner-btn:active {
-  transform: scale(0.97);
+  transform: translateY(0) scale(0.98);
 }
-
 .swipe-banner-new {
   display: inline-block;
-  padding: 0.2rem 0.8rem;
-  background: var(--white);
-  color: var(--coral);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 0.8rem;
-  letter-spacing: 0.15em;
+  padding: 0.25rem 0.85rem;
+  border: 1px solid rgba(236, 227, 209, 0.32);
+  color: rgba(236, 227, 209, 0.75);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
   border-radius: 20px;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.4rem;
 }
 
 /* ═══ GEEN IDEE SPINNER ═══ */
@@ -577,10 +606,6 @@ nav .links a:hover { opacity: 0.5; }
   padding: 3.5rem 1rem;
   position: relative;
 }
-@keyframes yellowStripeScroll {
-  0%   { background-position: 0 0; }
-  100% { background-position: 100px 0; }
-}
 .spinner-section {
   max-width: 700px;
   margin: 0 auto;
@@ -588,20 +613,28 @@ nav .links a:hover { opacity: 0.5; }
   position: relative;
   z-index: 1;
 }
+.spinner-eyebrow {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 1rem;
+}
 .spinner-title {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(2.8rem, 8vw, 5rem);
-  color: #1e2a5a;
-  letter-spacing: 0.04em;
+  color: var(--ink);
+  letter-spacing: 0.03em;
   line-height: 0.9;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
-.spinner-title span { color: #e63928; }
+.spinner-title span { color: var(--coral); }
 .spinner-sub {
   font-size: 0.95rem;
-  color: #1e2a5a;
-  margin-bottom: 2rem;
-  opacity: 0.7;
+  color: var(--ink-mid);
+  margin-bottom: 2.4rem;
+  opacity: 0.75;
 }
 .spinner-question {
   margin-bottom: 1.5rem;
@@ -609,7 +642,7 @@ nav .links a:hover { opacity: 0.5; }
 .spinner-q-label {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.1rem;
-  color: #1e2a5a;
+  color: var(--ink);
   letter-spacing: 0.08em;
   margin-bottom: 0.5rem;
   opacity: 0.6;
@@ -622,42 +655,42 @@ nav .links a:hover { opacity: 0.5; }
 .person-btns button {
   width: 44px; height: 44px;
   border-radius: 50%;
-  border: 2.5px solid #1e2a5a;
-  background: rgba(255,255,255,0.7);
+  border: 2.5px solid var(--ink);
+  background: transparent;
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.3rem;
-  color: #1e2a5a;
+  color: var(--ink);
   cursor: pointer;
   transition: all 0.2s;
 }
 .wijk-btns button {
   padding: 0.4rem 1rem;
   border-radius: 25px;
-  border: 2px solid #1e2a5a;
-  background: rgba(255,255,255,0.7);
+  border: 2px solid var(--ink);
+  background: transparent;
   font-family: 'Outfit', sans-serif;
   font-size: 0.82rem;
-  color: #1e2a5a;
+  color: var(--ink);
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 400;
 }
 .wijk-btns button.selected {
-  background: #1e2a5a;
-  color: #f5c842;
+  background: var(--ink);
+  color: var(--cream);
 }
 .wijk-btns button:hover {
-  background: #1e2a5a;
-  color: #fffdf5;
+  background: var(--ink);
+  color: var(--white);
 }
 .person-btns button.selected {
-  background: #1e2a5a;
-  color: #f5c842;
+  background: var(--ink);
+  color: var(--cream);
 }
 .person-btns button:hover {
-  background: #1e2a5a;
-  color: #fffdf5;
-  border-color: #1e2a5a;
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
 }
 /* Slot reel */
 .slot-wrapper {
@@ -665,9 +698,9 @@ nav .links a:hover { opacity: 0.5; }
   height: 80px;
   overflow: hidden;
   border-radius: 10px;
-  border: 3px solid #1e2a5a;
+  border: 2px solid var(--ink);
   margin-bottom: 1.5rem;
-  background: rgba(255,255,255,0.85);
+  background: var(--white);
   backdrop-filter: blur(6px);
 }
 .slot-wrapper::before, .slot-wrapper::after {
@@ -680,11 +713,11 @@ nav .links a:hover { opacity: 0.5; }
 }
 .slot-wrapper::before {
   top: 0;
-  background: linear-gradient(to bottom, rgba(255,253,245,0.9), transparent);
+  background: linear-gradient(to bottom, rgba(248,243,232,0.95), transparent);
 }
 .slot-wrapper::after {
   bottom: 0;
-  background: linear-gradient(to top, rgba(255,253,245,0.9), transparent);
+  background: linear-gradient(to top, rgba(248,243,232,0.95), transparent);
 }
 .slot-reel {
   position: absolute;
@@ -702,14 +735,14 @@ nav .links a:hover { opacity: 0.5; }
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2rem;
   letter-spacing: 0.06em;
-  color: #1e2a5a;
+  color: var(--ink);
   white-space: nowrap;
   flex-shrink: 0;
 }
 .slot-item .slot-area {
   font-family: 'Outfit', sans-serif;
   font-size: 0.75rem;
-  color: #1e2a5a;
+  color: var(--ink);
   opacity: 0.5;
   margin-left: 0.6rem;
   font-weight: 400;
@@ -720,9 +753,9 @@ nav .links a:hover { opacity: 0.5; }
   display: inline-block;
   padding: 0.9rem 3rem;
   border-radius: 50px;
-  border: 3px solid #1e2a5a;
-  background: #1e2a5a;
-  color: #f5c842;
+  border: 2px solid var(--ink);
+  background: var(--ink);
+  color: var(--cream);
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.8rem;
   letter-spacing: 0.12em;
@@ -730,9 +763,10 @@ nav .links a:hover { opacity: 0.5; }
   transition: all 0.2s;
 }
 .spin-btn:hover {
-  background: #f5c842;
-  color: #1e2a5a;
-  transform: scale(1.05);
+  background: var(--coral);
+  border-color: var(--coral);
+  color: var(--white);
+  transform: translateY(-2px);
 }
 .spin-btn:active {
   transform: scale(0.96);
@@ -752,12 +786,12 @@ nav .links a:hover { opacity: 0.5; }
 .spin-result .result-name {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2.4rem;
-  color: #1e2a5a;
+  color: var(--ink);
   letter-spacing: 0.04em;
 }
 .spin-result .result-note {
   font-size: 0.85rem;
-  color: #1e2a5a;
+  color: var(--ink);
   opacity: 0.6;
   font-style: italic;
   margin: 0.3rem 0;
@@ -777,67 +811,69 @@ nav .links a:hover { opacity: 0.5; }
   transition: all 0.2s;
 }
 .spin-result .result-nav {
-  background: #1e2a5a;
-  color: #f5c842;
+  background: var(--ink);
+  color: var(--cream);
 }
-.spin-result .result-nav:hover { background: var(--blue); color: var(--white); }
+.spin-result .result-nav:hover { background: var(--olive); color: var(--white); }
 .spin-result .result-retry {
-  background: rgba(255,255,255,0.6);
-  border: 2px solid #1e2a5a;
-  color: #1e2a5a;
+  background: transparent;
+  border: 2px solid var(--ink);
+  color: var(--ink);
   cursor: pointer;
 }
 .spin-result .result-retry:hover {
-  background: #1e2a5a;
-  color: #f5c842;
+  background: var(--ink);
+  color: var(--cream);
 }
 
 /* ═══ ANECDOTE FOOTER ═══ */
 .anecdote-wrap {
-  background: repeating-linear-gradient(
-    90deg,
-    #e63928 0px, #e63928 45px,
-    #fffdf5 45px, #fffdf5 90px
-  );
-  background-size: 90px 100%;
-  padding: 3.5rem 1.5rem;
+  background: var(--cream);
+  padding: clamp(4rem, 9vw, 6.5rem) 1.5rem;
   text-align: center;
   position: relative;
 }
 .anecdote-inner {
-  max-width: 500px;
+  max-width: 560px;
   margin: 0 auto;
-  background: rgba(255,253,245,0.88);
-  backdrop-filter: blur(6px);
-  border-radius: 12px;
-  padding: 2rem 2rem;
+  padding: 0;
+  position: relative;
+}
+.anecdote-inner::before {
+  content: '';
+  display: block;
+  width: 34px;
+  height: 2px;
+  background: var(--coral);
+  margin: 0 auto 1.6rem;
 }
 .anecdote-label {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #e63928;
-  margin-bottom: 0.8rem;
-  opacity: 0.7;
+  color: var(--coral);
+  margin-bottom: 1.1rem;
 }
 .anecdote-text {
-  font-size: 0.95rem;
-  color: #1a1817;
-  line-height: 1.6;
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  color: var(--ink);
+  line-height: 1.55;
   font-style: italic;
+  font-weight: 300;
   transition: opacity 0.3s;
+  min-height: 4.5em;
 }
 .anecdote-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  margin-top: 1.2rem;
-  padding: 0.4rem 1rem;
-  border: 1px solid rgba(230,57,40,0.25);
+  margin-top: 2rem;
+  padding: 0.45rem 1.1rem;
+  border: 1px solid rgba(184,80,46,0.28);
   border-radius: 20px;
   background: transparent;
-  color: #e63928;
+  color: var(--coral);
   font-family: 'Outfit', sans-serif;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
@@ -847,14 +883,152 @@ nav .links a:hover { opacity: 0.5; }
 }
 .anecdote-btn:hover {
   opacity: 1;
-  background: rgba(230,57,40,0.08);
-  border-color: rgba(230,57,40,0.4);
+  background: rgba(184,80,46,0.09);
+  border-color: rgba(184,80,46,0.45);
 }
 .anecdote-btn svg {
   transition: transform 0.4s;
 }
 .anecdote-btn:active svg {
   transform: rotate(360deg);
+}
+
+/* ═══ SECTIEKOPPEN ═══ */
+.section-head {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.section-head .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--coral);
+}
+.section-head .eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.25;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+.section-head.in .eyebrow::after { transform: scaleX(1); }
+.section-head h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  letter-spacing: 0.03em;
+  line-height: 1;
+  color: var(--ink);
+  margin-top: 0.7rem;
+  font-weight: 400;
+}
+.section-head p {
+  color: var(--ink-mid);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 0.6rem;
+  max-width: 44ch;
+  opacity: 0.85;
+}
+
+/* ═══ STATS ═══ */
+.stats {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  border-top: 1px solid #ded3bd;
+}
+.stat .num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  line-height: 1;
+  color: var(--coral);
+  letter-spacing: 0.02em;
+}
+.stat .lbl {
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  opacity: 0.7;
+  margin-top: 0.35rem;
+}
+
+/* ═══ SCROLL REVEAL ═══ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+.reveal-zoom {
+  opacity: 0;
+  transform: scale(0.975);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-zoom.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Kaarten faden in per rij. `backwards` fill zorgt dat de animatie na
+   afloop loslaat, zodat de hover-transition van .card intact blijft. */
+.carousel-row .card { opacity: 0; }
+.carousel-row.in .card {
+  opacity: 1;
+  animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ═══ SCROLL PROGRESS ═══ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  z-index: 200;
+  background: var(--coral);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-zoom {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .carousel-row .card, .carousel-row.in .card {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  .section-head .eyebrow::after { transform: scaleX(1) !important; transition: none !important; }
+  .stripe-band .band-text span { animation: none !important; }
+  .hero .scroll-hint { animation: none !important; }
+  .spotify-hint svg { animation: none !important; }
 }
 
 /* ═══ RESPONSIVE ═══ */
@@ -866,9 +1040,16 @@ nav .links a:hover { opacity: 0.5; }
   .stripe-band .band-text { font-size: 1.2rem; }
 }
 @media (max-width: 600px) {
-  #map { height: 280px; border-radius: 8px; }
-  .map-section { padding: 1.5rem 0.6rem 1rem; }
-  .filters-section { padding: 1.2rem 0.6rem 0; }
+  #map { height: 300px; border-radius: 8px; }
+  .map-section { padding: 2.5rem 0.9rem 2.5rem; }
+  .filters-section { padding: 2.5rem 0.9rem 0; }
+  .section-head h2 { font-size: 2rem; }
+  .section-head p { font-size: 0.88rem; }
+  .stats { gap: 1.5rem 2rem; padding-top: 1.8rem; }
+  .map-section .stats { margin-top: 2rem; }
+  .stat .num { font-size: 2.2rem; }
+  .swipe-banner { padding: 3.5rem 1.2rem; }
+  .anecdote-wrap { padding: 3.5rem 1.2rem; }
   .card { flex: 0 0 250px; }
   .carousel-header { padding: 0 0.6rem; }
   .carousel-track { padding: 0.3rem 0.6rem 1rem; }
@@ -917,6 +1098,8 @@ nav .links a:hover { opacity: 0.5; }
 </head>
 <body>
 
+<div class="scroll-progress" id="scrollProgress"></div>
+
 <!-- ═══ STRIPES ACHTERGROND ═══ -->
 <div class="stripes-bg" id="stripesBg"></div>
 <div class="stripes-overlay" id="stripesOverlay"></div>
@@ -936,6 +1119,7 @@ nav .links a:hover { opacity: 0.5; }
 <section class="hero">
   <h1><small>(W)</small>ETEN<span>WAAR.</span></h1>
   <p class="sub">Geen algoritme. Geen influencers. Gewoon plekken waar wij &eacute;cht komen.</p>
+  <span class="updated">Laatst bijgewerkt &mdash; augustus 2026</span>
   <div class="hero-spotify">
     <div class="spotify-hint">
       <span>speel af &amp; kijk lekker rond</span>
@@ -974,22 +1158,23 @@ nav .links a:hover { opacity: 0.5; }
 
   <!-- KAART -->
   <div class="map-section" id="kaart">
-    <div id="map"></div>
-  </div>
-
-  <!-- SWIPE & DINE BANNER -->
-  <div class="swipe-banner">
-    <div class="swipe-banner-inner">
-      <div class="swipe-banner-new">NEW</div>
-      <div class="swipe-banner-title">SWIPE &amp; DINE</div>
-      <p class="swipe-banner-sub">Samen kiezen waar je eet. Swipe, match, boek.</p>
-      <a class="swipe-banner-btn" href="duo.html">START SESSIE &rarr;</a>
+    <div class="section-head reveal">
+      <div class="eyebrow">01 &mdash; De kaart</div>
+      <h2>Waar het allemaal ligt</h2>
+      <p>Elke stip is een plek waar we zelf zijn geweest. Tik erop, of kies hieronder een wijk.</p>
+    </div>
+    <div id="map" class="reveal-zoom"></div>
+    <div class="stats reveal" id="stats">
+      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">plekken</div></div>
+      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">buurten</div></div>
+      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">influencers</div></div>
     </div>
   </div>
 
   <!-- GEEN IDEE SPINNER -->
   <div class="spinner-wrap" id="geen-idee">
-    <div class="spinner-section">
+    <div class="spinner-section reveal">
+      <div class="spinner-eyebrow">02 &mdash; Laat ons kiezen</div>
       <div class="spinner-title">GEEN IDEE<span>?</span></div>
       <p class="spinner-sub">Wij kiezen voor je.</p>
       <div class="spinner-question">
@@ -1026,14 +1211,19 @@ nav .links a:hover { opacity: 0.5; }
 
   <!-- FILTERS + CARDS -->
   <div class="filters-section" id="plekken">
-    <div class="filter-row area-row" id="area-filters"></div>
-    <div class="filter-row" id="filters"></div>
+    <div class="section-head reveal">
+      <div class="eyebrow">03 &mdash; De lijst</div>
+      <h2>Alle plekken</h2>
+      <p>Filter op wijk of op waar je zin in hebt. Tik een kaartje aan om het op de kaart te zien.</p>
+    </div>
+    <div class="filter-row area-row reveal" id="area-filters"></div>
+    <div class="filter-row reveal" id="filters"></div>
   </div>
   <div class="carousels-section" id="carousels"></div>
 
   <!-- ANECDOTE FOOTER -->
   <div class="anecdote-wrap" id="anecdotes">
-    <div class="anecdote-inner">
+    <div class="anecdote-inner reveal">
       <div class="anecdote-label">Wist je dat</div>
       <div class="anecdote-text" id="anecdoteText"></div>
       <button class="anecdote-btn" id="anecdoteBtn" aria-label="Nieuw weetje">
@@ -1044,6 +1234,16 @@ nav .links a:hover { opacity: 0.5; }
         </svg>
         <span>nog eentje</span>
       </button>
+    </div>
+  </div>
+
+  <!-- SWIPE & DINE — SLOTSECTIE -->
+  <div class="swipe-banner" id="swipe">
+    <div class="swipe-banner-inner reveal">
+      <div class="swipe-banner-new">Nieuw</div>
+      <div class="swipe-banner-title">SWIPE &amp;<br><em>DINE</em></div>
+      <p class="swipe-banner-sub">Samen kiezen waar je eet. Ieder swipet, bij een match weet je het meteen.</p>
+      <a class="swipe-banner-btn" href="duo.html">Start sessie &rarr;</a>
     </div>
   </div>
 
@@ -1219,15 +1419,24 @@ const places = [
   { name:"Caf\u00e9 Kieb\u00eart", area:"Oud-Zuid", hearts:0, note:"Open haard, gezellig op de Marathonweg", lat:52.3458,lng:4.8645, web:"", tags:["caf\u00e9","restaurant"] },
   { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"Gezellig", lat:52.3465,lng:4.8655, web:"", tags:["bar"] },
   { name:"'t Smalle", area:"Jordaan", hearts:0, note:"Biertje of broodje bal, altijd goed", lat:52.3758,lng:4.8838, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
-  { name:"Papeneiland", area:"Jordaan", fav:true, note:"Terrasje als de zon schijnt", lat:52.3803,lng:4.8842, web:"", tags:["terras","caf\u00e9"] },
+  { name:"Papeneiland", area:"Jordaan", fav:true, note:"Terrasje als de zon schijnt", lat:52.3826,lng:4.8871, web:"", tags:["terras","caf\u00e9"] },
   { name:"Bistro Feline", area:"Jordaan", hearts:0, note:"Michelin gids, neem de kreeftenorzo", lat:52.3769,lng:4.8832, web:"", tags:["restaurant","frans"] },
   { name:"La Perla", area:"Jordaan", hearts:0, note:"Gewoon gezellig pizza aan de bar", lat:52.3737,lng:4.8810, web:"", tags:["italiaans","pizza"] },
-  { name:"De Pizzakamer", area:"De Pijp", hearts:0, note:"Houtoven pizza, terras, altijd goed", lat:52.3543,lng:4.8933, web:"", tags:["italiaans","pizza"] },
+  { name:"De Pizzakamer", area:"De Pijp", hearts:0, note:"Houtoven pizza, terras, altijd goed", lat:52.3561,lng:4.8945, web:"", tags:["italiaans","pizza"] },
   { name:"Pilsvogel", area:"De Pijp", fav:true, note:"Terras op het plein, lekker biertje", lat:52.3555,lng:4.8937, web:"", tags:["bar","terras"] },
-  { name:"Caf\u00e9 Sarphaat", area:"De Pijp", hearts:0, note:"Chill caf\u00e9 op de Ceintuurbaan", lat:52.3530,lng:4.8945, web:"", tags:["caf\u00e9","terras"] },
+  { name:"Caf\u00e9 Sarphaat", area:"De Pijp", hearts:0, note:"Chill caf\u00e9 op de Ceintuurbaan", lat:52.3536,lng:4.8942, web:"", tags:["caf\u00e9","terras"] },
   { name:"Caf\u00e9-Restaurant Hesp", area:"Oost", hearts:0, note:"Terras aan het water, biertje en oesters", lat:52.3538,lng:4.9105, web:"", tags:["caf\u00e9","terras","oesters"] },
   { name:"Caf\u00e9 Wildschut", area:"Oud-Zuid", hearts:0, note:"Lunch, niet gek gewoon goed", lat:52.3537,lng:4.8830, web:"", tags:["caf\u00e9","lunch","terras"] },
   { name:"Caf\u00e9 Thijssen", area:"Jordaan", hearts:0, note:"Gemoedelijk, koffie of biertje aan de Brouwersgracht", lat:52.3820,lng:4.8848, web:"", tags:["caf\u00e9","brunch"] },
+  { name:"Ilario", area:"De Pijp", fav:true, note:"Onze favoriet. Aperol erbij en een lekkere pasta", lat:52.3554,lng:4.8960, web:"https://ilario.nl", tags:["italiaans","bar","pasta","terras"] },
+  { name:"Samuel's", area:"De Pijp", hearts:0, note:"Hip, lekker, gewoon helemaal top", lat:52.3546,lng:4.8920, web:"", tags:["restaurant","terras"] },
+  { name:"Brio", area:"De Pijp", hearts:0, note:"Nog een beetje onontdekt \u2014 reserveer aan de bar voor Italiaans en goede wijn", lat:52.3550,lng:4.8960, web:"", tags:["italiaans","wijn","restaurant"] },
+  { name:"Caf\u00e9 De Klepel", area:"Jordaan", hearts:0, note:"Aanrader als je iets te vieren hebt. Fantastische wijnen, leuke sommeliers, top eten", lat:52.3791,lng:4.8872, web:"https://cafedeklepel.nl", tags:["frans","wijn","restaurant"] },
+  { name:"Le Petit Bouillon", area:"Oud-Zuid", hearts:0, note:"Goedkoop en lekker, precies waar het om bekend staat. Geen gekke sfeer, wel altijd prima", lat:52.3457,lng:4.8763, web:"", tags:["frans","restaurant","terras"] },
+  { name:"Caf\u00e9-Restaurant Meyer", area:"Amstelveld", hearts:0, note:"Zelfde eigenaar als Marcella, net zo gezellig", lat:52.3625,lng:4.8957, web:"", tags:["caf\u00e9","restaurant","terras"] },
+  { name:"Caf\u00e9 De Blaffende Vis", area:"Jordaan", hearts:0, note:"Hartje Jordaan, voor weinig goed eten of de daghap", lat:52.3788,lng:4.8818, web:"", tags:["caf\u00e9","bruin caf\u00e9","terras"] },
+  { name:"SALUT", area:"De Pijp", hearts:0, note:"Leuk, hip en grappig. Beetje ordi vibes, maar dan op de goede manier", lat:52.3564,lng:4.8936, web:"", tags:["restaurant","terras"] },
+  { name:"De Wasserette", area:"De Pijp", hearts:0, note:"Ga hier ontbijten \u2014 broodje smashed avo met kip en parmezaan, echt een topper", lat:52.3553,lng:4.8933, web:"", tags:["ontbijt","brunch","lunch"] },
 ];
 
 // ═══ MAP ═══
@@ -1235,16 +1444,16 @@ const map = L.map('map', { scrollWheelZoom: false, attributionControl: false }).
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   maxZoom: 18
 }).addTo(map);
-document.querySelector('.leaflet-tile-pane').style.filter = 'saturate(0.3) contrast(1.05)';
+document.querySelector('.leaflet-tile-pane').style.filter = 'saturate(0.45) contrast(1.02) sepia(0.18) hue-rotate(-8deg)';
 
 const bounds = [];
 const markers = [];
 places.forEach((p, i) => {
   const size = 10;
-  const color = '#8badc4';
+  const color = '#3d6b4f';
   const icon = L.divIcon({
     className: '',
-    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid #fff;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,0.25);"></div>`,
+    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid #f8f3e8;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,0.25);"></div>`,
     iconSize: [size, size], iconAnchor: [size/2, size/2]
   });
   const marker = L.marker([p.lat, p.lng], { icon }).addTo(map);
@@ -1517,6 +1726,86 @@ spinBtn.onclick = () => {
 
   requestAnimationFrame(animate);
 };
+
+// ═══ SCROLL REVEALS ═══
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const revealObserver = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('in');
+    obs.unobserve(entry.target);
+  });
+}, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+
+function observeReveals(root = document) {
+  root.querySelectorAll('.reveal:not(.in), .reveal-zoom:not(.in), .section-head:not(.in)')
+    .forEach(el => {
+      if (reduceMotion) { el.classList.add('in'); return; }
+      revealObserver.observe(el);
+    });
+}
+
+// Kaarten komen gestaggerd binnen zodra hun rij in beeld komt.
+// We observeren de rij (niet de losse kaarten), zodat kaarten die
+// horizontaal buiten de track vallen niet onzichtbaar blijven hangen.
+document.querySelectorAll('.carousel-track').forEach(track => {
+  [...track.children].forEach((card, i) => {
+    card.style.setProperty('--d', `${Math.min(i, 6) * 70}ms`);
+  });
+});
+document.querySelectorAll('.carousel-row').forEach(row => {
+  if (reduceMotion) { row.classList.add('in'); return; }
+  revealObserver.observe(row);
+});
+
+observeReveals();
+
+// ═══ TELLERS ═══
+const statsEl = document.getElementById('stats');
+if (statsEl) {
+  const nums = statsEl.querySelectorAll('.num');
+  const targets = [places.length, new Set(places.map(p => p.area)).size, 0];
+  nums.forEach((n, i) => n.dataset.count = targets[i]);
+
+  const countObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      obs.unobserve(entry.target);
+      nums.forEach(n => {
+        const target = parseInt(n.dataset.count, 10);
+        if (reduceMotion || target === 0) { n.textContent = target; return; }
+        const duration = 900;
+        let start = null;
+        const step = ts => {
+          if (!start) start = ts;
+          const p = Math.min((ts - start) / duration, 1);
+          n.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    });
+  }, { threshold: 0.4 });
+  countObserver.observe(statsEl);
+}
+
+// ═══ SCROLL PROGRESS ═══
+const progressEl = document.getElementById('scrollProgress');
+let progressTicking = false;
+function updateProgress() {
+  if (progressTicking) return;
+  progressTicking = true;
+  requestAnimationFrame(() => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+    progressEl.style.transform = `scaleX(${p})`;
+    progressTicking = false;
+  });
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+window.addEventListener('resize', updateProgress, { passive: true });
+updateProgress();
 </script>
 </body>
 </html>
