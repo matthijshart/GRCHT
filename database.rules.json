@@ -1,0 +1,32 @@
+{
+  // Regels voor Swipe & Dine (duo.html). Er is geen login: de sessiecode van
+  // vier hoofdletters is het gedeelde geheim. Alles buiten /sessions is dicht.
+  "rules": {
+    "sessions": {
+      ".indexOn": ["created"],
+
+      // Leesrecht op de hele lijst geldt alleen voor de opruimquery uit
+      // duo.html, niet om zomaar alle sessies op te halen.
+      ".read": "query.orderByChild == 'created' && query.limitToFirst <= 10",
+
+      "$code": {
+        ".read": true,
+        ".write": "$code.matches(/^[A-Z]{4}$/)",
+
+        "created": { ".validate": "newData.isNumber()" },
+
+        "players": {
+          "$player": {
+            ".validate": "$player.matches(/^player[12]$/) && newData.isBoolean()"
+          }
+        },
+
+        "votes": {
+          "$player": {
+            "$place": { ".validate": "newData.isBoolean()" }
+          }
+        }
+      }
+    }
+  }
+}
