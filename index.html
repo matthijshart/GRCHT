@@ -174,6 +174,25 @@ nav .links a:hover { opacity: 0.5; }
   max-width: 400px;
   line-height: 1.6;
 }
+.hero .updated {
+  margin-top: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #3a3a3a;
+  opacity: 0.65;
+  font-weight: 500;
+}
+.hero .updated::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--coral);
+}
 .partner-badge {
   margin-top: 2.5rem;
   display: flex;
@@ -936,6 +955,7 @@ nav .links a:hover { opacity: 0.5; }
 <section class="hero">
   <h1><small>(W)</small>ETEN<span>WAAR.</span></h1>
   <p class="sub">Geen algoritme. Geen influencers. Gewoon plekken waar wij &eacute;cht komen.</p>
+  <span class="updated">Laatst bijgewerkt &mdash; augustus 2026</span>
   <div class="hero-spotify">
     <div class="spotify-hint">
       <span>speel af &amp; kijk lekker rond</span>
@@ -1219,15 +1239,24 @@ const places = [
   { name:"Caf\u00e9 Kieb\u00eart", area:"Oud-Zuid", hearts:0, note:"Open haard, gezellig op de Marathonweg", lat:52.3458,lng:4.8645, web:"", tags:["caf\u00e9","restaurant"] },
   { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"Gezellig", lat:52.3465,lng:4.8655, web:"", tags:["bar"] },
   { name:"'t Smalle", area:"Jordaan", hearts:0, note:"Biertje of broodje bal, altijd goed", lat:52.3758,lng:4.8838, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
-  { name:"Papeneiland", area:"Jordaan", fav:true, note:"Terrasje als de zon schijnt", lat:52.3803,lng:4.8842, web:"", tags:["terras","caf\u00e9"] },
+  { name:"Papeneiland", area:"Jordaan", fav:true, note:"Terrasje als de zon schijnt", lat:52.3826,lng:4.8871, web:"", tags:["terras","caf\u00e9"] },
   { name:"Bistro Feline", area:"Jordaan", hearts:0, note:"Michelin gids, neem de kreeftenorzo", lat:52.3769,lng:4.8832, web:"", tags:["restaurant","frans"] },
   { name:"La Perla", area:"Jordaan", hearts:0, note:"Gewoon gezellig pizza aan de bar", lat:52.3737,lng:4.8810, web:"", tags:["italiaans","pizza"] },
-  { name:"De Pizzakamer", area:"De Pijp", hearts:0, note:"Houtoven pizza, terras, altijd goed", lat:52.3543,lng:4.8933, web:"", tags:["italiaans","pizza"] },
+  { name:"De Pizzakamer", area:"De Pijp", hearts:0, note:"Houtoven pizza, terras, altijd goed", lat:52.3561,lng:4.8945, web:"", tags:["italiaans","pizza"] },
   { name:"Pilsvogel", area:"De Pijp", fav:true, note:"Terras op het plein, lekker biertje", lat:52.3555,lng:4.8937, web:"", tags:["bar","terras"] },
-  { name:"Caf\u00e9 Sarphaat", area:"De Pijp", hearts:0, note:"Chill caf\u00e9 op de Ceintuurbaan", lat:52.3530,lng:4.8945, web:"", tags:["caf\u00e9","terras"] },
+  { name:"Caf\u00e9 Sarphaat", area:"De Pijp", hearts:0, note:"Chill caf\u00e9 op de Ceintuurbaan", lat:52.3536,lng:4.8942, web:"", tags:["caf\u00e9","terras"] },
   { name:"Caf\u00e9-Restaurant Hesp", area:"Oost", hearts:0, note:"Terras aan het water, biertje en oesters", lat:52.3538,lng:4.9105, web:"", tags:["caf\u00e9","terras","oesters"] },
   { name:"Caf\u00e9 Wildschut", area:"Oud-Zuid", hearts:0, note:"Lunch, niet gek gewoon goed", lat:52.3537,lng:4.8830, web:"", tags:["caf\u00e9","lunch","terras"] },
   { name:"Caf\u00e9 Thijssen", area:"Jordaan", hearts:0, note:"Gemoedelijk, koffie of biertje aan de Brouwersgracht", lat:52.3820,lng:4.8848, web:"", tags:["caf\u00e9","brunch"] },
+  { name:"Ilario", area:"De Pijp", fav:true, note:"Onze favoriet. Aperol erbij en een lekkere pasta", lat:52.3554,lng:4.8960, web:"https://ilario.nl", tags:["italiaans","bar","pasta","terras"] },
+  { name:"Samuel's", area:"De Pijp", hearts:0, note:"Hip, lekker, gewoon helemaal top", lat:52.3546,lng:4.8920, web:"", tags:["restaurant","terras"] },
+  { name:"Brio", area:"De Pijp", hearts:0, note:"Nog een beetje onontdekt \u2014 reserveer aan de bar voor Italiaans en goede wijn", lat:52.3550,lng:4.8960, web:"", tags:["italiaans","wijn","restaurant"] },
+  { name:"Caf\u00e9 De Klepel", area:"Jordaan", hearts:0, note:"Aanrader als je iets te vieren hebt. Fantastische wijnen, leuke sommeliers, top eten", lat:52.3791,lng:4.8872, web:"https://cafedeklepel.nl", tags:["frans","wijn","restaurant"] },
+  { name:"Le Petit Bouillon", area:"Oud-Zuid", hearts:0, note:"Goedkoop en lekker, precies waar het om bekend staat. Geen gekke sfeer, wel altijd prima", lat:52.3457,lng:4.8763, web:"", tags:["frans","restaurant","terras"] },
+  { name:"Caf\u00e9-Restaurant Meyer", area:"Amstelveld", hearts:0, note:"Zelfde eigenaar als Marcella, net zo gezellig", lat:52.3625,lng:4.8957, web:"", tags:["caf\u00e9","restaurant","terras"] },
+  { name:"Caf\u00e9 De Blaffende Vis", area:"Jordaan", hearts:0, note:"Hartje Jordaan, voor weinig goed eten of de daghap", lat:52.3788,lng:4.8818, web:"", tags:["caf\u00e9","bruin caf\u00e9","terras"] },
+  { name:"SALUT", area:"De Pijp", hearts:0, note:"Leuk, hip en grappig. Beetje ordi vibes, maar dan op de goede manier", lat:52.3564,lng:4.8936, web:"", tags:["restaurant","terras"] },
+  { name:"De Wasserette", area:"De Pijp", hearts:0, note:"Ga hier ontbijten \u2014 broodje smashed avo met kip en parmezaan, echt een topper", lat:52.3553,lng:4.8933, web:"", tags:["ontbijt","brunch","lunch"] },
 ];
 
 // ═══ MAP ═══
