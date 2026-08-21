@@ -234,6 +234,18 @@ body {
   color: var(--gray-light);
   letter-spacing: 0.3em;
 }
+.conn-error {
+  display: none;
+  max-width: 300px;
+  margin: 1.5rem auto 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--olive);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
 .error-msg {
   color: var(--red);
   font-size: 0.85rem;
@@ -633,6 +645,7 @@ body {
       <button class="btn btn-primary" onclick="showScreen('create')">START SESSIE</button>
       <button class="btn btn-secondary" onclick="showScreen('join')">JOIN SESSIE</button>
     </div>
+    <p class="conn-error" id="conn-error"></p>
   </div>
 
   <!-- SCREEN: Create Session -->
@@ -659,7 +672,7 @@ body {
 
   <!-- SCREEN: Swipe -->
   <div id="screen-swipe" class="screen swipe-screen">
-    <div class="progress-bar" id="progress-text">1 / 43 plekken</div>
+    <div class="progress-bar" id="progress-text">&nbsp;</div>
     <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
     <div class="card-container" id="card-container">
       <div class="card" id="swipe-card">
@@ -712,8 +725,32 @@ const firebaseConfig = {
   messagingSenderId: "421176637079",
   appId: "1:421176637079:web:54e91b720f012247875bd2"
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+// Firebase mag nooit de hele pagina meenemen als het misgaat: zonder deze
+// guard sterft het script hier en doen alle knoppen daaronder niets.
+let db = null;
+let dbError = null;
+try {
+  if (typeof firebase === 'undefined') throw new Error('offline');
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
+} catch (e) {
+  dbError = e;
+  console.error('Firebase niet beschikbaar:', e);
+}
+
+function showConnectionError(msg) {
+  const el = document.getElementById('conn-error');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// Waarschuw meteen op het startscherm in plaats van bij de eerste klik
+if (!db) {
+  document.addEventListener('DOMContentLoaded', () => showConnectionError(
+    'Geen verbinding met de server. Swipe & Dine heeft internet nodig — check je verbinding of een adblocker en probeer opnieuw.'
+  ));
+}
 
 // ═══ PLACES DATA ═══
 const places = [
@@ -842,7 +879,13 @@ function showScreen(name) {
 }
 
 // ═══ CREATE SESSION ═══
-async function createSession() {
+async function createSession(attempt = 0) {
+  if (!db) {
+    showScreen('landing');
+    showConnectionError('Geen verbinding met de server. Probeer het zo nog eens.');
+    return;
+  }
+
   const code = generateCode();
   sessionCode = code;
   playerId = 'player1';
@@ -850,20 +893,36 @@ async function createSession() {
 
   sessionRef = db.ref('sessions/' + code);
 
-  // Check if code already exists and is less than 24h old
-  const snap = await sessionRef.once('value');
-  if (snap.exists()) {
-    const data = snap.val();
-    if (data.created && Date.now() - data.created < 86400000) {
-      // Code in use, try again
-      return createSession();
+  try {
+    // Check if code already exists and is less than 24h old
+    const snap = await sessionRef.once('value');
+    if (snap.exists()) {
+      const data = snap.val();
+      if (data.created && Date.now() - data.created < 86400000) {
+        // Code in use, try again — begrensd, anders kan dit eindeloos doorgaan
+        if (attempt >= 10) {
+          showScreen('landing');
+          showConnectionError('Het lukt even niet om een vrije code te vinden. Probeer het zo nog eens.');
+          return;
+        }
+        return createSession(attempt + 1);
+      }
     }
-  }
 
-  await sessionRef.set({
-    created: Date.now(),
-    players: { player1: true }
-  });
+    await sessionRef.set({
+      created: Date.now(),
+      players: { player1: true }
+    });
+  } catch (e) {
+    console.error('Sessie aanmaken mislukt:', e);
+    showScreen('landing');
+    showConnectionError(
+      e && e.code === 'PERMISSION_DENIED'
+        ? 'De server weigert de verbinding. Waarschijnlijk zijn de databaseregels verlopen.'
+        : 'Sessie aanmaken lukt niet. Check je internetverbinding en probeer opnieuw.'
+    );
+    return;
+  }
 
   document.getElementById('session-code-display').textContent = code;
   showScreen('create');
@@ -876,9 +935,8 @@ async function createSession() {
   });
 }
 
-document.querySelector('[onclick="showScreen(\'create\')"]').onclick = function() {
-  createSession();
-};
+const startBtn = document.querySelector('[onclick="showScreen(\'create\')"]');
+if (startBtn) startBtn.onclick = function() { createSession(); };
 
 // ═══ JOIN SESSION ═══
 async function joinSession() {
@@ -891,33 +949,48 @@ async function joinSession() {
     return;
   }
 
+  if (!db) {
+    errorEl.textContent = 'Geen verbinding met de server';
+    return;
+  }
+
   sessionRef = db.ref('sessions/' + code);
-  const snap = await sessionRef.once('value');
 
-  if (!snap.exists()) {
-    errorEl.textContent = 'Sessie niet gevonden';
+  try {
+    const snap = await sessionRef.once('value');
+
+    if (!snap.exists()) {
+      errorEl.textContent = 'Sessie niet gevonden';
+      return;
+    }
+
+    const data = snap.val();
+
+    // Check if expired
+    if (data.created && Date.now() - data.created > 86400000) {
+      errorEl.textContent = 'Sessie is verlopen';
+      return;
+    }
+
+    // Check if already full
+    if (data.players && data.players.player2) {
+      errorEl.textContent = 'Sessie is al vol';
+      return;
+    }
+
+    sessionCode = code;
+    playerId = 'player2';
+    otherPlayerId = 'player1';
+
+    await sessionRef.child('players/player2').set(true);
+  } catch (e) {
+    console.error('Joinen mislukt:', e);
+    errorEl.textContent = e && e.code === 'PERMISSION_DENIED'
+      ? 'De server weigert de verbinding'
+      : 'Verbinden lukt niet, probeer opnieuw';
     return;
   }
 
-  const data = snap.val();
-
-  // Check if expired
-  if (data.created && Date.now() - data.created > 86400000) {
-    errorEl.textContent = 'Sessie is verlopen';
-    return;
-  }
-
-  // Check if already full
-  if (data.players && data.players.player2) {
-    errorEl.textContent = 'Sessie is al vol';
-    return;
-  }
-
-  sessionCode = code;
-  playerId = 'player2';
-  otherPlayerId = 'player1';
-
-  await sessionRef.child('players/player2').set(true);
   startSwipeMode();
 }
 
@@ -1024,8 +1097,12 @@ async function vote(liked) {
   // Animate card off screen
   animateCardOff(liked);
 
-  // Save vote
-  await votesRef.child(playerId).child(placeKey).set(liked);
+  // Save vote — een mislukte schrijfactie mag het swipen niet blokkeren
+  try {
+    await votesRef.child(playerId).child(placeKey).set(liked);
+  } catch (e) {
+    console.error('Stem opslaan mislukt:', e);
+  }
 
   // Move to next
   setTimeout(() => {

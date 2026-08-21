@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%231a4d43'/><rect width='4' height='32' x='4' fill='%23ded8c6'/><rect width='4' height='32' x='8' fill='%231a4d43'/><rect width='4' height='32' x='12' fill='%23ded8c6'/><rect width='4' height='32' x='16' fill='%231a4d43'/><rect width='4' height='32' x='20' fill='%23ded8c6'/><rect width='4' height='32' x='24' fill='%231a4d43'/><rect width='4' height='32' x='28' fill='%23ded8c6'/></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -155,21 +155,53 @@ nav .links a:hover { opacity: 0.5; }
   margin-bottom: 1.5rem;
   font-weight: 500;
 }
+/* ═══ HET BRIEFJE ═══
+   Papieren kaartje met plakband over het gestreepte doek, met het woordmerk
+   in handschrift. Echte tekst, dus schaalbaar en leesbaar voor screenreaders. */
+.note-card {
+  position: relative;
+  width: min(78vw, 420px);
+  aspect-ratio: 5 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background:
+    linear-gradient(158deg, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.035) 100%),
+    #e7e2d6;
+  box-shadow:
+    0 1px 1px rgba(18,48,41,0.10),
+    0 14px 34px rgba(18,48,41,0.22);
+  transform: rotate(-0.6deg);
+}
+.note-tape {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  width: 46%;
+  max-width: 190px;
+  height: 52px;
+  transform: translateX(-50%) rotate(-1.2deg);
+  background: linear-gradient(100deg, rgba(214,200,150,0.85), rgba(226,214,170,0.92) 45%, rgba(208,192,140,0.85));
+  box-shadow: 0 1px 2px rgba(18,48,41,0.12);
+  /* gerafelde randen links en rechts */
+  clip-path: polygon(2% 6%, 98% 0%, 100% 92%, 0% 100%);
+}
 .hero h1 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(5rem, 15vw, 14rem);
-  line-height: 0.85;
-  letter-spacing: -0.02em;
-  color: var(--olive);
+  font-family: 'Caveat', 'Bradley Hand', 'Segoe Script', cursive;
+  font-size: clamp(1.5rem, 5.4vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: #26356b;
+  text-align: center;
+  white-space: nowrap;
+  transform: rotate(0.4deg) translateY(0.35em);
 }
 .hero h1 small {
-  font-size: 0.55em;
-  opacity: 0.5;
-  font-weight: 400;
+  font-size: 1em;
+  font-weight: 600;
   letter-spacing: 0;
-}
-.hero h1 span {
-  display: block;
 }
 .hero .sub {
   margin-top: 2rem;
@@ -868,6 +900,51 @@ nav .links a:hover { opacity: 0.5; }
   transform: rotate(360deg);
 }
 
+/* ═══ HERO-AFBEELDING ═══
+   Wordt pas actief als hero-note.jpg bestaat; zonder dat bestand blijft de
+   hero precies zoals hij was, met de CSS-strepen. */
+html.has-hero-image .stripes-bg,
+html.has-hero-image .stripes-overlay { display: none; }
+html.has-hero-image .hero {
+  background: var(--black);
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}
+/* Het briefje is een staande foto. De kaart krijgt exact dezelfde verhouding,
+   zodat 'cover' niets wegsnijdt op welk scherm dan ook. */
+html.has-hero-image .note-card {
+  aspect-ratio: 1122 / 1402;
+  height: min(56vh, 500px);
+  width: auto;
+  max-width: 86vw;
+  background: url('hero-note.jpg') center / cover no-repeat;
+  box-shadow: 0 20px 48px rgba(0,0,0,0.42);
+  transform: none;
+  padding: 0;
+}
+html.has-hero-image .note-tape { display: none; }
+/* De foto draagt het woordmerk zelf; de h1 blijft voor screenreaders. */
+html.has-hero-image .hero h1 {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+html.has-hero-image .hero .sub,
+html.has-hero-image .hero .updated { color: var(--cream); }
+html.has-hero-image .hero .sub { margin-top: 1.8rem; }
+html.has-hero-image .hero .updated { opacity: 0.8; }
+html.has-hero-image .hero .scroll-hint,
+html.has-hero-image .spotify-hint { color: var(--cream); }
+html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
+@media (max-width: 600px) {
+  html.has-hero-image .hero { padding-top: 5rem; padding-bottom: 4rem; }
+  html.has-hero-image .note-card { height: min(46vh, 380px); }
+}
+
 /* ═══ SFEERFOTO ═══ */
 .photo-band {
   margin: clamp(2rem, 6vw, 4.5rem) 0 0;
@@ -1047,7 +1124,7 @@ nav .links a:hover { opacity: 0.5; }
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 768px) {
   nav .links { display: none; }
-  .hero h1 { font-size: clamp(4rem, 18vw, 8rem); }
+  .note-card { width: min(82vw, 360px); }
   .hero .sub { font-size: 1rem; padding: 0 1rem; }
   .stripe-band { height: 80px; }
   .stripe-band .band-text { font-size: 1.2rem; }
@@ -1111,6 +1188,16 @@ nav .links a:hover { opacity: 0.5; }
 </head>
 <body>
 
+<script>
+// Zet de hero-afbeelding aan zodra hero-note.jpg geladen is; ontbreekt het
+// bestand, dan blijft de hero met CSS-strepen ongemoeid.
+(function () {
+  var img = new Image();
+  img.onload = function () { document.documentElement.classList.add('has-hero-image'); };
+  img.src = 'hero-note.jpg';
+})();
+</script>
+
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- ═══ STRIPES ACHTERGROND ═══ -->
@@ -1130,7 +1217,10 @@ nav .links a:hover { opacity: 0.5; }
 
 <!-- ═══ HERO ═══ -->
 <section class="hero">
-  <h1><small>(W)</small>ETEN<span>WAAR.</span></h1>
+  <div class="note-card">
+    <span class="note-tape" aria-hidden="true"></span>
+    <h1><small>(W)</small>ETEN WAAR.</h1>
+  </div>
   <p class="sub">Geen algoritme. Geen influencers. Gewoon plekken waar wij &eacute;cht komen.</p>
   <span class="updated">Laatst bijgewerkt &mdash; augustus 2026</span>
   <div class="hero-spotify">
