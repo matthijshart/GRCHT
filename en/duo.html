@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>SWIPE & DINE — (W)ETEN WAAR.</title>
 <meta property="og:title" content="SWIPE & DINE — (W)ETEN WAAR.">
-<meta property="og:description" content="Swipe samen door Amsterdam's beste plekken">
+<meta property="og:description" content="Swipe together through the best places in Amsterdam">
 <meta property="og:image" content="https://matthijshart.github.io/GRCHT/og-image.png">
-<meta property="og:url" content="https://matthijshart.github.io/GRCHT/duo.html">
+<meta property="og:url" content="https://matthijshart.github.io/GRCHT/en/duo.html">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%231a4d43'/><rect width='4' height='32' x='4' fill='%23ded8c6'/><rect width='4' height='32' x='8' fill='%231a4d43'/><rect width='4' height='32' x='12' fill='%23ded8c6'/><rect width='4' height='32' x='16' fill='%231a4d43'/><rect width='4' height='32' x='20' fill='%23ded8c6'/><rect width='4' height='32' x='24' fill='%231a4d43'/><rect width='4' height='32' x='28' fill='%23ded8c6'/></svg>">
@@ -652,41 +652,41 @@ body {
 <div class="app">
   <!-- Top Bar -->
   <div class="top-bar">
-    <a href="index.html">&larr; Terug naar (W)ETEN WAAR.</a>
-    <a class="lang-switch" href="en/duo.html">English</a>
+    <a href="index.html">&larr; Back to (W)ETEN WAAR.</a>
+    <a class="lang-switch" href="../duo.html">Nederlands</a>
   </div>
 
   <!-- SCREEN: Landing -->
   <div id="screen-landing" class="screen active">
     <div class="landing-title">SWIPE<br>&amp; DINE</div>
-    <p class="landing-subtitle">Swipe samen door de beste plekken van Amsterdam. Match = date night besloten.</p>
+    <p class="landing-subtitle">Swipe together through the best places in Amsterdam. A match settles date night.</p>
     <div class="btn-group">
-      <button class="btn btn-primary" onclick="showScreen('create')">START SESSIE</button>
-      <button class="btn btn-secondary" onclick="showScreen('join')">JOIN SESSIE</button>
+      <button class="btn btn-primary" onclick="showScreen('create')">START SESSION</button>
+      <button class="btn btn-secondary" onclick="showScreen('join')">JOIN SESSION</button>
     </div>
     <p class="conn-error" id="conn-error"></p>
   </div>
 
   <!-- SCREEN: Create Session -->
   <div id="screen-create" class="screen">
-    <div class="small-label">JOUW SESSIE CODE</div>
+    <div class="small-label">YOUR SESSION CODE</div>
     <div class="session-code" id="session-code-display">----</div>
-    <p class="session-msg">Deel deze code met je date<span class="waiting-dots"></span></p>
+    <p class="session-msg">Share this code with your date<span class="waiting-dots"></span></p>
     <div class="share-row">
-      <button class="btn-share" onclick="copyCode()">Kopieer code</button>
-      <button class="btn-share" onclick="shareCode()">Delen</button>
+      <button class="btn-share" onclick="copyCode()">Copy code</button>
+      <button class="btn-share" onclick="shareCode()">Share</button>
     </div>
-    <p class="session-msg" id="waiting-msg" style="margin-top:1.5rem;">Wacht op speler 2<span class="waiting-dots"></span></p>
-    <button class="btn-back" onclick="cancelSession()">Annuleren</button>
+    <p class="session-msg" id="waiting-msg" style="margin-top:1.5rem;">Waiting for player 2<span class="waiting-dots"></span></p>
+    <button class="btn-back" onclick="cancelSession()">Cancel</button>
   </div>
 
   <!-- SCREEN: Join Session -->
   <div id="screen-join" class="screen">
-    <div class="small-label">VOER DE CODE IN</div>
+    <div class="small-label">ENTER THE CODE</div>
     <input class="code-input" id="join-input" type="text" maxlength="4" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false">
     <p class="error-msg" id="join-error">&nbsp;</p>
     <button class="btn btn-primary" style="margin-top:1rem;max-width:220px;" onclick="joinSession()">JOIN</button>
-    <button class="btn-back" onclick="showScreen('landing')">Terug</button>
+    <button class="btn-back" onclick="showScreen('landing')">Back</button>
   </div>
 
   <!-- SCREEN: Swipe -->
@@ -695,8 +695,8 @@ body {
     <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
     <div class="card-container" id="card-container">
       <div class="card" id="swipe-card">
-        <div class="card-stamp stamp-ja" id="stamp-ja">JA!</div>
-        <div class="card-stamp stamp-nee" id="stamp-nee">NEE</div>
+        <div class="card-stamp stamp-ja" id="stamp-ja">YES!</div>
+        <div class="card-stamp stamp-nee" id="stamp-nee">NOPE</div>
         <div class="card-name" id="card-name"></div>
         <div class="card-area" id="card-area"></div>
         <div class="card-note" id="card-note"></div>
@@ -712,10 +712,10 @@ body {
 
   <!-- SCREEN: Results -->
   <div id="screen-results" class="screen results-screen">
-    <div class="results-title">JULLIE MATCHES</div>
+    <div class="results-title">YOUR MATCHES</div>
     <p class="results-sub" id="results-sub"></p>
     <div class="results-list" id="results-list"></div>
-    <button class="btn btn-primary btn-restart" onclick="location.reload()">OPNIEUW</button>
+    <button class="btn btn-primary btn-restart" onclick="location.reload()">START OVER</button>
   </div>
 </div>
 
@@ -767,63 +767,63 @@ function showConnectionError(msg) {
 // Waarschuw meteen op het startscherm in plaats van bij de eerste klik
 if (!db) {
   document.addEventListener('DOMContentLoaded', () => showConnectionError(
-    'Geen verbinding met de server. Swipe & Dine heeft internet nodig — check je verbinding of een adblocker en probeer opnieuw.'
+    'No connection to the server. Swipe & Dine needs internet — check your connection or an ad blocker and try again.'
   ));
 }
 
 // ═══ PLACES DATA ═══
 const places = [
-  { name:"Caffe Pico", area:"De Pijp", note:"Goed eten, chill sfeertje", lat:52.3552,lng:4.8900, tags:["restaurant"] },
-  { name:"Peps", area:"Oud-West", note:"Happy hour 16\u201318u, altijd gezellig", lat:52.3675,lng:4.8716, tags:["tapas","happy hour"] },
-  { name:"Arie", area:"De Pijp", note:"Lekker eten en drinken", lat:52.3567,lng:4.8905, tags:["restaurant","bar"] },
-  { name:"Cafe Ente", area:"Jordaan", note:"Warme Franse bistro, donkerrood interieur, leuk goed kaartje", lat:52.3804,lng:4.8869, tags:["oesters","bistro"] },
-  { name:"Libertine", area:"Jordaan", note:"Fijn voor brunch", lat:52.3802,lng:4.8876, tags:["cafe","brunch"] },
-  { name:"Zum Barbarossa", area:"Centrum", note:"Speakeasy, goede cocktails", lat:52.3686,lng:4.8906, tags:["cocktails","speakeasy"] },
-  { name:"Cafe Sonneveld", area:"Jordaan", note:"Spareribs en appeltaart", lat:52.3763,lng:4.8823, tags:["cafe","bruin cafe"] },
+  { name:"Caffe Pico", area:"De Pijp", note:"Good food, relaxed vibe", lat:52.3552,lng:4.8900, tags:["restaurant"] },
+  { name:"Peps", area:"Oud-West", note:"Happy hour 4-6pm, always a good time", lat:52.3675,lng:4.8716, tags:["tapas","happy hour"] },
+  { name:"Arie", area:"De Pijp", note:"Good food, good drinks", lat:52.3567,lng:4.8905, tags:["restaurant","bar"] },
+  { name:"Cafe Ente", area:"Jordaan", note:"Warm French bistro, deep red interior, a short menu done well", lat:52.3804,lng:4.8869, tags:["oesters","bistro"] },
+  { name:"Libertine", area:"Jordaan", note:"Lovely for brunch", lat:52.3802,lng:4.8876, tags:["cafe","brunch"] },
+  { name:"Zum Barbarossa", area:"Centrum", note:"Speakeasy, good cocktails", lat:52.3686,lng:4.8906, tags:["cocktails","speakeasy"] },
+  { name:"Cafe Sonneveld", area:"Jordaan", note:"Spare ribs and apple pie", lat:52.3763,lng:4.8823, tags:["cafe","bruin cafe"] },
   { name:"Cafe Amsterdam (Cradam)", area:"West", note:"Tip van Rick", lat:52.3841,lng:4.8683, tags:["restaurant"] },
-  { name:"Cafe Tabac", area:"Jordaan", note:"Borrelhap mandje, maar ook verrassend goed rijsttafeltje", lat:52.3802,lng:4.8885, tags:["borrel","indonesisch"] },
-  { name:"A-Fusion", area:"Zeedijk", note:"Aziatisch, snel en lekker", lat:52.3732,lng:4.9001, tags:["aziatisch","sushi"] },
-  { name:"Ela", area:"Jordaan", note:"Lekker zitten, heel klein, goed eten", lat:52.3695,lng:4.8809, tags:["oesters","bar"] },
-  { name:"Pata Negra", area:"Utrechtsestraat", note:"Tapas, altijd druk maar goed", lat:52.3614,lng:4.8991, tags:["tapas","spaans"] },
-  { name:"Troef", area:"Oost", note:"Frans bistro, rustig", lat:52.3492,lng:4.9137, tags:["restaurant","frans"] },
-  { name:"The Seafood Bar", area:"Oud-Zuid", note:"Happy hour 15\u201317u, Van Baerle", lat:52.3600,lng:4.8775, tags:["vis","happy hour"] },
-  { name:"Badcuyp", area:"De Pijp", note:"Fijn buurtrestaurant", lat:52.3566,lng:4.8971, tags:["restaurant"] },
-  { name:"L'Entrecote et les Dames", area:"Oud-Zuid", note:"Biefstuk, vraag om extra refill", lat:52.3557,lng:4.8805, tags:["steak","frans"] },
-  { name:"Bouwman", area:"Utrechtsestraat", note:"Makkelijk drankje doen", lat:52.3623,lng:4.8988, tags:["borrel","bruin cafe"] },
-  { name:"Cafe Marcella", area:"Amstelveld", note:"Mooi terras aan de gracht", lat:52.3622,lng:4.8983, tags:["terras","cafe"] },
-  { name:"Parlotte", area:"Jordaan", note:"Frans, lekker wijntje erbij", lat:52.3783,lng:4.8818, tags:["frans","wijn"] },
+  { name:"Cafe Tabac", area:"Jordaan", note:"Basket of bar snacks, but a surprisingly good rijsttafel too", lat:52.3802,lng:4.8885, tags:["borrel","indonesisch"] },
+  { name:"A-Fusion", area:"Zeedijk", note:"Asian, quick and good", lat:52.3732,lng:4.9001, tags:["aziatisch","sushi"] },
+  { name:"Ela", area:"Jordaan", note:"Comfortable, tiny, great food", lat:52.3695,lng:4.8809, tags:["oesters","bar"] },
+  { name:"Pata Negra", area:"Utrechtsestraat", note:"Tapas, always busy but worth it", lat:52.3614,lng:4.8991, tags:["tapas","spaans"] },
+  { name:"Troef", area:"Oost", note:"French bistro, quiet", lat:52.3492,lng:4.9137, tags:["restaurant","frans"] },
+  { name:"The Seafood Bar", area:"Oud-Zuid", note:"Happy hour 3-5pm, Van Baerlestraat", lat:52.3600,lng:4.8775, tags:["vis","happy hour"] },
+  { name:"Badcuyp", area:"De Pijp", note:"Good neighbourhood restaurant", lat:52.3566,lng:4.8971, tags:["restaurant"] },
+  { name:"L'Entrecote et les Dames", area:"Oud-Zuid", note:"Steak, ask for the extra refill", lat:52.3557,lng:4.8805, tags:["steak","frans"] },
+  { name:"Bouwman", area:"Utrechtsestraat", note:"Easy place for a drink", lat:52.3623,lng:4.8988, tags:["borrel","bruin cafe"] },
+  { name:"Cafe Marcella", area:"Amstelveld", note:"Beautiful terrace on the canal", lat:52.3622,lng:4.8983, tags:["terras","cafe"] },
+  { name:"Parlotte", area:"Jordaan", note:"French, with a good glass of wine", lat:52.3783,lng:4.8818, tags:["frans","wijn"] },
   { name:"De Willem", area:"Haarlemmerplein", note:"Favo van Rick", lat:52.3849,lng:4.8829, tags:["restaurant"] },
-  { name:"Cantine de Caron", area:"West", note:"Frans in een oud pakhuis, tof", lat:52.3863,lng:4.8728, tags:["frans","restaurant"] },
+  { name:"Cantine de Caron", area:"West", note:"French in an old warehouse, very cool", lat:52.3863,lng:4.8728, tags:["frans","restaurant"] },
   { name:"Binnenvisser", area:"Oud-West", note:"Staat hoog op de lijst, tip van Rick", lat:52.3715,lng:4.8704, tags:["wijn","natural wine"] },
-  { name:"Cafe Bern", area:"Nieuwmarkt", note:"Kaasfondue, gezellig", lat:52.3725,lng:4.9010, tags:["fondue","zwitsers"] },
-  { name:"Bar Jules", area:"Oud-Zuid", note:"Fijn voor lunch", lat:52.3530,lng:4.8634, tags:["lunch","bar"] },
-  { name:"Toscanini", area:"Jordaan", note:"Goed italiaans, wel prijzig", lat:52.3801,lng:4.8854, tags:["italiaans","\u20ac\u20ac\u20ac"] },
-  { name:"Amstel Hotel", area:"Centrum", note:"Alleen voor lunch, vraag om buiten", lat:52.3603,lng:4.9050, tags:["lunch","chic"] },
-  { name:"Borello Aperitivo", area:"Zeedijk", note:"Cocktails en pizza, top sfeertje", lat:52.3754,lng:4.9012, tags:["cocktails","bar"] },
-  { name:"Polly Goudvis", area:"Noord", note:"Brunch bij de pont", lat:52.3825,lng:4.9033, tags:["brunch","bar"] },
-  { name:"Roest", area:"Oost", note:"Industrieel, altijd chill", lat:52.3720,lng:4.9266, tags:["bar","industrieel"] },
+  { name:"Cafe Bern", area:"Nieuwmarkt", note:"Cheese fondue, cosy", lat:52.3725,lng:4.9010, tags:["fondue","zwitsers"] },
+  { name:"Bar Jules", area:"Oud-Zuid", note:"Lovely for lunch", lat:52.3530,lng:4.8634, tags:["lunch","bar"] },
+  { name:"Toscanini", area:"Jordaan", note:"Good Italian, on the pricey side", lat:52.3801,lng:4.8854, tags:["italiaans","\u20ac\u20ac\u20ac"] },
+  { name:"Amstel Hotel", area:"Centrum", note:"Lunch only, ask to sit outside", lat:52.3603,lng:4.9050, tags:["lunch","chic"] },
+  { name:"Borello Aperitivo", area:"Zeedijk", note:"Cocktails and pizza, great atmosphere", lat:52.3754,lng:4.9012, tags:["cocktails","bar"] },
+  { name:"Polly Goudvis", area:"Noord", note:"Brunch by the ferry", lat:52.3825,lng:4.9033, tags:["brunch","bar"] },
+  { name:"Roest", area:"Oost", note:"Industrial, always relaxed", lat:52.3720,lng:4.9266, tags:["bar","industrieel"] },
   { name:"No Nonsense", area:"Centrum", note:"Gezellig bruin cafe", lat:52.3759,lng:4.9027, tags:["bar","cafe"] },
-  { name:"Bar Grill Marathonweg", area:"Oud-Zuid", note:"Goed voor een hapje op de Marathonweg", lat:52.3460,lng:4.8650, tags:["bar","restaurant"] },
-  { name:"Cafe Kiebert", area:"Oud-Zuid", note:"Open haard, gezellig op de Marathonweg", lat:52.3458,lng:4.8645, tags:["cafe","restaurant"] },
-  { name:"Bar Bonnie", area:"Oud-Zuid", note:"Gezellig", lat:52.3465,lng:4.8655, tags:["bar"] },
-  { name:"'t Smalle", area:"Jordaan", note:"Biertje of broodje bal, altijd goed", lat:52.3758,lng:4.8838, tags:["cafe","bruin cafe"] },
-  { name:"Papeneiland", area:"Jordaan", note:"Terrasje als de zon schijnt", lat:52.3826,lng:4.8871, tags:["terras","cafe"] },
-  { name:"Bistro Feline", area:"Jordaan", note:"Michelin gids, neem de kreeftenorzo", lat:52.3769,lng:4.8832, tags:["restaurant","frans"] },
-  { name:"La Perla", area:"Jordaan", note:"Gewoon gezellig pizza aan de bar", lat:52.3737,lng:4.8810, tags:["italiaans","pizza"] },
-  { name:"De Pizzakamer", area:"De Pijp", note:"Houtoven pizza, terras, altijd goed", lat:52.3561,lng:4.8945, tags:["italiaans","pizza"] },
-  { name:"Pilsvogel", area:"De Pijp", note:"Terras op het plein, lekker biertje", lat:52.3555,lng:4.8937, tags:["bar","terras"] },
+  { name:"Bar Grill Marathonweg", area:"Oud-Zuid", note:"Good for a bite on the Marathonweg", lat:52.3460,lng:4.8650, tags:["bar","restaurant"] },
+  { name:"Cafe Kiebert", area:"Oud-Zuid", note:"Open fire, cosy spot on the Marathonweg", lat:52.3458,lng:4.8645, tags:["cafe","restaurant"] },
+  { name:"Bar Bonnie", area:"Oud-Zuid", note:"Cosy", lat:52.3465,lng:4.8655, tags:["bar"] },
+  { name:"'t Smalle", area:"Jordaan", note:"A beer or a meatball roll, never wrong", lat:52.3758,lng:4.8838, tags:["cafe","bruin cafe"] },
+  { name:"Papeneiland", area:"Jordaan", note:"Terrace when the sun is out", lat:52.3826,lng:4.8871, tags:["terras","cafe"] },
+  { name:"Bistro Feline", area:"Jordaan", note:"In the Michelin guide, order the lobster orzo", lat:52.3769,lng:4.8832, tags:["restaurant","frans"] },
+  { name:"La Perla", area:"Jordaan", note:"Just good pizza at the bar", lat:52.3737,lng:4.8810, tags:["italiaans","pizza"] },
+  { name:"De Pizzakamer", area:"De Pijp", note:"Wood-fired pizza, terrace, always good", lat:52.3561,lng:4.8945, tags:["italiaans","pizza"] },
+  { name:"Pilsvogel", area:"De Pijp", note:"Terrace on the square, good beer", lat:52.3555,lng:4.8937, tags:["bar","terras"] },
   { name:"Cafe Sarphaat", area:"De Pijp", note:"Chill cafe op de Ceintuurbaan", lat:52.3536,lng:4.8942, tags:["cafe","terras"] },
-  { name:"Cafe-Restaurant Hesp", area:"Oost", note:"Terras aan het water, biertje en oesters", lat:52.3538,lng:4.9105, tags:["cafe","terras","oesters"] },
-  { name:"Cafe Wildschut", area:"Oud-Zuid", note:"Lunch, niet gek gewoon goed", lat:52.3537,lng:4.8830, tags:["cafe","lunch","terras"] },
-  { name:"Cafe Thijssen", area:"Jordaan", note:"Gemoedelijk, koffie of biertje aan de Brouwersgracht", lat:52.3820,lng:4.8848, tags:["cafe","brunch"] },
-  { name:"Ilario", area:"De Pijp", note:"Onze favoriet. Aperol erbij en een lekkere pasta", lat:52.3554,lng:4.8960, tags:["italiaans","bar","pasta","terras"] },
-  { name:"Samuel's", area:"De Pijp", note:"Hip, lekker, gewoon helemaal top", lat:52.3546,lng:4.8920, tags:["restaurant","terras"] },
+  { name:"Cafe-Restaurant Hesp", area:"Oost", note:"Waterside terrace, beer and oysters", lat:52.3538,lng:4.9105, tags:["cafe","terras","oesters"] },
+  { name:"Cafe Wildschut", area:"Oud-Zuid", note:"Lunch, nothing wild, just good", lat:52.3537,lng:4.8830, tags:["cafe","lunch","terras"] },
+  { name:"Cafe Thijssen", area:"Jordaan", note:"Easy-going, coffee or a beer on the Brouwersgracht", lat:52.3820,lng:4.8848, tags:["cafe","brunch"] },
+  { name:"Ilario", area:"De Pijp", note:"Our favourite. An Aperol and a very good pasta", lat:52.3554,lng:4.8960, tags:["italiaans","bar","pasta","terras"] },
+  { name:"Samuel's", area:"De Pijp", note:"Hip, delicious, just brilliant", lat:52.3546,lng:4.8920, tags:["restaurant","terras"] },
   { name:"Brio", area:"De Pijp", note:"Nog een beetje onontdekt, reserveer aan de bar voor Italiaans en goede wijn", lat:52.3550,lng:4.8960, tags:["italiaans","wijn","restaurant"] },
-  { name:"Cafe De Klepel", area:"Jordaan", note:"Aanrader als je iets te vieren hebt. Fantastische wijnen, leuke sommeliers, top eten", lat:52.3791,lng:4.8872, tags:["frans","wijn","restaurant"] },
-  { name:"Le Petit Bouillon", area:"Oud-Zuid", note:"Goedkoop en lekker, precies waar het om bekend staat. Geen gekke sfeer, wel altijd prima", lat:52.3457,lng:4.8763, tags:["frans","restaurant","terras"] },
-  { name:"Cafe-Restaurant Meyer", area:"Amstelveld", note:"Zelfde eigenaar als Marcella, net zo gezellig", lat:52.3625,lng:4.8957, tags:["cafe","restaurant","terras"] },
-  { name:"Cafe De Blaffende Vis", area:"Jordaan", note:"Hartje Jordaan, voor weinig goed eten of de daghap", lat:52.3788,lng:4.8818, tags:["cafe","bruin cafe","terras"] },
-  { name:"SALUT", area:"De Pijp", note:"Leuk, hip en grappig. Beetje ordi vibes, maar dan op de goede manier", lat:52.3564,lng:4.8936, tags:["restaurant","terras"] },
+  { name:"Cafe De Klepel", area:"Jordaan", note:"The one if you have something to celebrate. Fantastic wines, great sommeliers, excellent food", lat:52.3791,lng:4.8872, tags:["frans","wijn","restaurant"] },
+  { name:"Le Petit Bouillon", area:"Oud-Zuid", note:"Cheap and good, exactly what it is known for. Nothing special atmosphere-wise, but always solid", lat:52.3457,lng:4.8763, tags:["frans","restaurant","terras"] },
+  { name:"Cafe-Restaurant Meyer", area:"Amstelveld", note:"Same owner as Marcella, just as cosy", lat:52.3625,lng:4.8957, tags:["cafe","restaurant","terras"] },
+  { name:"Cafe De Blaffende Vis", area:"Jordaan", note:"Heart of the Jordaan, good food or the dish of the day for very little", lat:52.3788,lng:4.8818, tags:["cafe","bruin cafe","terras"] },
+  { name:"SALUT", area:"De Pijp", note:"Fun, hip and funny. A bit trashy, but in the best way", lat:52.3564,lng:4.8936, tags:["restaurant","terras"] },
   { name:"De Wasserette", area:"De Pijp", note:"Ga hier ontbijten, broodje smashed avo met kip en parmezaan is een topper", lat:52.3553,lng:4.8933, tags:["ontbijt","brunch","lunch"] },
 ];
 
@@ -901,7 +901,7 @@ function showScreen(name) {
 async function createSession(attempt = 0) {
   if (!db) {
     showScreen('landing');
-    showConnectionError('Geen verbinding met de server. Probeer het zo nog eens.');
+    showConnectionError('No connection to the server. Please try again in a moment.');
     return;
   }
 
@@ -921,7 +921,7 @@ async function createSession(attempt = 0) {
         // Code in use, try again — begrensd, anders kan dit eindeloos doorgaan
         if (attempt >= 10) {
           showScreen('landing');
-          showConnectionError('Het lukt even niet om een vrije code te vinden. Probeer het zo nog eens.');
+          showConnectionError('Could not find a free code right now. Please try again in a moment.');
           return;
         }
         return createSession(attempt + 1);
@@ -937,8 +937,8 @@ async function createSession(attempt = 0) {
     showScreen('landing');
     showConnectionError(
       e && e.code === 'PERMISSION_DENIED'
-        ? 'De server weigert de verbinding. Waarschijnlijk zijn de databaseregels verlopen.'
-        : 'Sessie aanmaken lukt niet. Check je internetverbinding en probeer opnieuw.'
+        ? 'The server is refusing the connection. The database rules have most likely expired.'
+        : 'Could not create a session. Check your internet connection and try again.'
     );
     return;
   }
@@ -964,12 +964,12 @@ async function joinSession() {
   const errorEl = document.getElementById('join-error');
 
   if (code.length !== 4) {
-    errorEl.textContent = 'Voer een code van 4 letters in';
+    errorEl.textContent = 'Enter a 4-letter code';
     return;
   }
 
   if (!db) {
-    errorEl.textContent = 'Geen verbinding met de server';
+    errorEl.textContent = 'No connection to the server';
     return;
   }
 
@@ -979,7 +979,7 @@ async function joinSession() {
     const snap = await sessionRef.once('value');
 
     if (!snap.exists()) {
-      errorEl.textContent = 'Sessie niet gevonden';
+      errorEl.textContent = 'Session not found';
       return;
     }
 
@@ -987,13 +987,13 @@ async function joinSession() {
 
     // Check if expired
     if (data.created && Date.now() - data.created > 86400000) {
-      errorEl.textContent = 'Sessie is verlopen';
+      errorEl.textContent = 'Session has expired';
       return;
     }
 
     // Check if already full
     if (data.players && data.players.player2) {
-      errorEl.textContent = 'Sessie is al vol';
+      errorEl.textContent = 'Session is already full';
       return;
     }
 
@@ -1005,8 +1005,8 @@ async function joinSession() {
   } catch (e) {
     console.error('Joinen mislukt:', e);
     errorEl.textContent = e && e.code === 'PERMISSION_DENIED'
-      ? 'De server weigert de verbinding'
-      : 'Verbinden lukt niet, probeer opnieuw';
+      ? 'The server is refusing the connection'
+      : 'Could not connect, please try again';
     return;
   }
 
@@ -1028,8 +1028,8 @@ document.getElementById('join-input').addEventListener('input', (e) => {
 function copyCode() {
   navigator.clipboard.writeText(sessionCode).then(() => {
     const btns = document.querySelectorAll('.btn-share');
-    btns[0].textContent = 'Gekopieerd!';
-    setTimeout(() => btns[0].textContent = 'Kopieer code', 1500);
+    btns[0].textContent = 'Copied!';
+    setTimeout(() => btns[0].textContent = 'Copy code', 1500);
   });
 }
 
@@ -1037,7 +1037,7 @@ function shareCode() {
   if (navigator.share) {
     navigator.share({
       title: 'SWIPE & DINE - (W)ETEN WAAR.',
-      text: `Join mijn sessie met code: ${sessionCode}`,
+      text: `Join my session with code: ${sessionCode}`,
       url: window.location.href
     });
   } else {
@@ -1088,7 +1088,7 @@ function renderCard() {
   const tagsEl = document.getElementById('card-tags');
   tagsEl.innerHTML = place.tags.map(t => `<span class="card-tag">${t}</span>`).join('');
 
-  document.getElementById('progress-text').textContent = `${currentIndex + 1} / ${shuffledPlaces.length} plekken`;
+  document.getElementById('progress-text').textContent = `${currentIndex + 1} / ${shuffledPlaces.length} places`;
   document.getElementById('progress-fill').style.width = `${((currentIndex) / shuffledPlaces.length) * 100}%`;
 
   // Reset card position
@@ -1306,7 +1306,7 @@ function updateWaitingStatus(data) {
   const myCount = Object.keys(myVotes).length;
 
   if (myCount > otherCount + 5) {
-    statusEl.textContent = 'Je partner is nog aan het swipen...';
+    statusEl.textContent = 'Your partner is still swiping...';
   } else {
     statusEl.innerHTML = '&nbsp;';
   }
@@ -1352,13 +1352,13 @@ function showResults() {
     list.innerHTML = '';
 
     if (matches.length === 0) {
-      document.getElementById('results-sub').textContent = 'Geen matches deze keer... Probeer het nog eens!';
-      list.innerHTML = '<div class="no-matches">Misschien volgende keer meer geluk samen.</div>';
+      document.getElementById('results-sub').textContent = 'No matches this time... Give it another go!';
+      list.innerHTML = '<div class="no-matches">Better luck together next time.</div>';
       return;
     }
 
     document.getElementById('results-sub').textContent =
-      `${matches.length} ${matches.length === 1 ? 'match' : 'matches'} gevonden!`;
+      `${matches.length} ${matches.length === 1 ? 'match' : 'matches'} found!`;
 
     matches.forEach(placeKey => {
       const place = places.find(p => p.name.replace(/[.#$/\[\]]/g, '_') === placeKey);
@@ -1371,7 +1371,7 @@ function showResults() {
           <h3>${place.name}</h3>
           <span>${place.area}</span>
         </div>
-        <a class="result-link" href="https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}" target="_blank">Breng me hier</a>
+        <a class="result-link" href="https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}" target="_blank">Take me there</a>
       `;
       list.appendChild(card);
     });

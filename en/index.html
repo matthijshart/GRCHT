@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>(W)ETEN WAAR.</title>
+<title>(W)ETEN WAAR. — Amsterdam food guide</title>
 <meta property="og:title" content="(W)ETEN WAAR.">
 <meta property="og:description" content="Amsterdam — onze favoriete plekken">
 <meta property="og:image" content="https://matthijshart.github.io/GRCHT/og-image.png">
-<meta property="og:url" content="https://matthijshart.github.io/GRCHT/">
+<meta property="og:url" content="https://matthijshart.github.io/GRCHT/en/">
 <link rel="alternate" hreflang="nl" href="https://matthijshart.github.io/GRCHT/">
 <link rel="alternate" hreflang="en" href="https://matthijshart.github.io/GRCHT/en/">
 <link rel="alternate" hreflang="x-default" href="https://matthijshart.github.io/GRCHT/">
@@ -937,7 +937,7 @@ html.has-hero-image .note-card {
   height: min(56vh, 500px);
   width: auto;
   max-width: 86vw;
-  background: url('hero-note.jpg') center / cover no-repeat;
+  background: url('../hero-note.jpg') center / cover no-repeat;
   box-shadow: 0 20px 48px rgba(0,0,0,0.42);
   transform: none;
   padding: 0;
@@ -1214,7 +1214,7 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
 (function () {
   var img = new Image();
   img.onload = function () { document.documentElement.classList.add('has-hero-image'); };
-  img.src = 'hero-note.jpg';
+  img.src = '../hero-note.jpg';
 })();
 </script>
 
@@ -1228,12 +1228,12 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
 <nav>
   <a class="logo" href="#">(W)ETEN WAAR.</a>
   <div class="links">
-    <a href="#geen-idee">Geen Idee?</a>
+    <a href="#geen-idee">No Idea?</a>
     <a href="duo.html">Swipe &amp; Dine</a>
-    <a href="#kaart">Kaart</a>
-    <a href="#plekken">Plekken</a>
+    <a href="#kaart">Map</a>
+    <a href="#plekken">Places</a>
   </div>
-  <a class="lang-switch" href="en/" hreflang="en" lang="en">English</a>
+  <a class="lang-switch" href="../" hreflang="nl" lang="nl">Nederlands</a>
 </nav>
 
 <!-- ═══ HERO ═══ -->
@@ -1242,11 +1242,11 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
     <span class="note-tape" aria-hidden="true"></span>
     <h1><small>(W)</small>ETEN WAAR.</h1>
   </div>
-  <p class="sub">Geen algoritme. Geen influencers. Gewoon plekken waar wij &eacute;cht komen.</p>
-  <span class="updated">Laatst bijgewerkt &mdash; augustus 2026</span>
+  <p class="sub">No algorithm. No influencers. Just places we actually go.</p>
+  <span class="updated">Last updated &mdash; August 2026</span>
   <div class="hero-spotify">
     <div class="spotify-hint">
-      <span>speel af &amp; kijk lekker rond</span>
+      <span>press play &amp; have a look around</span>
       <svg width="28" height="32" viewBox="0 0 28 32" fill="none" stroke="var(--olive)" stroke-width="2" stroke-linecap="round"><path d="M14 2 C10 8, 6 14, 8 20 C10 26, 14 28, 14 30"/><path d="M8 25 L14 30 L18 24"/></svg>
     </div>
     <iframe id="spotifyPlayer" src="" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media" loading="lazy"></iframe>
@@ -1265,7 +1265,7 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   </div>
   <a class="scroll-hint" href="#anecdotes" onclick="event.preventDefault();slowScroll(document.getElementById('anecdotes'))">
     <svg width="20" height="28" viewBox="0 0 20 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 1 C8 6, 4 10, 6 16 C8 22, 10 24, 10 27"/><path d="M5 22 L10 27 L14 21"/></svg>
-    <span>scroll &mdash; en lees onderaan wat je niet wist</span>
+    <span>scroll &mdash; and read what you did not know at the bottom</span>
   </a>
 </section>
 
@@ -1273,7 +1273,7 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
 <div class="stripe-band">
   <div class="band-inner" id="bandInner1"></div>
   <div class="band-text">
-    <span>ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; </span>
+    <span>EAT &nbsp;&middot;&nbsp; DRINK &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; EAT &nbsp;&middot;&nbsp; DRINK &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; EAT &nbsp;&middot;&nbsp; DRINK &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; </span>
   </div>
 </div>
 
@@ -1283,14 +1283,14 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   <!-- KAART -->
   <div class="map-section" id="kaart">
     <div class="section-head reveal">
-      <div class="eyebrow">01 &mdash; De kaart</div>
-      <h2>Waar het allemaal ligt</h2>
-      <p>Elke stip is een plek waar we zelf zijn geweest. Tik erop, of kies hieronder een wijk.</p>
+      <div class="eyebrow">01 &mdash; The map</div>
+      <h2>Where it all is</h2>
+      <p>Every dot is a place we have been ourselves. Tap one, or pick a neighbourhood below.</p>
     </div>
     <div id="map" class="reveal-zoom"></div>
     <div class="stats reveal" id="stats">
-      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">plekken</div></div>
-      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">buurten</div></div>
+      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">places</div></div>
+      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">neighbourhoods</div></div>
       <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">influencers</div></div>
     </div>
   </div>
@@ -1298,11 +1298,11 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   <!-- GEEN IDEE SPINNER -->
   <div class="spinner-wrap" id="geen-idee">
     <div class="spinner-section reveal">
-      <div class="spinner-eyebrow">02 &mdash; Laat ons kiezen</div>
-      <div class="spinner-title">GEEN IDEE<span>?</span></div>
-      <p class="spinner-sub">Wij kiezen voor je.</p>
+      <div class="spinner-eyebrow">02 &mdash; Let us pick</div>
+      <div class="spinner-title">NO IDEA<span>?</span></div>
+      <p class="spinner-sub">We will choose for you.</p>
       <div class="spinner-question">
-        <div class="spinner-q-label">Hoeveel zijn jullie?</div>
+        <div class="spinner-q-label">How many of you?</div>
         <div class="person-btns" id="personBtns">
           <button data-n="1">1</button>
           <button data-n="2" class="selected">2</button>
@@ -1312,9 +1312,9 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
         </div>
       </div>
       <div class="spinner-question">
-        <div class="spinner-q-label">Welke wijk?</div>
+        <div class="spinner-q-label">Which neighbourhood?</div>
         <div class="wijk-btns" id="wijkBtns">
-          <button class="selected" data-wijk="">Alle wijken vind ik leuk</button>
+          <button class="selected" data-wijk="">Any neighbourhood works</button>
           <button data-wijk="Jordaan">Jordaan</button>
           <button data-wijk="De Pijp">De Pijp</button>
           <button data-wijk="Zuid">Zuid</button>
@@ -1324,7 +1324,7 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
       <div class="slot-wrapper">
         <div class="slot-reel" id="slotReel"></div>
       </div>
-      <button class="spin-btn" id="spinBtn">DRAAI</button>
+      <button class="spin-btn" id="spinBtn">SPIN</button>
       <div class="spin-result" id="spinResult">
         <div class="result-name" id="resultName"></div>
         <div class="result-note" id="resultNote"></div>
@@ -1336,9 +1336,9 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   <!-- FILTERS + CARDS -->
   <div class="filters-section" id="plekken">
     <div class="section-head reveal">
-      <div class="eyebrow">03 &mdash; De lijst</div>
-      <h2>Alle plekken</h2>
-      <p>Filter op wijk of op waar je zin in hebt. Tik een kaartje aan om het op de kaart te zien.</p>
+      <div class="eyebrow">03 &mdash; The list</div>
+      <h2>Every place</h2>
+      <p>Filter by neighbourhood or by what you fancy. Tap a card to see it on the map.</p>
     </div>
     <div class="filter-row area-row reveal" id="area-filters"></div>
     <div class="filter-row reveal" id="filters"></div>
@@ -1348,24 +1348,24 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   <!-- SFEERFOTO -->
   <figure class="photo-band reveal" id="sfeer">
     <div class="photo-band-inner">
-      <img src="today.jpg" alt="Zomer aan de Italiaanse kust"
+      <img src="../today.jpg" alt="Zomer aan de Italiaanse kust"
            onerror="this.closest('.photo-band').remove()">
     </div>
-    <figcaption>Waar we het allemaal voor doen.</figcaption>
+    <figcaption>What it is all for.</figcaption>
   </figure>
 
   <!-- ANECDOTE FOOTER -->
   <div class="anecdote-wrap" id="anecdotes">
     <div class="anecdote-inner reveal">
-      <div class="anecdote-label">Wist je dat</div>
+      <div class="anecdote-label">Did you know</div>
       <div class="anecdote-text" id="anecdoteText"></div>
-      <button class="anecdote-btn" id="anecdoteBtn" aria-label="Nieuw weetje">
+      <button class="anecdote-btn" id="anecdoteBtn" aria-label="Another fact">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
           <path d="M1 8a7 7 0 0 1 13.4-2.8M15 8a7 7 0 0 1-13.4 2.8"/>
           <path d="M14.4 1v4.2h-4.2"/>
           <path d="M1.6 15v-4.2h4.2"/>
         </svg>
-        <span>nog eentje</span>
+        <span>one more</span>
       </button>
     </div>
   </div>
@@ -1373,10 +1373,10 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   <!-- SWIPE & DINE — SLOTSECTIE -->
   <div class="swipe-banner" id="swipe">
     <div class="swipe-banner-inner reveal">
-      <div class="swipe-banner-new">Nieuw</div>
+      <div class="swipe-banner-new">New</div>
       <div class="swipe-banner-title">SWIPE &amp;<br><em>DINE</em></div>
-      <p class="swipe-banner-sub">Samen kiezen waar je eet. Ieder swipet, bij een match weet je het meteen.</p>
-      <a class="swipe-banner-btn" href="duo.html">Start sessie &rarr;</a>
+      <p class="swipe-banner-sub">Decide together where to eat. You both swipe, and a match settles it.</p>
+      <a class="swipe-banner-btn" href="duo.html">Start a session &rarr;</a>
     </div>
   </div>
 
@@ -1409,39 +1409,39 @@ function slowScroll(target) {
 
 // ═══ ANECDOTES ═══
 const anecdotes = [
-  "De Jordaan dankt zijn naam niet aan de rivier de Jordaan, maar aan een 17e-eeuwse kaashandelaar genaamd Hendrik de Jordaan die er als eerste een winkel opende.",
-  "Amsterdam heeft meer bruggen dan Veneti\u00eb, maar de gemeente telt er officieel maar 1.281 omdat ze br\u00fcggetjes onder de drie meter niet meetellen.",
-  "De scheefste grachtenpanden staan niet scheef door verzakking, maar werden expres zo gebouwd zodat bewoners hun meubels makkelijker naar binnen konden takelen.",
-  "Het woord \u2018gezellig\u2019 werd in 1978 officieel onvertaalbaar verklaard door de Koninklijke Nederlandse Akademie van Wetenschappen.",
-  "De eerste espressobar van Amsterdam opende in 1957 op de Zeedijk en serveerde per ongeluk filterkoffie met opgeschuimde melk \u2014 wat ze daar \u2018een verkeerd kopje\u2019 noemden.",
-  "De Amstel is technisch gezien geen rivier maar een \u2018getijdengeul\u2019. Amsterdammers weigeren dit te accepteren.",
-  "In de 18e eeuw was het bij wet verboden om na middernacht op de grachten te fluiten. Deze wet is nooit officieel ingetrokken.",
-  "De gemiddelde Amsterdammer bestelt 3,2 keer per week eten, maar beweert in gesprekken altijd zelf te koken.",
-  "Het Vondelpark heette oorspronkelijk \u2018Nieuw Park\u2019 maar werd hernoemd omdat niemand dat kon onthouden.",
-  "De kleur van de Amsterdamse straatklinkers is geen toeval \u2014 ze worden speciaal gebakken op 1.180 graden voor die specifieke tint donkerrood.",
-  "Er zijn meer koffietentjes per vierkante kilometer in De Pijp dan in heel Milaan. Dit is nooit feitelijk onderzocht.",
-  "In Oud-Zuid is het sinds 2019 sociaal onacceptabel om een flat white te bestellen zonder eerst te vermelden dat je net van padel komt.",
-  "Bewoners van Oost beweren dat hun wijk \u2018het nieuwe centrum\u2019 is. Het centrum is het hier niet mee eens. Oost is hier ook niet slim genoeg voor om te begrijpen.",
-  "In De Pijp wordt elke nieuwe zaak die opent automatisch een \u2018hidden gem\u2019 genoemd, ook als er al 45 minuten rij staat.",
-  "Uit onderzoek blijkt dat 87% van alle mensen die zeggen \u2018ik ken een leuk tentje\u2019 precies hetzelfde restaurant bedoelen.",
-  "Oost is de enige wijk waar je een kwartier moet lopen voor een fatsoenlijke kroeg en dat dan \u2018karakter\u2019 noemt.",
-  "In de Jordaan is het onmogelijk om een bruin caf\u00e9 binnen te lopen zonder dat iemand zegt \u2018hier kom ik al jaren\u2019. Gemiddeld blijkt dat 8 maanden te zijn.",
-  "Mensen uit Oost zeggen \u2018het is maar tien minuten fietsen naar de Pijp\u2019. Bij tegenwind is dat 25 minuten en twee existenti\u00eble crises.",
-  "Oost heeft niet eens een yogastudio. Zelfs yogastudio\u2019s willen er niet zitten.",
-  "Noord is officieel Amsterdam, maar de pont voelt als een grenscontrole. Bewoners vinden dat juist het charme. De rest vindt het gewoon ver.",
-  "In Noord wonen is de Amsterdamse versie van zeggen dat je in Amsterdam woont terwijl je eigenlijk in Zaandam woont maar dan met een hipper postadres.",
-  "Mensen verhuizen naar Noord \u2018voor de ruimte\u2019. Na twee winters pont varen in de regen verhuizen ze terug naar een 40m\u00b2 studio in West.",
-  "Noord-bewoners noemen zichzelf pioniers. De rest van Amsterdam noemt ze mensen die geen huis konden vinden aan de goede kant van het IJ.",
-  "De Rivierenbuurt is De Pijp voor mensen die De Pijp te duur vinden maar dat nooit hardop zullen zeggen.",
-  "Bewoners van de Rivierenbuurt geven standaard hun locatie op als \u2018vlakbij De Pijp\u2019. Het is niet vlakbij De Pijp.",
-  "De grachten werden in de 17e eeuw met de klok mee gegraven zodat het water op natuurlijke wijze richting het IJ zou stromen. Dat werkt tot op de dag van vandaag.",
-  "Het Concertgebouw heeft bewust geen airconditioning omdat de akoestiek in 1888 werd afgestemd op een zaaltemperatuur van precies 19 graden.",
-  "De rode luiken die je op veel grachtenpanden ziet zijn niet decoratief \u2014 ze werden vroeger dichtgeslagen als waarschuwing dat het water steeg.",
-  "De Westertorenklok loopt bewust twee minuten voor. Dit werd in 1681 ingesteld zodat kerkgangers nooit te laat zouden komen.",
-  "De Magere Brug wordt twee keer per jaar met de hand gewit door dezelfde familie die dit sinds 1904 doet.",
-  "Het Rijksmuseum is precies zo geplaatst dat de zon op Koningsdag door het middelste raam van de Nachtwachtzaal valt.",
-  "De pont naar Noord vaart sinds 1924 gratis omdat een wethouder per ongeluk de verkeerde motie indiende. Niemand heeft het ooit teruggedraaid.",
-  "In de Jordaan werden straatnamen oorspronkelijk vernoemd naar bloemen. De Rozenstraat is de enige die zijn oorspronkelijke naam heeft behouden.",
+  "The Jordaan is not named after the river Jordan, but after a 17th-century cheese merchant called Hendrik de Jordaan who opened the first shop there.",
+  "Amsterdam has more bridges than Venice, though the city officially counts only 1,281 because anything under three metres does not make the list.",
+  "The most crooked canal houses did not sink that way. They were built leaning forward on purpose, so residents could hoist furniture in through the windows.",
+  "The word 'gezellig' was officially declared untranslatable in 1978 by the Royal Netherlands Academy of Arts and Sciences.",
+  "Amsterdam's first espresso bar opened on the Zeedijk in 1957 and accidentally served filter coffee with foamed milk, which they called 'a wrong cup'. The name stuck.",
+  "The Amstel is technically not a river but a tidal channel. Amsterdammers refuse to accept this.",
+  "In the 18th century it was illegal to whistle on the canals after midnight. The law has never been formally repealed.",
+  "The average Amsterdammer orders food 3.2 times a week, but will tell you in conversation that they always cook.",
+  "The Vondelpark was originally called 'New Park' but was renamed because nobody could remember it.",
+  "The colour of Amsterdam's street bricks is no accident. They are fired at 1,180 degrees specifically for that shade of dark red.",
+  "There are more coffee places per square kilometre in De Pijp than in all of Milan. This has never actually been researched.",
+  "In Oud-Zuid it has been socially unacceptable since 2019 to order a flat white without first mentioning that you just came from padel.",
+  "People in Oost claim their neighbourhood is 'the new centre'. The centre disagrees. Oost is not clever enough to understand this either.",
+  "In De Pijp every new place that opens is automatically called a hidden gem, even when there is already a 45-minute queue outside.",
+  "Research shows that 87% of everyone who says 'I know a nice little place' means exactly the same restaurant.",
+  "Oost is the only neighbourhood where you walk fifteen minutes for a decent bar and then call that character.",
+  "In the Jordaan it is impossible to walk into a brown cafe without someone saying 'I have been coming here for years'. On average that turns out to be 8 months.",
+  "People from Oost say 'it is only ten minutes by bike to De Pijp'. With a headwind it is 25 minutes and two existential crises.",
+  "Oost does not even have a yoga studio. Not even yoga studios want to be there.",
+  "Noord is officially Amsterdam, but the ferry feels like a border crossing. Residents call that the charm. Everyone else just calls it far.",
+  "Living in Noord is the Amsterdam way of saying you live in Amsterdam while actually living in Zaandam, but with a cooler postcode.",
+  "People move to Noord 'for the space'. After two winters of crossing on the ferry in the rain, they move back to a 40m2 studio in West.",
+  "Noord residents call themselves pioneers. The rest of Amsterdam calls them people who could not find a house on the right side of the IJ.",
+  "The Rivierenbuurt is De Pijp for people who find De Pijp too expensive but will never say so out loud.",
+  "Residents of the Rivierenbuurt give their location as 'near De Pijp' by default. It is not near De Pijp.",
+  "The canals were dug clockwise in the 17th century so the water would flow naturally towards the IJ. It still works to this day.",
+  "The Concertgebouw deliberately has no air conditioning, because in 1888 the acoustics were tuned to a hall temperature of exactly 19 degrees.",
+  "The red shutters you see on many canal houses are not decorative. They were slammed shut as a warning that the water was rising.",
+  "The Westertoren clock deliberately runs two minutes fast. This was set in 1681 so churchgoers would never be late.",
+  "The Magere Brug is whitewashed by hand twice a year by the same family that has done it since 1904.",
+  "The Rijksmuseum is positioned so precisely that on King's Day the sun falls through the middle window of the Night Watch gallery.",
+  "The ferry to Noord has been free since 1924 because an alderman accidentally tabled the wrong motion. Nobody has ever reversed it.",
+  "Streets in the Jordaan were originally named after flowers. The Rozenstraat is the only one that kept its original name.",
 ];
 let lastAnecdoteIndex = -1;
 function showRandomAnecdote() {
@@ -1517,58 +1517,58 @@ window.addEventListener('scroll', () => {
 
 // ═══ PLACES DATA ═══
 const places = [
-  { name:"Caff\u00e8 Pico", area:"De Pijp", fav:true, note:"Goed eten, chill sfeertje", lat:52.3552,lng:4.8900, web:"https://www.caffepico.com/", tags:["restaurant"] },
-  { name:"Peps", area:"Oud-West", hearts:0, note:"Happy hour 16\u201318u, altijd gezellig", lat:52.3675,lng:4.8716, web:"https://www.peps-amsterdam.nl", tags:["tapas","happy hour"] },
-  { name:"Arie", area:"De Pijp", fav:true, note:"Lekker eten en drinken", lat:52.3567,lng:4.8905, web:"https://www.arie-amsterdam.nl", tags:["restaurant","bar"] },
-  { name:"Caf\u00e9 Ent\u00e9", area:"Jordaan", fav:true, note:"Warme Franse bistro, donkerrood interieur, leuk goed kaartje", lat:52.3804,lng:4.8869, web:"https://www.cafeente.nl", tags:["oesters","bistro"] },
-  { name:"Libertine", area:"Jordaan", hearts:0, note:"Fijn voor brunch", lat:52.3802,lng:4.8876, web:"", tags:["caf\u00e9","brunch"] },
-  { name:"Zum Barbarossa", area:"Centrum", hearts:0, note:"Speakeasy, goede cocktails", lat:52.3686,lng:4.8906, web:"https://www.zumbarbarossa.com", tags:["cocktails","speakeasy"] },
-  { name:"Caf\u00e9 Sonneveld", area:"Jordaan", hearts:0, note:"Spareribs en appeltaart", lat:52.3763,lng:4.8823, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
-  { name:"Caf\u00e9 Amsterdam (Cradam)", area:"West", hearts:0, note:"Gezellig buurtrestaurant", lat:52.3841,lng:4.8683, web:"", tags:["restaurant"] },
-  { name:"Cafe Tabac", area:"Jordaan", hearts:0, note:"Borrelhap mandje, maar ook verrassend goed rijsttafeltje", lat:52.3802,lng:4.8885, web:"", tags:["borrel","indonesisch"] },
-  { name:"A-Fusion", area:"Zeedijk", hearts:0, note:"Aziatisch, snel en lekker", lat:52.3732,lng:4.9001, web:"", tags:["aziatisch","sushi"] },
-  { name:"Ela", area:"Jordaan", hearts:0, note:"Lekker zitten, heel klein, goed eten", lat:52.3695,lng:4.8809, web:"", tags:["oesters","bar"] },
-  { name:"Pata Negra", area:"Utrechtsestraat", hearts:0, note:"Tapas, altijd druk maar goed", lat:52.3614,lng:4.8991, web:"", tags:["tapas","spaans"] },
-  { name:"Troef", area:"Oost", hearts:0, note:"Frans bistro, rustig", lat:52.3492,lng:4.9137, web:"", tags:["restaurant","frans"] },
-  { name:"The Seafood Bar", area:"Oud-Zuid", hearts:0, note:"Happy hour 15\u201317u, Van Baerle", lat:52.3600,lng:4.8775, web:"https://www.theseafoodbar.nl", tags:["vis","happy hour"] },
-  { name:"Badcuyp", area:"De Pijp", hearts:0, note:"Fijn buurtrestaurant", lat:52.3566,lng:4.8971, web:"", tags:["restaurant"] },
-  { name:"L'Entrec\u00f4te et les Dames", area:"Oud-Zuid", hearts:0, note:"Biefstuk, vraag om extra refill", lat:52.3557,lng:4.8805, web:"", tags:["steak","frans"] },
-  { name:"Bouwman", area:"Utrechtsestraat", hearts:0, note:"Makkelijk drankje doen", lat:52.3623,lng:4.8988, web:"", tags:["borrel","bruin caf\u00e9"] },
-  { name:"Caf\u00e9 Marcella", area:"Amstelveld", hearts:0, note:"Mooi terras aan de gracht", lat:52.3622,lng:4.8983, web:"", tags:["terras","caf\u00e9"] },
-  { name:"Parlotte", area:"Jordaan", hearts:0, note:"Frans, lekker wijntje erbij", lat:52.3783,lng:4.8818, web:"", tags:["frans","wijn"] },
-  { name:"De Willem", area:"Haarlemmerplein", hearts:0, note:"Lekker eten, prima sfeer", lat:52.3849,lng:4.8829, web:"", tags:["restaurant"] },
-  { name:"Cantine de Caron", area:"West", hearts:0, note:"Frans in een oud pakhuis, tof", lat:52.3863,lng:4.8728, web:"", tags:["frans","restaurant"] },
-  { name:"Binnenvisser", area:"Oud-West", hearts:0, note:"Staat hoog op de lijst", lat:52.3715,lng:4.8704, web:"", tags:["wijn","natural wine"] },
-  { name:"Caf\u00e9 Bern", area:"Nieuwmarkt", hearts:0, note:"Kaasfondue, gezellig", lat:52.3725,lng:4.9010, web:"", tags:["fondue","zwitsers"] },
-  { name:"Bar Jules", area:"Oud-Zuid", hearts:0, note:"Fijn voor lunch", lat:52.3530,lng:4.8634, web:"", tags:["lunch","bar"] },
-  { name:"Toscanini", area:"Jordaan", hearts:0, note:"Goed italiaans, wel prijzig", lat:52.3801,lng:4.8854, web:"", tags:["italiaans","\u20ac\u20ac\u20ac"] },
-  { name:"Amstel Hotel", area:"Centrum", hearts:0, note:"Alleen voor lunch, vraag om buiten", lat:52.3603,lng:4.9050, web:"", tags:["lunch","chic"] },
-  { name:"Borello Aperitivo", area:"Zeedijk", hearts:0, note:"Cocktails en pizza, top sfeertje", lat:52.3754,lng:4.9012, web:"", tags:["cocktails","bar"] },
-  { name:"Polly Goudvis", area:"Noord", hearts:0, note:"Brunch bij de pont", lat:52.3825,lng:4.9033, web:"", tags:["brunch","bar"] },
-  { name:"Roest", area:"Oost", hearts:0, note:"Industrieel, altijd chill", lat:52.3720,lng:4.9266, web:"", tags:["bar","industrieel"] },
-  { name:"No Nonsense", area:"Centrum", hearts:0, note:"Gezellig bruin caf\u00e9", lat:52.3759,lng:4.9027, web:"", tags:["bar","caf\u00e9"] },
-  { name:"Bar Grill Marathonweg", area:"Oud-Zuid", fav:true, note:"Goed voor een hapje op de Marathonweg", lat:52.3460,lng:4.8650, web:"", tags:["bar","restaurant"] },
-  { name:"Caf\u00e9 Kieb\u00eart", area:"Oud-Zuid", hearts:0, note:"Open haard, gezellig op de Marathonweg", lat:52.3458,lng:4.8645, web:"", tags:["caf\u00e9","restaurant"] },
-  { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"Gezellig", lat:52.3465,lng:4.8655, web:"", tags:["bar"] },
-  { name:"'t Smalle", area:"Jordaan", hearts:0, note:"Biertje of broodje bal, altijd goed", lat:52.3758,lng:4.8838, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
-  { name:"Papeneiland", area:"Jordaan", fav:true, note:"Terrasje als de zon schijnt", lat:52.3826,lng:4.8871, web:"", tags:["terras","caf\u00e9"] },
-  { name:"Bistro Feline", area:"Jordaan", hearts:0, note:"Michelin gids, neem de kreeftenorzo", lat:52.3769,lng:4.8832, web:"", tags:["restaurant","frans"] },
-  { name:"La Perla", area:"Jordaan", hearts:0, note:"Gewoon gezellig pizza aan de bar", lat:52.3737,lng:4.8810, web:"", tags:["italiaans","pizza"] },
-  { name:"De Pizzakamer", area:"De Pijp", hearts:0, note:"Houtoven pizza, terras, altijd goed", lat:52.3561,lng:4.8945, web:"", tags:["italiaans","pizza"] },
-  { name:"Pilsvogel", area:"De Pijp", fav:true, note:"Terras op het plein, lekker biertje", lat:52.3555,lng:4.8937, web:"", tags:["bar","terras"] },
-  { name:"Caf\u00e9 Sarphaat", area:"De Pijp", hearts:0, note:"Chill caf\u00e9 op de Ceintuurbaan", lat:52.3536,lng:4.8942, web:"", tags:["caf\u00e9","terras"] },
-  { name:"Caf\u00e9-Restaurant Hesp", area:"Oost", hearts:0, note:"Terras aan het water, biertje en oesters", lat:52.3538,lng:4.9105, web:"", tags:["caf\u00e9","terras","oesters"] },
-  { name:"Caf\u00e9 Wildschut", area:"Oud-Zuid", hearts:0, note:"Lunch, niet gek gewoon goed", lat:52.3537,lng:4.8830, web:"", tags:["caf\u00e9","lunch","terras"] },
-  { name:"Caf\u00e9 Thijssen", area:"Jordaan", hearts:0, note:"Gemoedelijk, koffie of biertje aan de Brouwersgracht", lat:52.3820,lng:4.8848, web:"", tags:["caf\u00e9","brunch"] },
-  { name:"Ilario", area:"De Pijp", fav:true, note:"Onze favoriet. Aperol erbij en een lekkere pasta", lat:52.3554,lng:4.8960, web:"https://ilario.nl", tags:["italiaans","bar","pasta","terras"] },
-  { name:"Samuel's", area:"De Pijp", hearts:0, note:"Hip, lekker, gewoon helemaal top", lat:52.3546,lng:4.8920, web:"", tags:["restaurant","terras"] },
-  { name:"Brio", area:"De Pijp", hearts:0, note:"Nog een beetje onontdekt \u2014 reserveer aan de bar voor Italiaans en goede wijn", lat:52.3550,lng:4.8960, web:"", tags:["italiaans","wijn","restaurant"] },
-  { name:"Caf\u00e9 De Klepel", area:"Jordaan", hearts:0, note:"Aanrader als je iets te vieren hebt. Fantastische wijnen, leuke sommeliers, top eten", lat:52.3791,lng:4.8872, web:"https://cafedeklepel.nl", tags:["frans","wijn","restaurant"] },
-  { name:"Le Petit Bouillon", area:"Oud-Zuid", hearts:0, note:"Goedkoop en lekker, precies waar het om bekend staat. Geen gekke sfeer, wel altijd prima", lat:52.3457,lng:4.8763, web:"", tags:["frans","restaurant","terras"] },
-  { name:"Caf\u00e9-Restaurant Meyer", area:"Amstelveld", hearts:0, note:"Zelfde eigenaar als Marcella, net zo gezellig", lat:52.3625,lng:4.8957, web:"", tags:["caf\u00e9","restaurant","terras"] },
-  { name:"Caf\u00e9 De Blaffende Vis", area:"Jordaan", hearts:0, note:"Hartje Jordaan, voor weinig goed eten of de daghap", lat:52.3788,lng:4.8818, web:"", tags:["caf\u00e9","bruin caf\u00e9","terras"] },
-  { name:"SALUT", area:"De Pijp", hearts:0, note:"Leuk, hip en grappig. Beetje ordi vibes, maar dan op de goede manier", lat:52.3564,lng:4.8936, web:"", tags:["restaurant","terras"] },
-  { name:"De Wasserette", area:"De Pijp", hearts:0, note:"Ga hier ontbijten \u2014 broodje smashed avo met kip en parmezaan, echt een topper", lat:52.3553,lng:4.8933, web:"", tags:["ontbijt","brunch","lunch"] },
+  { name:"Caff\u00e8 Pico", area:"De Pijp", fav:true, note:"Good food, relaxed vibe", lat:52.3552,lng:4.8900, web:"https://www.caffepico.com/", tags:["restaurant"] },
+  { name:"Peps", area:"Oud-West", hearts:0, note:"Happy hour 4-6pm, always a good time", lat:52.3675,lng:4.8716, web:"https://www.peps-amsterdam.nl", tags:["tapas","happy hour"] },
+  { name:"Arie", area:"De Pijp", fav:true, note:"Good food, good drinks", lat:52.3567,lng:4.8905, web:"https://www.arie-amsterdam.nl", tags:["restaurant","bar"] },
+  { name:"Caf\u00e9 Ent\u00e9", area:"Jordaan", fav:true, note:"Warm French bistro, deep red interior, a short menu done well", lat:52.3804,lng:4.8869, web:"https://www.cafeente.nl", tags:["oesters","bistro"] },
+  { name:"Libertine", area:"Jordaan", hearts:0, note:"Lovely for brunch", lat:52.3802,lng:4.8876, web:"", tags:["caf\u00e9","brunch"] },
+  { name:"Zum Barbarossa", area:"Centrum", hearts:0, note:"Speakeasy, good cocktails", lat:52.3686,lng:4.8906, web:"https://www.zumbarbarossa.com", tags:["cocktails","speakeasy"] },
+  { name:"Caf\u00e9 Sonneveld", area:"Jordaan", hearts:0, note:"Spare ribs and apple pie", lat:52.3763,lng:4.8823, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
+  { name:"Caf\u00e9 Amsterdam (Cradam)", area:"West", hearts:0, note:"Cosy neighbourhood restaurant", lat:52.3841,lng:4.8683, web:"", tags:["restaurant"] },
+  { name:"Cafe Tabac", area:"Jordaan", hearts:0, note:"Basket of bar snacks, but a surprisingly good rijsttafel too", lat:52.3802,lng:4.8885, web:"", tags:["borrel","indonesisch"] },
+  { name:"A-Fusion", area:"Zeedijk", hearts:0, note:"Asian, quick and good", lat:52.3732,lng:4.9001, web:"", tags:["aziatisch","sushi"] },
+  { name:"Ela", area:"Jordaan", hearts:0, note:"Comfortable, tiny, great food", lat:52.3695,lng:4.8809, web:"", tags:["oesters","bar"] },
+  { name:"Pata Negra", area:"Utrechtsestraat", hearts:0, note:"Tapas, always busy but worth it", lat:52.3614,lng:4.8991, web:"", tags:["tapas","spaans"] },
+  { name:"Troef", area:"Oost", hearts:0, note:"French bistro, quiet", lat:52.3492,lng:4.9137, web:"", tags:["restaurant","frans"] },
+  { name:"The Seafood Bar", area:"Oud-Zuid", hearts:0, note:"Happy hour 3-5pm, Van Baerlestraat", lat:52.3600,lng:4.8775, web:"https://www.theseafoodbar.nl", tags:["vis","happy hour"] },
+  { name:"Badcuyp", area:"De Pijp", hearts:0, note:"Good neighbourhood restaurant", lat:52.3566,lng:4.8971, web:"", tags:["restaurant"] },
+  { name:"L'Entrec\u00f4te et les Dames", area:"Oud-Zuid", hearts:0, note:"Steak, ask for the extra refill", lat:52.3557,lng:4.8805, web:"", tags:["steak","frans"] },
+  { name:"Bouwman", area:"Utrechtsestraat", hearts:0, note:"Easy place for a drink", lat:52.3623,lng:4.8988, web:"", tags:["borrel","bruin caf\u00e9"] },
+  { name:"Caf\u00e9 Marcella", area:"Amstelveld", hearts:0, note:"Beautiful terrace on the canal", lat:52.3622,lng:4.8983, web:"", tags:["terras","caf\u00e9"] },
+  { name:"Parlotte", area:"Jordaan", hearts:0, note:"French, with a good glass of wine", lat:52.3783,lng:4.8818, web:"", tags:["frans","wijn"] },
+  { name:"De Willem", area:"Haarlemmerplein", hearts:0, note:"Good food, nice atmosphere", lat:52.3849,lng:4.8829, web:"", tags:["restaurant"] },
+  { name:"Cantine de Caron", area:"West", hearts:0, note:"French in an old warehouse, very cool", lat:52.3863,lng:4.8728, web:"", tags:["frans","restaurant"] },
+  { name:"Binnenvisser", area:"Oud-West", hearts:0, note:"High on the list", lat:52.3715,lng:4.8704, web:"", tags:["wijn","natural wine"] },
+  { name:"Caf\u00e9 Bern", area:"Nieuwmarkt", hearts:0, note:"Cheese fondue, cosy", lat:52.3725,lng:4.9010, web:"", tags:["fondue","zwitsers"] },
+  { name:"Bar Jules", area:"Oud-Zuid", hearts:0, note:"Lovely for lunch", lat:52.3530,lng:4.8634, web:"", tags:["lunch","bar"] },
+  { name:"Toscanini", area:"Jordaan", hearts:0, note:"Good Italian, on the pricey side", lat:52.3801,lng:4.8854, web:"", tags:["italiaans","\u20ac\u20ac\u20ac"] },
+  { name:"Amstel Hotel", area:"Centrum", hearts:0, note:"Lunch only, ask to sit outside", lat:52.3603,lng:4.9050, web:"", tags:["lunch","chic"] },
+  { name:"Borello Aperitivo", area:"Zeedijk", hearts:0, note:"Cocktails and pizza, great atmosphere", lat:52.3754,lng:4.9012, web:"", tags:["cocktails","bar"] },
+  { name:"Polly Goudvis", area:"Noord", hearts:0, note:"Brunch by the ferry", lat:52.3825,lng:4.9033, web:"", tags:["brunch","bar"] },
+  { name:"Roest", area:"Oost", hearts:0, note:"Industrial, always relaxed", lat:52.3720,lng:4.9266, web:"", tags:["bar","industrieel"] },
+  { name:"No Nonsense", area:"Centrum", hearts:0, note:"Cosy brown cafe", lat:52.3759,lng:4.9027, web:"", tags:["bar","caf\u00e9"] },
+  { name:"Bar Grill Marathonweg", area:"Oud-Zuid", fav:true, note:"Good for a bite on the Marathonweg", lat:52.3460,lng:4.8650, web:"", tags:["bar","restaurant"] },
+  { name:"Caf\u00e9 Kieb\u00eart", area:"Oud-Zuid", hearts:0, note:"Open fire, cosy spot on the Marathonweg", lat:52.3458,lng:4.8645, web:"", tags:["caf\u00e9","restaurant"] },
+  { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"Cosy", lat:52.3465,lng:4.8655, web:"", tags:["bar"] },
+  { name:"'t Smalle", area:"Jordaan", hearts:0, note:"A beer or a meatball roll, never wrong", lat:52.3758,lng:4.8838, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
+  { name:"Papeneiland", area:"Jordaan", fav:true, note:"Terrace when the sun is out", lat:52.3826,lng:4.8871, web:"", tags:["terras","caf\u00e9"] },
+  { name:"Bistro Feline", area:"Jordaan", hearts:0, note:"In the Michelin guide, order the lobster orzo", lat:52.3769,lng:4.8832, web:"", tags:["restaurant","frans"] },
+  { name:"La Perla", area:"Jordaan", hearts:0, note:"Just good pizza at the bar", lat:52.3737,lng:4.8810, web:"", tags:["italiaans","pizza"] },
+  { name:"De Pizzakamer", area:"De Pijp", hearts:0, note:"Wood-fired pizza, terrace, always good", lat:52.3561,lng:4.8945, web:"", tags:["italiaans","pizza"] },
+  { name:"Pilsvogel", area:"De Pijp", fav:true, note:"Terrace on the square, good beer", lat:52.3555,lng:4.8937, web:"", tags:["bar","terras"] },
+  { name:"Caf\u00e9 Sarphaat", area:"De Pijp", hearts:0, note:"Relaxed cafe on the Ceintuurbaan", lat:52.3536,lng:4.8942, web:"", tags:["caf\u00e9","terras"] },
+  { name:"Caf\u00e9-Restaurant Hesp", area:"Oost", hearts:0, note:"Waterside terrace, beer and oysters", lat:52.3538,lng:4.9105, web:"", tags:["caf\u00e9","terras","oesters"] },
+  { name:"Caf\u00e9 Wildschut", area:"Oud-Zuid", hearts:0, note:"Lunch, nothing wild, just good", lat:52.3537,lng:4.8830, web:"", tags:["caf\u00e9","lunch","terras"] },
+  { name:"Caf\u00e9 Thijssen", area:"Jordaan", hearts:0, note:"Easy-going, coffee or a beer on the Brouwersgracht", lat:52.3820,lng:4.8848, web:"", tags:["caf\u00e9","brunch"] },
+  { name:"Ilario", area:"De Pijp", fav:true, note:"Our favourite. An Aperol and a very good pasta", lat:52.3554,lng:4.8960, web:"https://ilario.nl", tags:["italiaans","bar","pasta","terras"] },
+  { name:"Samuel's", area:"De Pijp", hearts:0, note:"Hip, delicious, just brilliant", lat:52.3546,lng:4.8920, web:"", tags:["restaurant","terras"] },
+  { name:"Brio", area:"De Pijp", hearts:0, note:"Still a bit undiscovered. Book a seat at the bar for Italian food and good wine", lat:52.3550,lng:4.8960, web:"", tags:["italiaans","wijn","restaurant"] },
+  { name:"Caf\u00e9 De Klepel", area:"Jordaan", hearts:0, note:"The one if you have something to celebrate. Fantastic wines, great sommeliers, excellent food", lat:52.3791,lng:4.8872, web:"https://cafedeklepel.nl", tags:["frans","wijn","restaurant"] },
+  { name:"Le Petit Bouillon", area:"Oud-Zuid", hearts:0, note:"Cheap and good, exactly what it is known for. Nothing special atmosphere-wise, but always solid", lat:52.3457,lng:4.8763, web:"", tags:["frans","restaurant","terras"] },
+  { name:"Caf\u00e9-Restaurant Meyer", area:"Amstelveld", hearts:0, note:"Same owner as Marcella, just as cosy", lat:52.3625,lng:4.8957, web:"", tags:["caf\u00e9","restaurant","terras"] },
+  { name:"Caf\u00e9 De Blaffende Vis", area:"Jordaan", hearts:0, note:"Heart of the Jordaan, good food or the dish of the day for very little", lat:52.3788,lng:4.8818, web:"", tags:["caf\u00e9","bruin caf\u00e9","terras"] },
+  { name:"SALUT", area:"De Pijp", hearts:0, note:"Fun, hip and funny. A bit trashy, but in the best way", lat:52.3564,lng:4.8936, web:"", tags:["restaurant","terras"] },
+  { name:"De Wasserette", area:"De Pijp", hearts:0, note:"Come here for breakfast. The smashed avo roll with chicken and parmesan is a winner", lat:52.3553,lng:4.8933, web:"", tags:["ontbijt","brunch","lunch"] },
 ];
 
 // ═══ MAP ═══
@@ -1609,14 +1609,14 @@ const areaGroups = {
   'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt'],
 };
 const overigAreas = [...new Set(places.map(p => p.area))].filter(a => !Object.values(areaGroups).flat().includes(a));
-areaGroups['Overig'] = overigAreas;
+areaGroups['Other'] = overigAreas;
 const areaFiltersEl = document.getElementById('area-filters');
 const allAreaBtn = document.createElement('button');
-allAreaBtn.textContent = 'Alle wijken';
+allAreaBtn.textContent = 'All areas';
 allAreaBtn.className = 'active';
 allAreaBtn.onclick = () => { activeArea = null; applyFilters(); };
 areaFiltersEl.appendChild(allAreaBtn);
-['Jordaan','De Pijp','Zuid','Centrum','Overig'].forEach(label => {
+['Jordaan','De Pijp','Zuid','Centrum','Other'].forEach(label => {
   const btn = document.createElement('button');
   btn.textContent = label;
   btn.onclick = () => { activeArea = label; applyFilters(); };
@@ -1624,10 +1624,10 @@ areaFiltersEl.appendChild(allAreaBtn);
 });
 
 const allTags = [...new Set(places.flatMap(p => p.tags))].sort();
-const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wijn', italiaans:'Italiaans', frans:'Frans', vis:'Vis', oesters:'Oesters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terras', borrel:'Borrel', ontbijt:'Ontbijt', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Kaas', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Chic' };
+const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wine', italiaans:'Italian', frans:'French', vis:'Fish', oesters:'Oysters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terrace', borrel:'Drinks', ontbijt:'Breakfast', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Cheese', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Smart' };
 const filtersEl = document.getElementById('filters');
 const allBtn = document.createElement('button');
-allBtn.textContent = 'Alles';
+allBtn.textContent = 'All';
 allBtn.className = 'active';
 allBtn.onclick = () => { activeTag = null; applyFilters(); };
 filtersEl.appendChild(allBtn);
@@ -1688,7 +1688,7 @@ function applyFilters() {
 
 // ═══ CAROUSELS PER WIJK ═══
 const carouselsEl = document.getElementById('carousels');
-const wijkOrder = ['Jordaan','De Pijp','Zuid','Centrum','Overig'];
+const wijkOrder = ['Jordaan','De Pijp','Zuid','Centrum','Other'];
 const carouselRows = {};
 
 wijkOrder.forEach(wijk => {
@@ -1702,7 +1702,7 @@ wijkOrder.forEach(wijk => {
 
   const header = document.createElement('div');
   header.className = 'carousel-header';
-  header.innerHTML = `<h2>${wijk}</h2><span class="count">${wijkPlaces.length} plekken</span>`;
+  header.innerHTML = `<h2>${wijk}</h2><span class="count">${wijkPlaces.length} places</span>`;
 
   const track = document.createElement('div');
   track.className = 'carousel-track';
@@ -1718,7 +1718,7 @@ wijkOrder.forEach(wijk => {
       document.getElementById('kaart').scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
     card.innerHTML = `
-      ${p.fav ? '<div class="fav-label">favorietje</div>' : ''}
+      ${p.fav ? '<div class="fav-label">our favourite</div>' : ''}
       <div class="card-top">
         <h3>${p.name}</h3>
       </div>
@@ -1729,7 +1729,7 @@ wijkOrder.forEach(wijk => {
       </div>
       <div class="actions">
         ${p.web ? `<a class="link" href="${p.web}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Website \u2192</a>` : ''}
-        <a class="nav-btn" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}" target="_blank" rel="noopener" onclick="event.stopPropagation()">\u2794 Breng me hier</a>
+        <a class="nav-btn" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}" target="_blank" rel="noopener" onclick="event.stopPropagation()">\u2794 Take me there</a>
       </div>
     `;
     track.appendChild(card);
@@ -1844,8 +1844,8 @@ spinBtn.onclick = () => {
       resultName.textContent = winner.name;
       resultNote.textContent = winner.note || winner.area;
       resultActions.innerHTML = `
-        <a class="result-nav" href="https://www.google.com/maps/dir/?api=1&destination=${winner.lat},${winner.lng}" target="_blank" rel="noopener">\u2794 Breng me hier</a>
-        <button class="result-retry" onclick="document.getElementById('spinBtn').click()">Nee, opnieuw</button>
+        <a class="result-nav" href="https://www.google.com/maps/dir/?api=1&destination=${winner.lat},${winner.lng}" target="_blank" rel="noopener">\u2794 Take me there</a>
+        <button class="result-retry" onclick="document.getElementById('spinBtn').click()">No, spin again</button>
       `;
       spinResult.classList.add('visible');
 
