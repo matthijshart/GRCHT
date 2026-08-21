@@ -10,26 +10,28 @@
 <meta property="og:url" content="https://matthijshart.github.io/GRCHT/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%238badc4'/><rect width='4' height='32' x='4' fill='%23f5f0e8'/><rect width='4' height='32' x='8' fill='%238badc4'/><rect width='4' height='32' x='12' fill='%23f5f0e8'/><rect width='4' height='32' x='16' fill='%238badc4'/><rect width='4' height='32' x='20' fill='%23f5f0e8'/><rect width='4' height='32' x='24' fill='%238badc4'/><rect width='4' height='32' x='28' fill='%23f5f0e8'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%231a4d43'/><rect width='4' height='32' x='4' fill='%23ded8c6'/><rect width='4' height='32' x='8' fill='%231a4d43'/><rect width='4' height='32' x='12' fill='%23ded8c6'/><rect width='4' height='32' x='16' fill='%231a4d43'/><rect width='4' height='32' x='20' fill='%23ded8c6'/><rect width='4' height='32' x='24' fill='%231a4d43'/><rect width='4' height='32' x='28' fill='%23ded8c6'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  /* Oud-mediterraan palet: cipres, salie, zongebleekt pleisterwerk, terracotta */
-  --black: #101a12;
-  --red: #93381f;
-  --cream: #ece3d1;
-  --white: #f8f3e8;
+  /* Oud-mediterraan: flessengroen + linnen (foto 1), gedempte salie (foto 2),
+     krantengroen (foto 3), zacht oker als enige warme accent. Geen rood. */
+  --black: #123029;
+  --ink: #16382f;
+  --ink-mid: #4c5a52;
+  --cream: #e9e4d5;
+  --white: #f4f1e6;
+  --stripe-white: #ded8c6;
   --gray: #6f6a5b;
-  --gray-light: #a79f8c;
-  --blue: #9db69a;
-  --olive: #3d6b4f;
-  --stripe-white: #efe6d4;
-  --coral: #b8502e;
-  --ink: #1f2a1e;
-  --ink-mid: #4e564a;
+  --gray-light: #a09a89;
+  --blue: #8faa93;
+  --olive: #1a4d43;
+  --coral: #84621f;
+  --amber: #d8ab5c;
+  --red: #6b4e18;
 }
 html { scroll-behavior: auto; }
 body {
@@ -39,7 +41,7 @@ body {
   overflow-x: hidden;
   font-weight: 300;
 }
-::selection { background: var(--red); color: var(--white); }
+::selection { background: var(--olive); color: var(--white); }
 
 /* ═══ ANIMATED STRIPES BACKGROUND (hero only) ═══ */
 .stripes-bg {
@@ -92,7 +94,7 @@ body {
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 1;
   pointer-events: none;
-  background: rgba(16, 26, 18, 0.15);
+  background: rgba(18, 48, 41, 0.18);
   opacity: 0;
   animation: overlayFadeIn 1s ease 1.8s forwards;
 }
@@ -149,7 +151,7 @@ nav .links a:hover { opacity: 0.5; }
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--coral);
+  color: var(--olive);
   margin-bottom: 1.5rem;
   font-weight: 500;
 }
@@ -158,7 +160,7 @@ nav .links a:hover { opacity: 0.5; }
   font-size: clamp(5rem, 15vw, 14rem);
   line-height: 0.85;
   letter-spacing: -0.02em;
-  color: var(--coral);
+  color: var(--olive);
 }
 .hero h1 small {
   font-size: 0.55em;
@@ -172,7 +174,7 @@ nav .links a:hover { opacity: 0.5; }
 .hero .sub {
   margin-top: 2rem;
   font-size: 1.1rem;
-  color: #38342a;
+  color: #33392f;
   max-width: 400px;
   line-height: 1.6;
 }
@@ -184,7 +186,7 @@ nav .links a:hover { opacity: 0.5; }
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #38342a;
+  color: #33392f;
   opacity: 0.65;
   font-weight: 500;
 }
@@ -195,29 +197,6 @@ nav .links a:hover { opacity: 0.5; }
   border-radius: 50%;
   background: var(--coral);
 }
-.partner-badge {
-  margin-top: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-.partner-badge span {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #38342a;
-  opacity: 0.6;
-}
-.partner-badge img {
-  height: 70px;
-  width: auto;
-  opacity: 0.8;
-  transition: opacity 0.3s;
-}
-.partner-badge img:hover {
-  opacity: 1;
-}
 .hero .scroll-hint {
   position: absolute;
   bottom: 2.5rem;
@@ -227,7 +206,7 @@ nav .links a:hover { opacity: 0.5; }
   gap: 0.4rem;
   text-decoration: none;
   cursor: pointer;
-  color: var(--coral);
+  color: var(--olive);
   animation: pulse 2s infinite;
 }
 .hero .scroll-hint svg {
@@ -303,7 +282,7 @@ nav .links a:hover { opacity: 0.5; }
   align-items: flex-end;
   gap: 0.5rem;
   margin-bottom: 0.4rem;
-  color: var(--coral);
+  color: var(--olive);
   font-size: 0.85rem;
   font-style: italic;
   font-weight: 300;
@@ -379,7 +358,7 @@ nav .links a:hover { opacity: 0.5; }
 }
 .filter-row button {
   padding: 0.35rem 0.9rem; border-radius: 20px;
-  border: 1px solid #d8cdb6; background: var(--white);
+  border: 1px solid #d3ccb8; background: var(--white);
   font-family: 'Outfit', sans-serif; font-size: 0.78rem;
   color: var(--ink-mid); cursor: pointer; transition: all 0.2s;
   font-weight: 400;
@@ -388,7 +367,7 @@ nav .links a:hover { opacity: 0.5; }
   background: var(--ink); color: var(--cream); border-color: var(--ink);
 }
 .filter-row button.active {
-  background: var(--coral); color: var(--white); border-color: var(--coral);
+  background: var(--olive); color: var(--white); border-color: var(--olive);
 }
 /* Wijk filters — groot en bold */
 .filter-row.area-row {
@@ -412,9 +391,9 @@ nav .links a:hover { opacity: 0.5; }
   border-color: var(--ink);
 }
 .filter-row.area-row button.active {
-  background: var(--coral);
+  background: var(--olive);
   color: var(--white);
-  border-color: var(--coral);
+  border-color: var(--olive);
 }
 
 /* ═══ CAROUSEL LAYOUT ═══ */
@@ -462,7 +441,7 @@ nav .links a:hover { opacity: 0.5; }
   border-radius: 10px;
   padding: 1rem 1.2rem;
   cursor: pointer;
-  border: 1px solid #e2d8c2;
+  border: 1px solid #ddd5c1;
   transition: transform 0.2s, box-shadow 0.2s;
   scroll-snap-align: start;
 }
@@ -489,7 +468,7 @@ nav .links a:hover { opacity: 0.5; }
 .card .meta span { display: inline-flex; align-items: center; gap: 0.2rem; }
 .card .tag {
   display: inline-block; padding: 0.12rem 0.45rem; border-radius: 10px;
-  background: #e6dcc7; font-size: 0.68rem; color: var(--ink-mid);
+  background: #ded6c2; font-size: 0.68rem; color: var(--ink-mid);
 }
 .card .link {
   display: inline-block; margin-top: 0.5rem;
@@ -551,11 +530,11 @@ nav .links a:hover { opacity: 0.5; }
 }
 .swipe-banner-title em {
   font-style: normal;
-  color: var(--coral);
+  color: var(--amber);
 }
 .swipe-banner-sub {
   font-size: 1rem;
-  color: rgba(236, 227, 209, 0.62);
+  color: rgba(233, 228, 213, 0.62);
   margin-bottom: 2.4rem;
   line-height: 1.6;
   max-width: 34ch;
@@ -566,8 +545,8 @@ nav .links a:hover { opacity: 0.5; }
   display: inline-block;
   padding: 1rem 2.6rem;
   border-radius: 50px;
-  background: var(--coral);
-  color: var(--white);
+  background: var(--amber);
+  color: var(--ink);
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.5rem;
   letter-spacing: 0.1em;
@@ -576,7 +555,7 @@ nav .links a:hover { opacity: 0.5; }
 }
 .swipe-banner-btn:hover {
   transform: translateY(-3px);
-  background: var(--red);
+  background: var(--white);
 }
 .swipe-banner-btn:active {
   transform: translateY(0) scale(0.98);
@@ -584,8 +563,8 @@ nav .links a:hover { opacity: 0.5; }
 .swipe-banner-new {
   display: inline-block;
   padding: 0.25rem 0.85rem;
-  border: 1px solid rgba(236, 227, 209, 0.32);
-  color: rgba(236, 227, 209, 0.75);
+  border: 1px solid rgba(233, 228, 213, 0.32);
+  color: rgba(233, 228, 213, 0.75);
   font-size: 0.6rem;
   font-weight: 500;
   letter-spacing: 0.22em;
@@ -596,14 +575,10 @@ nav .links a:hover { opacity: 0.5; }
 
 /* ═══ GEEN IDEE SPINNER ═══ */
 .spinner-wrap {
-  background: repeating-linear-gradient(
-    90deg,
-    #d8342a 0px, #d8342a 50px,
-    #f1e7d0 50px, #f1e7d0 100px
-  );
-  background-size: 100px 100%;
-  animation: yellowStripeScroll 8s linear infinite;
-  padding: 3.5rem 1rem;
+  background: var(--white);
+  border-top: 1px solid #d7cfba;
+  border-bottom: 1px solid #d7cfba;
+  padding: clamp(3.5rem, 8vw, 6rem) 1rem;
   position: relative;
 }
 .spinner-section {
@@ -618,7 +593,7 @@ nav .links a:hover { opacity: 0.5; }
   font-weight: 500;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--coral);
+  color: var(--olive);
   margin-bottom: 1rem;
 }
 .spinner-title {
@@ -713,11 +688,11 @@ nav .links a:hover { opacity: 0.5; }
 }
 .slot-wrapper::before {
   top: 0;
-  background: linear-gradient(to bottom, rgba(248,243,232,0.95), transparent);
+  background: linear-gradient(to bottom, rgba(244,241,230,0.95), transparent);
 }
 .slot-wrapper::after {
   bottom: 0;
-  background: linear-gradient(to top, rgba(248,243,232,0.95), transparent);
+  background: linear-gradient(to top, rgba(244,241,230,0.95), transparent);
 }
 .slot-reel {
   position: absolute;
@@ -844,7 +819,7 @@ nav .links a:hover { opacity: 0.5; }
   display: block;
   width: 34px;
   height: 2px;
-  background: var(--coral);
+  background: var(--olive);
   margin: 0 auto 1.6rem;
 }
 .anecdote-label {
@@ -852,7 +827,7 @@ nav .links a:hover { opacity: 0.5; }
   font-weight: 500;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--coral);
+  color: var(--olive);
   margin-bottom: 1.1rem;
 }
 .anecdote-text {
@@ -870,10 +845,10 @@ nav .links a:hover { opacity: 0.5; }
   gap: 0.4rem;
   margin-top: 2rem;
   padding: 0.45rem 1.1rem;
-  border: 1px solid rgba(184,80,46,0.28);
+  border: 1px solid rgba(26,77,67,0.25);
   border-radius: 20px;
   background: transparent;
-  color: var(--coral);
+  color: var(--olive);
   font-family: 'Outfit', sans-serif;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
@@ -883,14 +858,52 @@ nav .links a:hover { opacity: 0.5; }
 }
 .anecdote-btn:hover {
   opacity: 1;
-  background: rgba(184,80,46,0.09);
-  border-color: rgba(184,80,46,0.45);
+  background: rgba(26,77,67,0.08);
+  border-color: rgba(26,77,67,0.4);
 }
 .anecdote-btn svg {
   transition: transform 0.4s;
 }
 .anecdote-btn:active svg {
   transform: rotate(360deg);
+}
+
+/* ═══ SFEERFOTO ═══ */
+.photo-band {
+  margin: clamp(2rem, 6vw, 4.5rem) 0 0;
+  background: var(--black);
+}
+.photo-band-inner {
+  position: relative;
+  overflow: hidden;
+  height: clamp(320px, 58vh, 620px);
+}
+.photo-band img {
+  position: absolute;
+  inset: -12% 0;
+  width: 100%;
+  height: 124%;
+  object-fit: cover;
+  object-position: center 45%;
+  will-change: transform;
+}
+.photo-band-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(18,48,41,0.12) 0%, rgba(18,48,41,0) 35%, rgba(18,48,41,0.55) 100%);
+  pointer-events: none;
+}
+.photo-band figcaption {
+  background: var(--black);
+  color: var(--cream);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  padding: 1rem 1.2rem 1.2rem;
+  text-align: center;
 }
 
 /* ═══ SECTIEKOPPEN ═══ */
@@ -907,7 +920,7 @@ nav .links a:hover { opacity: 0.5; }
   font-weight: 500;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--coral);
+  color: var(--olive);
 }
 .section-head .eyebrow::after {
   content: '';
@@ -946,7 +959,7 @@ nav .links a:hover { opacity: 0.5; }
   display: flex;
   flex-wrap: wrap;
   gap: 2.5rem;
-  border-top: 1px solid #ded3bd;
+  border-top: 1px solid #d7cfba;
 }
 .stat .num {
   font-family: 'Bebas Neue', sans-serif;
@@ -1009,7 +1022,7 @@ nav .links a:hover { opacity: 0.5; }
   top: 0; left: 0; right: 0;
   height: 2px;
   z-index: 200;
-  background: var(--coral);
+  background: var(--olive);
   transform: scaleX(0);
   transform-origin: 0 50%;
   pointer-events: none;
@@ -1123,7 +1136,7 @@ nav .links a:hover { opacity: 0.5; }
   <div class="hero-spotify">
     <div class="spotify-hint">
       <span>speel af &amp; kijk lekker rond</span>
-      <svg width="28" height="32" viewBox="0 0 28 32" fill="none" stroke="var(--coral)" stroke-width="2" stroke-linecap="round"><path d="M14 2 C10 8, 6 14, 8 20 C10 26, 14 28, 14 30"/><path d="M8 25 L14 30 L18 24"/></svg>
+      <svg width="28" height="32" viewBox="0 0 28 32" fill="none" stroke="var(--olive)" stroke-width="2" stroke-linecap="round"><path d="M14 2 C10 8, 6 14, 8 20 C10 26, 14 28, 14 30"/><path d="M8 25 L14 30 L18 24"/></svg>
     </div>
     <iframe id="spotifyPlayer" src="" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media" loading="lazy"></iframe>
     <script>
@@ -1221,6 +1234,15 @@ nav .links a:hover { opacity: 0.5; }
   </div>
   <div class="carousels-section" id="carousels"></div>
 
+  <!-- SFEERFOTO -->
+  <figure class="photo-band reveal" id="sfeer">
+    <div class="photo-band-inner">
+      <img src="today.jpg" alt="Zomer aan de Italiaanse kust"
+           onerror="this.closest('.photo-band').remove()">
+    </div>
+    <figcaption>Waar we het allemaal voor doen.</figcaption>
+  </figure>
+
   <!-- ANECDOTE FOOTER -->
   <div class="anecdote-wrap" id="anecdotes">
     <div class="anecdote-inner reveal">
@@ -1288,8 +1310,7 @@ const anecdotes = [
   "De kleur van de Amsterdamse straatklinkers is geen toeval \u2014 ze worden speciaal gebakken op 1.180 graden voor die specifieke tint donkerrood.",
   "Er zijn meer koffietentjes per vierkante kilometer in De Pijp dan in heel Milaan. Dit is nooit feitelijk onderzocht.",
   "In Oud-Zuid is het sinds 2019 sociaal onacceptabel om een flat white te bestellen zonder eerst te vermelden dat je net van padel komt.",
-  "Bewoners van Oost beweren dat hun wijk \u2018het nieuwe centrum\u2019 is. Het centrum is het hier niet mee eens. Oost ook niet, stiekem.",
-  "De gemiddelde yup op de Beethovenstraat bezit 2,3 Canadese winterjassen maar heeft Nederland nog nooit verlaten bij een temperatuur onder de min twee.",
+  "Bewoners van Oost beweren dat hun wijk \u2018het nieuwe centrum\u2019 is. Het centrum is het hier niet mee eens. Oost is hier ook niet slim genoeg voor om te begrijpen.",
   "In De Pijp wordt elke nieuwe zaak die opent automatisch een \u2018hidden gem\u2019 genoemd, ook als er al 45 minuten rij staat.",
   "Uit onderzoek blijkt dat 87% van alle mensen die zeggen \u2018ik ken een leuk tentje\u2019 precies hetzelfde restaurant bedoelen.",
   "Oost is de enige wijk waar je een kwartier moet lopen voor een fatsoenlijke kroeg en dat dan \u2018karakter\u2019 noemt.",
@@ -1450,10 +1471,10 @@ const bounds = [];
 const markers = [];
 places.forEach((p, i) => {
   const size = 10;
-  const color = '#3d6b4f';
+  const color = '#1a4d43';
   const icon = L.divIcon({
     className: '',
-    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid #f8f3e8;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,0.25);"></div>`,
+    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid #f4f1e6;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,0.25);"></div>`,
     iconSize: [size, size], iconAnchor: [size/2, size/2]
   });
   const marker = L.marker([p.lat, p.lng], { icon }).addTo(map);
@@ -1806,6 +1827,29 @@ function updateProgress() {
 window.addEventListener('scroll', updateProgress, { passive: true });
 window.addEventListener('resize', updateProgress, { passive: true });
 updateProgress();
+
+// ═══ PARALLAX OP DE SFEERFOTO ═══
+const photoWrap = document.querySelector('.photo-band-inner');
+const photoImg = photoWrap && photoWrap.querySelector('img');
+if (photoImg && !reduceMotion) {
+  let photoTicking = false;
+  const movePhoto = () => {
+    if (photoTicking) return;
+    photoTicking = true;
+    requestAnimationFrame(() => {
+      const r = photoWrap.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < window.innerHeight) {
+        // -1 boven beeld, +1 onder beeld
+        const p = (r.top + r.height / 2 - window.innerHeight / 2) / (window.innerHeight / 2 + r.height / 2);
+        photoImg.style.transform = `translateY(${(p * 6).toFixed(2)}%)`;
+      }
+      photoTicking = false;
+    });
+  };
+  window.addEventListener('scroll', movePhoto, { passive: true });
+  window.addEventListener('resize', movePhoto, { passive: true });
+  movePhoto();
+}
 </script>
 </body>
 </html>

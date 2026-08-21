@@ -10,26 +10,28 @@
 <meta property="og:url" content="https://matthijshart.github.io/GRCHT/duo.html">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%238badc4'/><rect width='4' height='32' x='4' fill='%23f5f0e8'/><rect width='4' height='32' x='8' fill='%238badc4'/><rect width='4' height='32' x='12' fill='%23f5f0e8'/><rect width='4' height='32' x='16' fill='%238badc4'/><rect width='4' height='32' x='20' fill='%23f5f0e8'/><rect width='4' height='32' x='24' fill='%238badc4'/><rect width='4' height='32' x='28' fill='%23f5f0e8'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%231a4d43'/><rect width='4' height='32' x='4' fill='%23ded8c6'/><rect width='4' height='32' x='8' fill='%231a4d43'/><rect width='4' height='32' x='12' fill='%23ded8c6'/><rect width='4' height='32' x='16' fill='%231a4d43'/><rect width='4' height='32' x='20' fill='%23ded8c6'/><rect width='4' height='32' x='24' fill='%231a4d43'/><rect width='4' height='32' x='28' fill='%23ded8c6'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  /* Oud-mediterraan palet: cipres, salie, zongebleekt pleisterwerk, terracotta */
-  --black: #101a12;
-  --red: #93381f;
-  --cream: #ece3d1;
-  --white: #f8f3e8;
+  /* Oud-mediterraan: flessengroen + linnen (foto 1), gedempte salie (foto 2),
+     krantengroen (foto 3), zacht oker als enige warme accent. Geen rood. */
+  --black: #123029;
+  --ink: #16382f;
+  --ink-mid: #4c5a52;
+  --cream: #e9e4d5;
+  --white: #f4f1e6;
+  --stripe-white: #ded8c6;
   --gray: #6f6a5b;
-  --gray-light: #a79f8c;
-  --blue: #9db69a;
-  --olive: #3d6b4f;
-  --stripe-white: #efe6d4;
-  --coral: #b8502e;
-  --ink: #1f2a1e;
-  --ink-mid: #4e564a;
+  --gray-light: #a09a89;
+  --blue: #8faa93;
+  --olive: #1a4d43;
+  --coral: #84621f;
+  --amber: #d8ab5c;
+  --red: #6b4e18;
 }
 html { scroll-behavior: auto; }
 body {
@@ -41,7 +43,7 @@ body {
   min-height: 100vh;
   min-height: 100svh;
 }
-::selection { background: var(--red); color: var(--white); }
+::selection { background: var(--olive); color: var(--white); }
 
 /* ═══ STRIPES BACKGROUND ═══ */
 .stripes-bg {
@@ -178,7 +180,7 @@ body {
   background: var(--coral);
   color: var(--white);
 }
-.btn-primary:hover { background: var(--red); transform: scale(1.03); }
+.btn-primary:hover { background: var(--olive); transform: scale(1.03); }
 .btn-primary:active { transform: scale(0.98); }
 .btn-secondary {
   background: var(--ink);
@@ -382,8 +384,8 @@ body {
 }
 .stamp-ja {
   right: 1.5rem;
-  color: #4e8f63;
-  border-color: #4e8f63;
+  color: #2a6a55;
+  border-color: #2a6a55;
 }
 .stamp-nee {
   left: 1.5rem;
@@ -414,12 +416,12 @@ body {
   background: var(--white);
   color: var(--red);
 }
-.swipe-btn-nee:hover { background: #f3e0d7; transform: scale(1.08); }
+.swipe-btn-nee:hover { background: #e6e0cf; transform: scale(1.08); }
 .swipe-btn-ja {
   background: var(--white);
-  color: #4e8f63;
+  color: #2a6a55;
 }
-.swipe-btn-ja:hover { background: #e2ecdf; transform: scale(1.08); }
+.swipe-btn-ja:hover { background: #dfe8de; transform: scale(1.08); }
 
 .waiting-status {
   margin-top: 1rem;
@@ -579,7 +581,7 @@ body {
   white-space: nowrap;
   transition: all 0.2s;
 }
-.result-link:hover { background: var(--red); transform: scale(1.05); }
+.result-link:hover { background: var(--olive); transform: scale(1.05); }
 
 .no-matches {
   margin-top: 2rem;
@@ -1218,7 +1220,7 @@ function updateWaitingStatus(data) {
 function spawnConfetti() {
   const container = document.getElementById('confetti-container');
   container.innerHTML = '';
-  const colors = ['#b8502e', '#9db69a', '#ece3d1', '#93381f', '#4e8f63', '#efe6d4', '#c9a227'];
+  const colors = ['#1a4d43', '#8faa93', '#e9e4d5', '#2a6a55', '#d8ab5c', '#ded8c6', '#123029'];
 
   for (let i = 0; i < 60; i++) {
     const piece = document.createElement('div');
