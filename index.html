@@ -596,10 +596,14 @@ nav .links a:hover { opacity: 0.5; }
 
 /* ═══ GEEN IDEE SPINNER ═══ */
 .spinner-wrap {
-  background: var(--white);
-  border-top: 1px solid #ded3bd;
-  border-bottom: 1px solid #ded3bd;
-  padding: clamp(3.5rem, 8vw, 6rem) 1rem;
+  background: repeating-linear-gradient(
+    90deg,
+    #d8342a 0px, #d8342a 50px,
+    #f1e7d0 50px, #f1e7d0 100px
+  );
+  background-size: 100px 100%;
+  animation: yellowStripeScroll 8s linear infinite;
+  padding: 3.5rem 1rem;
   position: relative;
 }
 .spinner-section {
