@@ -3,14 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>(W)ETEN WAAR.</title>
+<title>(W)ETEN WAAR. &mdash; eten &amp; drinken in Amsterdam</title>
 <meta property="og:title" content="(W)ETEN WAAR.">
-<meta property="og:description" content="Amsterdam — onze favoriete plekken">
-<meta property="og:image" content="https://matthijshart.github.io/GRCHT/og-image.png">
-<meta property="og:url" content="https://matthijshart.github.io/GRCHT/">
-<link rel="alternate" hreflang="nl" href="https://matthijshart.github.io/GRCHT/">
-<link rel="alternate" hreflang="en" href="https://matthijshart.github.io/GRCHT/en/">
-<link rel="alternate" hreflang="x-default" href="https://matthijshart.github.io/GRCHT/">
+<meta property="og:description" content="Alle plekken in Amsterdam waar we zelf hebben gegeten en gedronken.">
+<meta property="og:image" content="https://www.wetenwaar.nl/og-image.png">
+<meta property="og:url" content="https://www.wetenwaar.nl/">
+<link rel="alternate" hreflang="nl" href="https://www.wetenwaar.nl/">
+<link rel="alternate" hreflang="en" href="https://www.wetenwaar.nl/en/">
+<link rel="alternate" hreflang="x-default" href="https://www.wetenwaar.nl/">
+<meta name="description" content="Alle plekken in Amsterdam waar we zelf hebben gegeten en gedronken. Geen algoritme, geen influencers.">
+<link rel="canonical" href="https://www.wetenwaar.nl/">
+<meta property="og:site_name" content="(W)ETEN WAAR.">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="theme-color" content="#123029">
+<link rel="apple-touch-icon" href="https://www.wetenwaar.nl/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%231a4d43'/><rect width='4' height='32' x='4' fill='%23ded8c6'/><rect width='4' height='32' x='8' fill='%231a4d43'/><rect width='4' height='32' x='12' fill='%23ded8c6'/><rect width='4' height='32' x='16' fill='%231a4d43'/><rect width='4' height='32' x='20' fill='%23ded8c6'/><rect width='4' height='32' x='24' fill='%231a4d43'/><rect width='4' height='32' x='28' fill='%23ded8c6'/></svg>">
@@ -1623,7 +1632,7 @@ const places = [
   { name:"Zum Barbarossa", area:"Centrum", hearts:0, note:"Speakeasy, goede cocktails", lat:52.3686,lng:4.8906, web:"https://www.zumbarbarossa.com", tags:["cocktails","speakeasy"] },
   { name:"Caf\u00e9 Sonneveld", area:"Jordaan", hearts:0, note:"Spareribs en appeltaart", lat:52.3763,lng:4.8823, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
   { name:"Caf\u00e9 Amsterdam (Cradam)", area:"West", hearts:0, note:"Gezellig buurtrestaurant", lat:52.3841,lng:4.8683, web:"", tags:["restaurant"] },
-  { name:"Cafe Tabac", area:"Jordaan", hearts:0, note:"Borrelhap mandje, maar ook verrassend goed rijsttafeltje", lat:52.3802,lng:4.8885, web:"", tags:["borrel","indonesisch"] },
+  { name:"Caf\u00e9 Tabac", area:"Jordaan", hearts:0, note:"Borrelhap mandje, maar ook verrassend goed rijsttafeltje", lat:52.3802,lng:4.8885, web:"", tags:["borrel","indonesisch"] },
   { name:"A-Fusion", area:"Zeedijk", hearts:0, note:"Aziatisch, snel en lekker", lat:52.3732,lng:4.9001, web:"", tags:["aziatisch","sushi"] },
   { name:"Ela", area:"Jordaan", hearts:0, note:"Lekker zitten, heel klein, goed eten", lat:52.3695,lng:4.8809, web:"", tags:["oesters","bar"] },
   { name:"Pata Negra", area:"Centrum", hearts:0, note:"Tapas, altijd druk maar goed", lat:52.3614,lng:4.8991, web:"", tags:["tapas","spaans"] },
@@ -1731,7 +1740,7 @@ wijkLabels.forEach(label => {
 });
 
 const allTags = [...new Set(places.flatMap(p => p.tags))].sort();
-const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wijn', italiaans:'Italiaans', frans:'Frans', vis:'Vis', oesters:'Oesters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terras', borrel:'Borrel', ontbijt:'Ontbijt', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Kaas', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Chic' };
+const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wijn', italiaans:'Italiaans', frans:'Frans', vis:'Vis', oesters:'Oesters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terras', borrel:'Borrel', ontbijt:'Ontbijt', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Kaas', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Chic', aziatisch:'Aziatisch', bistro:'Bistro', 'bruin caf\u00e9':'Bruin caf\u00e9', caf\u00e9:'Caf\u00e9', fondue:'Fondue', indonesisch:'Indonesisch', industrieel:'Industrieel', pizza:'Pizza', spaans:'Spaans', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Zwitsers', 'natural wine':'Natural wine' };
 const filtersEl = document.getElementById('filters');
 const allBtn = document.createElement('button');
 allBtn.textContent = 'Alles';
