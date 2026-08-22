@@ -681,6 +681,10 @@ nav .lang-switch:hover { opacity: 0.55; }
   color: var(--olive);
   margin-bottom: 1rem;
 }
+.spinner-title.spinner-title-sm {
+  font-size: clamp(1.7rem, 5.5vw, 2.4rem);
+  letter-spacing: 0.04em;
+}
 .spinner-title {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(2.8rem, 8vw, 5rem);
@@ -1036,6 +1040,44 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   text-align: center;
 }
 
+/* ═══ KEUZESECTIE: PRIMAIR + ALTERNATIEF ═══ */
+/* Scheidingsregel met label, zodat Swipe & Dine en de spinner als
+   twee routes van dezelfde vraag lezen in plaats van twee losse blokken. */
+.decide-split {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  max-width: 340px;
+  margin: 0 auto clamp(1.6rem, 4vw, 2.4rem);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.decide-split::before,
+.decide-split::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #d7cfba;
+}
+.handwritten {
+  font-family: 'Caveat', 'Bradley Hand', cursive;
+  font-size: clamp(1.1rem, 3.4vw, 1.45rem);
+  font-weight: 600;
+  color: var(--olive);
+  display: inline-block;
+  transform: rotate(-1.2deg);
+  line-height: 1.3;
+}
+.stats-note {
+  max-width: 1200px;
+  margin: 1.4rem auto 0;
+  padding: 0 1rem;
+}
+.map-section .stats-note { padding-left: 0; padding-right: 0; max-width: none; }
+
 /* ═══ SECTIEKOPPEN ═══ */
 .section-head {
   max-width: 1200px;
@@ -1237,6 +1279,37 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   .scroll-hint { bottom: 2rem; }
   .hero-spotify { max-width: 300px; }
 }
+/* Mobiele correcties als laatste, zodat ze de eerdere 600px-regels winnen. */
+@media (max-width: 600px) {
+  /* iOS wil minstens 44px aanraakvlak; de chips en rondjes waren te klein. */
+  .person-btns button { width: 46px; height: 46px; font-size: 1.2rem; }
+  .wijk-btns button { padding: 0.72rem 1.1rem; font-size: 0.8rem; }
+  .filter-row button { padding: 0.62rem 1rem; font-size: 0.75rem; }
+  .filter-row.area-row button { padding: 0.45rem 1.1rem; font-size: 1.25rem; }
+  .carousel-header { padding: 1.35rem 1rem; }
+  nav .lang-switch { padding: 0.6rem 0.95rem; }
+  nav .logo { padding: 0.4rem 0; }
+  /* Tagfilters als horizontale strip: blijft een regel in plaats van er drie. */
+  .filter-row:not(.area-row) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 0.2rem;
+    margin-left: -0.9rem;
+    margin-right: -0.9rem;
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+  }
+  .filter-row:not(.area-row)::-webkit-scrollbar { display: none; }
+  .filter-row:not(.area-row) button { flex: 0 0 auto; }
+  .swipe-banner-btn, .spin-btn { padding: 1rem 2.2rem; }
+  /* minder leegte tussen de twee keuzeroutes */
+  .swipe-banner { padding: 3.2rem 1.2rem 2.2rem; }
+  .swipe-banner-sub { margin-bottom: 1.8rem; }
+  .swipe-banner + .spinner-wrap::before { display: none; }
+  .spinner-wrap { padding-bottom: 3.2rem; }
+  .spinner-question { margin-bottom: 1.2rem; }
+}
 </style>
 </head>
 <body>
@@ -1327,9 +1400,9 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   <!-- GEEN IDEE SPINNER -->
   <div class="spinner-wrap" id="geen-idee">
     <div class="spinner-section reveal">
-      <div class="spinner-eyebrow">Or let us pick</div>
-      <div class="spinner-title">NO IDEA<span>?</span></div>
-      <p class="spinner-sub">We will choose for you.</p>
+      <div class="decide-split">or on your own</div>
+      <div class="spinner-title spinner-title-sm">No idea? We will pick<span>.</span></div>
+      <p class="spinner-sub">Tell us how many and where, we do the rest.</p>
       <div class="spinner-question">
         <div class="spinner-q-label">How many of you?</div>
         <div class="person-btns" id="personBtns">
@@ -1343,7 +1416,7 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
       <div class="spinner-question">
         <div class="spinner-q-label">Which neighbourhood?</div>
         <div class="wijk-btns" id="wijkBtns">
-          <button class="selected" data-wijk="">Any neighbourhood works</button>
+          <button class="selected" data-wijk="">Anywhere is fine</button>
           <button data-wijk="Jordaan">Jordaan</button>
           <button data-wijk="De Pijp">De Pijp</button>
           <button data-wijk="Zuid">Zuid</button>
@@ -1375,6 +1448,7 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
       <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">neighbourhoods</div></div>
       <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">influencers</div></div>
     </div>
+    <p class="stats-note reveal"><span class="handwritten">&mdash; and yes, we have been to every single one</span></p>
   </div>
 
 
@@ -1383,7 +1457,7 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
     <div class="section-head reveal">
       <div class="eyebrow">03 &mdash; The list</div>
       <h2>Every place</h2>
-      <p>Open a neighbourhood to see the places. Tap a card to find it on the map.</p>
+      <p>Everything below we have eaten and drunk ourselves. Open a neighbourhood and tap a card to find it on the map.</p>
     </div>
     <div class="filter-row area-row reveal" id="area-filters"></div>
     <div class="filter-row reveal" id="filters"></div>
