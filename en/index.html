@@ -450,38 +450,64 @@ nav .lang-switch:hover { opacity: 0.55; }
 
 /* ═══ CAROUSEL LAYOUT ═══ */
 .carousels-section {
-  max-width: 1400px; margin: 0 auto; padding: 1rem 0 3rem;
+  max-width: 1400px; margin: 0 auto; padding: 0.5rem 0 3rem;
 }
 .carousel-row {
-  margin-bottom: 2rem;
+  border-bottom: 1px solid #d7cfba;
 }
+.carousel-row:first-child { border-top: 1px solid #d7cfba; }
 .carousel-row.hidden { display: none; }
 .carousel-header {
   display: flex;
-  align-items: baseline;
-  gap: 0.8rem;
-  padding: 0 1rem;
-  margin-bottom: 0.6rem;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  padding: 1.15rem 1rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  transition: background 0.2s;
 }
+.carousel-header:hover { background: rgba(26, 77, 67, 0.045); }
 .carousel-header h2 {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
   color: var(--ink);
   letter-spacing: 0.06em;
   line-height: 1;
-}
-.carousel-header .count {
-  font-size: 0.75rem;
-  color: var(--gray-light);
   font-weight: 400;
 }
+.carousel-header .count {
+  font-size: 0.72rem;
+  color: var(--gray-light);
+  font-weight: 400;
+  margin-left: auto;
+  letter-spacing: 0.04em;
+}
+.carousel-header .chev {
+  flex-shrink: 0;
+  color: var(--olive);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.carousel-row.open .carousel-header .chev { transform: rotate(180deg); }
+/* Inklappen via grid-rijen: animeert vloeiend zonder een vaste hoogte te kennen. */
+.carousel-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.carousel-row.open .carousel-body { grid-template-rows: 1fr; }
+.carousel-clip { overflow: hidden; min-height: 0; }
 .carousel-track {
   display: flex;
   gap: 0.8rem;
   overflow-x: auto;
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
-  padding: 0.3rem 1rem 1rem;
+  padding: 0.3rem 1rem 1.4rem;
   scrollbar-width: none;
 }
 .carousel-track::-webkit-scrollbar { display: none; }
@@ -557,14 +583,13 @@ nav .lang-switch:hover { opacity: 0.55; }
 .p-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); letter-spacing: 0.04em; }
 .p-note { font-size: 0.78rem; color: var(--ink-mid); margin-top: 2px; }
 
-/* ═══ SWIPE & DINE — SLOTSECTIE ═══ */
+/* ═══ SWIPE & DINE — OPENINGSSECTIE ═══ */
 .swipe-banner {
-  background: var(--ink);
-  color: var(--cream);
-  padding: clamp(4rem, 10vw, 7rem) 1.5rem;
+  background: var(--white);
+  color: var(--ink);
+  padding: clamp(4rem, 9vw, 6.5rem) 1.5rem clamp(2.5rem, 5vw, 3.5rem);
   text-align: center;
   position: relative;
-  overflow: hidden;
 }
 .swipe-banner-inner {
   position: relative;
@@ -575,19 +600,19 @@ nav .lang-switch:hover { opacity: 0.55; }
 .swipe-banner-title {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(3rem, 11vw, 7rem);
-  color: var(--cream);
+  color: var(--olive);
   letter-spacing: 0.02em;
   line-height: 0.88;
   margin-bottom: 0.8rem;
 }
 .swipe-banner-title em {
   font-style: normal;
-  color: var(--amber);
+  color: var(--coral);
 }
 .swipe-banner-sub {
   font-size: 1rem;
-  color: rgba(233, 228, 213, 0.62);
-  margin-bottom: 2.4rem;
+  color: var(--ink-mid);
+  margin-bottom: 2.2rem;
   line-height: 1.6;
   max-width: 34ch;
   margin-left: auto;
@@ -597,8 +622,8 @@ nav .lang-switch:hover { opacity: 0.55; }
   display: inline-block;
   padding: 1rem 2.6rem;
   border-radius: 50px;
-  background: var(--amber);
-  color: var(--ink);
+  background: var(--olive);
+  color: var(--white);
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.5rem;
   letter-spacing: 0.1em;
@@ -607,7 +632,7 @@ nav .lang-switch:hover { opacity: 0.55; }
 }
 .swipe-banner-btn:hover {
   transform: translateY(-3px);
-  background: var(--white);
+  background: var(--ink);
 }
 .swipe-banner-btn:active {
   transform: translateY(0) scale(0.98);
@@ -615,23 +640,31 @@ nav .lang-switch:hover { opacity: 0.55; }
 .swipe-banner-new {
   display: inline-block;
   padding: 0.25rem 0.85rem;
-  border: 1px solid rgba(233, 228, 213, 0.32);
-  color: rgba(233, 228, 213, 0.75);
+  border: 1px solid rgba(26, 77, 67, 0.3);
+  color: var(--olive);
   font-size: 0.6rem;
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   border-radius: 20px;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.2rem;
 }
-
 /* ═══ GEEN IDEE SPINNER ═══ */
 .spinner-wrap {
   background: var(--white);
-  border-top: 1px solid #d7cfba;
   border-bottom: 1px solid #d7cfba;
-  padding: clamp(3.5rem, 8vw, 6rem) 1rem;
+  /* Sluit direct aan op het witte Swipe & Dine-blok erboven, met een
+     hairline ertussen in plaats van een kleurwissel. */
+  padding: 0 1rem clamp(3.5rem, 8vw, 6rem);
   position: relative;
+}
+.swipe-banner + .spinner-wrap::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: #d7cfba;
+  margin: 0 auto clamp(2.5rem, 6vw, 4rem);
 }
 .spinner-section {
   max-width: 700px;
@@ -1103,7 +1136,7 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
 /* Kaarten faden in per rij. `backwards` fill zorgt dat de animatie na
    afloop loslaat, zodat de hover-transition van .card intact blijft. */
 .carousel-row .card { opacity: 0; }
-.carousel-row.in .card {
+.carousel-row.open .card {
   opacity: 1;
   animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   animation-delay: var(--d, 0ms);
@@ -1131,7 +1164,7 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
     transform: none !important;
     transition: none !important;
   }
-  .carousel-row .card, .carousel-row.in .card {
+  .carousel-row .card, .carousel-row.open .card {
     opacity: 1 !important;
     animation: none !important;
   }
@@ -1280,25 +1313,21 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
 <!-- ═══ LIGHT CONTENT ═══ -->
 <div class="content-area">
 
-  <!-- KAART -->
-  <div class="map-section" id="kaart">
-    <div class="section-head reveal">
-      <div class="eyebrow">01 &mdash; The map</div>
-      <h2>Where it all is</h2>
-      <p>Every dot is a place we have been ourselves. Tap one, or pick a neighbourhood below.</p>
-    </div>
-    <div id="map" class="reveal-zoom"></div>
-    <div class="stats reveal" id="stats">
-      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">places</div></div>
-      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">neighbourhoods</div></div>
-      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">influencers</div></div>
+  <!-- SWIPE & DINE — SLOTSECTIE -->
+  <div class="swipe-banner" id="swipe">
+    <div class="swipe-banner-inner reveal">
+      <div class="spinner-eyebrow">01 &mdash; Can&rsquo;t decide?</div>
+      <div class="swipe-banner-new">New</div>
+      <div class="swipe-banner-title">SWIPE &amp;<br><em>DINE</em></div>
+      <p class="swipe-banner-sub">Decide together where to eat. You both swipe, and a match settles it.</p>
+      <a class="swipe-banner-btn" href="duo.html">Start a session &rarr;</a>
     </div>
   </div>
 
   <!-- GEEN IDEE SPINNER -->
   <div class="spinner-wrap" id="geen-idee">
     <div class="spinner-section reveal">
-      <div class="spinner-eyebrow">02 &mdash; Let us pick</div>
+      <div class="spinner-eyebrow">Or let us pick</div>
       <div class="spinner-title">NO IDEA<span>?</span></div>
       <p class="spinner-sub">We will choose for you.</p>
       <div class="spinner-question">
@@ -1333,12 +1362,28 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
     </div>
   </div>
 
+  <!-- KAART -->
+  <div class="map-section" id="kaart">
+    <div class="section-head reveal">
+      <div class="eyebrow">02 &mdash; The map</div>
+      <h2>Where it all is</h2>
+      <p>Every dot is a place we have been ourselves. Tap one, or pick a neighbourhood below.</p>
+    </div>
+    <div id="map" class="reveal-zoom"></div>
+    <div class="stats reveal" id="stats">
+      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">places</div></div>
+      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">neighbourhoods</div></div>
+      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">influencers</div></div>
+    </div>
+  </div>
+
+
   <!-- FILTERS + CARDS -->
   <div class="filters-section" id="plekken">
     <div class="section-head reveal">
       <div class="eyebrow">03 &mdash; The list</div>
       <h2>Every place</h2>
-      <p>Filter by neighbourhood or by what you fancy. Tap a card to see it on the map.</p>
+      <p>Open a neighbourhood to see the places. Tap a card to find it on the map.</p>
     </div>
     <div class="filter-row area-row reveal" id="area-filters"></div>
     <div class="filter-row reveal" id="filters"></div>
@@ -1370,15 +1415,6 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
     </div>
   </div>
 
-  <!-- SWIPE & DINE — SLOTSECTIE -->
-  <div class="swipe-banner" id="swipe">
-    <div class="swipe-banner-inner reveal">
-      <div class="swipe-banner-new">New</div>
-      <div class="swipe-banner-title">SWIPE &amp;<br><em>DINE</em></div>
-      <p class="swipe-banner-sub">Decide together where to eat. You both swipe, and a match settles it.</p>
-      <a class="swipe-banner-btn" href="duo.html">Start a session &rarr;</a>
-    </div>
-  </div>
 
 </div>
 
@@ -1670,6 +1706,11 @@ function applyFilters() {
       row.classList.toggle('hidden', visibleCards.length === 0);
     }
   });
+  // Een actief filter betekent 'laat maar zien': klap de overgebleven rijen open.
+  const filterActief = !!activeArea || !!activeTag;
+  document.querySelectorAll('.carousel-row').forEach(row => {
+    toggleRow(row, filterActief && !row.classList.contains('hidden'));
+  });
   // Zoom kaart naar geselecteerde wijk
   if (activeArea) {
     const areaPlaces = places.filter(p => areaGroups[activeArea].includes(p.area));
@@ -1686,6 +1727,13 @@ function applyFilters() {
   }
 }
 
+// Wijkrijen zijn standaard dicht; openklappen laat de kaartjes gestaggerd binnenkomen.
+function toggleRow(row, force) {
+  const open = force === undefined ? !row.classList.contains('open') : force;
+  row.classList.toggle('open', open);
+  row.querySelector('.carousel-header').setAttribute('aria-expanded', String(open));
+}
+
 // ═══ CAROUSELS PER WIJK ═══
 const carouselsEl = document.getElementById('carousels');
 const wijkOrder = ['Jordaan','De Pijp','Zuid','Centrum','Other'];
@@ -1700,9 +1748,15 @@ wijkOrder.forEach(wijk => {
   row.className = 'carousel-row';
   row.dataset.wijk = wijk;
 
-  const header = document.createElement('div');
+  const bodyId = 'row-' + wijk.replace(/[^a-zA-Z]/g, '');
+  const header = document.createElement('button');
+  header.type = 'button';
   header.className = 'carousel-header';
-  header.innerHTML = `<h2>${wijk}</h2><span class="count">${wijkPlaces.length} places</span>`;
+  header.setAttribute('aria-expanded', 'false');
+  header.setAttribute('aria-controls', bodyId);
+  header.innerHTML = `<h2>${wijk}</h2><span class="count">${wijkPlaces.length} places</span>` +
+    `<svg class="chev" width="13" height="9" viewBox="0 0 13 9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1.5 L6.5 7 L12 1.5"/></svg>`;
+  header.onclick = () => toggleRow(row);
 
   const track = document.createElement('div');
   track.className = 'carousel-track';
@@ -1735,8 +1789,16 @@ wijkOrder.forEach(wijk => {
     track.appendChild(card);
   });
 
+  const clip = document.createElement('div');
+  clip.className = 'carousel-clip';
+  clip.appendChild(track);
+  const body = document.createElement('div');
+  body.className = 'carousel-body';
+  body.id = bodyId;
+  body.appendChild(clip);
+
   row.appendChild(header);
-  row.appendChild(track);
+  row.appendChild(body);
   carouselsEl.appendChild(row);
   carouselRows[wijk] = row;
 });
@@ -1886,11 +1948,6 @@ document.querySelectorAll('.carousel-track').forEach(track => {
     card.style.setProperty('--d', `${Math.min(i, 6) * 70}ms`);
   });
 });
-document.querySelectorAll('.carousel-row').forEach(row => {
-  if (reduceMotion) { row.classList.add('in'); return; }
-  revealObserver.observe(row);
-});
-
 observeReveals();
 
 // ═══ TELLERS ═══
