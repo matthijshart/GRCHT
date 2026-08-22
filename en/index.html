@@ -587,7 +587,8 @@ nav .lang-switch:hover { opacity: 0.55; }
 .swipe-banner {
   background: var(--white);
   color: var(--ink);
-  padding: clamp(4rem, 9vw, 6.5rem) 1.5rem clamp(2.5rem, 5vw, 3.5rem);
+  border-bottom: 1px solid #d7cfba;
+  padding: clamp(4rem, 9vw, 6.5rem) 1.5rem clamp(4rem, 9vw, 6rem);
   text-align: center;
   position: relative;
 }
@@ -652,19 +653,10 @@ nav .lang-switch:hover { opacity: 0.55; }
 /* ═══ GEEN IDEE SPINNER ═══ */
 .spinner-wrap {
   background: var(--white);
+  border-top: 1px solid #d7cfba;
   border-bottom: 1px solid #d7cfba;
-  /* Sluit direct aan op het witte Swipe & Dine-blok erboven, met een
-     hairline ertussen in plaats van een kleurwissel. */
-  padding: 0 1rem clamp(3.5rem, 8vw, 6rem);
+  padding: clamp(3.5rem, 8vw, 6rem) 1rem;
   position: relative;
-}
-.swipe-banner + .spinner-wrap::before {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 1px;
-  background: #d7cfba;
-  margin: 0 auto clamp(2.5rem, 6vw, 4rem);
 }
 .spinner-section {
   max-width: 700px;
@@ -681,13 +673,9 @@ nav .lang-switch:hover { opacity: 0.55; }
   color: var(--olive);
   margin-bottom: 1rem;
 }
-.spinner-title.spinner-title-sm {
-  font-size: clamp(1.7rem, 5.5vw, 2.4rem);
-  letter-spacing: 0.04em;
-}
 .spinner-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.8rem, 8vw, 5rem);
+  font-size: clamp(2.2rem, 6.5vw, 3.4rem);
   color: var(--ink);
   letter-spacing: 0.03em;
   line-height: 0.9;
@@ -1304,9 +1292,8 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   .filter-row:not(.area-row) button { flex: 0 0 auto; }
   .swipe-banner-btn, .spin-btn { padding: 1rem 2.2rem; }
   /* minder leegte tussen de twee keuzeroutes */
-  .swipe-banner { padding: 3.2rem 1.2rem 2.2rem; }
+  .swipe-banner { padding: 3.2rem 1.2rem 3.2rem; }
   .swipe-banner-sub { margin-bottom: 1.8rem; }
-  .swipe-banner + .spinner-wrap::before { display: none; }
   .spinner-wrap { padding-bottom: 3.2rem; }
   .spinner-question { margin-bottom: 1.2rem; }
 }
@@ -1397,43 +1384,6 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
     </div>
   </div>
 
-  <!-- GEEN IDEE SPINNER -->
-  <div class="spinner-wrap" id="geen-idee">
-    <div class="spinner-section reveal">
-      <div class="decide-split">or on your own</div>
-      <div class="spinner-title spinner-title-sm">No idea? We will pick<span>.</span></div>
-      <p class="spinner-sub">Tell us how many and where, we do the rest.</p>
-      <div class="spinner-question">
-        <div class="spinner-q-label">How many of you?</div>
-        <div class="person-btns" id="personBtns">
-          <button data-n="1">1</button>
-          <button data-n="2" class="selected">2</button>
-          <button data-n="3">3</button>
-          <button data-n="4">4</button>
-          <button data-n="5">5+</button>
-        </div>
-      </div>
-      <div class="spinner-question">
-        <div class="spinner-q-label">Which neighbourhood?</div>
-        <div class="wijk-btns" id="wijkBtns">
-          <button class="selected" data-wijk="">Anywhere is fine</button>
-          <button data-wijk="Jordaan">Jordaan</button>
-          <button data-wijk="De Pijp">De Pijp</button>
-          <button data-wijk="Zuid">Zuid</button>
-          <button data-wijk="Centrum">Centrum</button>
-        </div>
-      </div>
-      <div class="slot-wrapper">
-        <div class="slot-reel" id="slotReel"></div>
-      </div>
-      <button class="spin-btn" id="spinBtn">SPIN</button>
-      <div class="spin-result" id="spinResult">
-        <div class="result-name" id="resultName"></div>
-        <div class="result-note" id="resultNote"></div>
-        <div class="result-actions" id="resultActions"></div>
-      </div>
-    </div>
-  </div>
 
   <!-- KAART -->
   <div class="map-section" id="kaart">
@@ -1472,6 +1422,44 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
     </div>
     <figcaption>What it is all for.</figcaption>
   </figure>
+
+  <!-- GEEN IDEE SPINNER -->
+  <div class="spinner-wrap" id="geen-idee">
+    <div class="spinner-section reveal">
+      <div class="spinner-eyebrow">04 &mdash; Still no idea?</div>
+      <div class="spinner-title">We will pick for you<span>.</span></div>
+      <p class="spinner-sub">Tell us how many and where, we do the rest.</p>
+      <div class="spinner-question">
+        <div class="spinner-q-label">How many of you?</div>
+        <div class="person-btns" id="personBtns">
+          <button data-n="1">1</button>
+          <button data-n="2" class="selected">2</button>
+          <button data-n="3">3</button>
+          <button data-n="4">4</button>
+          <button data-n="5">5+</button>
+        </div>
+      </div>
+      <div class="spinner-question">
+        <div class="spinner-q-label">Which neighbourhood?</div>
+        <div class="wijk-btns" id="wijkBtns">
+          <button class="selected" data-wijk="">Anywhere is fine</button>
+          <button data-wijk="Jordaan">Jordaan</button>
+          <button data-wijk="De Pijp">De Pijp</button>
+          <button data-wijk="Zuid">Zuid</button>
+          <button data-wijk="Centrum">Centrum</button>
+        </div>
+      </div>
+      <div class="slot-wrapper">
+        <div class="slot-reel" id="slotReel"></div>
+      </div>
+      <button class="spin-btn" id="spinBtn">SPIN</button>
+      <div class="spin-result" id="spinResult">
+        <div class="result-name" id="resultName"></div>
+        <div class="result-note" id="resultNote"></div>
+        <div class="result-actions" id="resultActions"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- ANECDOTE FOOTER -->
   <div class="anecdote-wrap" id="anecdotes">
@@ -1628,7 +1616,7 @@ window.addEventListener('scroll', () => {
 // ═══ PLACES DATA ═══
 const places = [
   { name:"Caff\u00e8 Pico", area:"De Pijp", fav:true, note:"Good food, relaxed vibe", lat:52.3552,lng:4.8900, web:"https://www.caffepico.com/", tags:["restaurant"] },
-  { name:"Peps", area:"Oud-West", hearts:0, note:"Happy hour 4-6pm, always a good time", lat:52.3675,lng:4.8716, web:"https://www.peps-amsterdam.nl", tags:["tapas","happy hour"] },
+  { name:"Peps", area:"West", hearts:0, note:"Happy hour 4-6pm, always a good time", lat:52.3675,lng:4.8716, web:"https://www.peps-amsterdam.nl", tags:["tapas","happy hour"] },
   { name:"Arie", area:"De Pijp", fav:true, note:"Good food, good drinks", lat:52.3567,lng:4.8905, web:"https://www.arie-amsterdam.nl", tags:["restaurant","bar"] },
   { name:"Caf\u00e9 Ent\u00e9", area:"Jordaan", fav:true, note:"Warm French bistro, deep red interior, a short menu done well", lat:52.3804,lng:4.8869, web:"https://www.cafeente.nl", tags:["oesters","bistro"] },
   { name:"Libertine", area:"Jordaan", hearts:0, note:"Lovely for brunch", lat:52.3802,lng:4.8876, web:"", tags:["caf\u00e9","brunch"] },
@@ -1638,17 +1626,16 @@ const places = [
   { name:"Cafe Tabac", area:"Jordaan", hearts:0, note:"Basket of bar snacks, but a surprisingly good rijsttafel too", lat:52.3802,lng:4.8885, web:"", tags:["borrel","indonesisch"] },
   { name:"A-Fusion", area:"Zeedijk", hearts:0, note:"Asian, quick and good", lat:52.3732,lng:4.9001, web:"", tags:["aziatisch","sushi"] },
   { name:"Ela", area:"Jordaan", hearts:0, note:"Comfortable, tiny, great food", lat:52.3695,lng:4.8809, web:"", tags:["oesters","bar"] },
-  { name:"Pata Negra", area:"Utrechtsestraat", hearts:0, note:"Tapas, always busy but worth it", lat:52.3614,lng:4.8991, web:"", tags:["tapas","spaans"] },
+  { name:"Pata Negra", area:"Centrum", hearts:0, note:"Tapas, always busy but worth it", lat:52.3614,lng:4.8991, web:"", tags:["tapas","spaans"] },
   { name:"Troef", area:"Oost", hearts:0, note:"French bistro, quiet", lat:52.3492,lng:4.9137, web:"", tags:["restaurant","frans"] },
   { name:"The Seafood Bar", area:"Oud-Zuid", hearts:0, note:"Happy hour 3-5pm, Van Baerlestraat", lat:52.3600,lng:4.8775, web:"https://www.theseafoodbar.nl", tags:["vis","happy hour"] },
   { name:"Badcuyp", area:"De Pijp", hearts:0, note:"Good neighbourhood restaurant", lat:52.3566,lng:4.8971, web:"", tags:["restaurant"] },
   { name:"L'Entrec\u00f4te et les Dames", area:"Oud-Zuid", hearts:0, note:"Steak, ask for the extra refill", lat:52.3557,lng:4.8805, web:"", tags:["steak","frans"] },
-  { name:"Bouwman", area:"Utrechtsestraat", hearts:0, note:"Easy place for a drink", lat:52.3623,lng:4.8988, web:"", tags:["borrel","bruin caf\u00e9"] },
-  { name:"Caf\u00e9 Marcella", area:"Amstelveld", hearts:0, note:"Beautiful terrace on the canal", lat:52.3622,lng:4.8983, web:"", tags:["terras","caf\u00e9"] },
+  { name:"Bouwman", area:"Centrum", hearts:0, note:"Easy place for a drink", lat:52.3623,lng:4.8988, web:"", tags:["borrel","bruin caf\u00e9"] },
+  { name:"Caf\u00e9 Marcella", area:"Centrum", hearts:0, note:"Beautiful terrace on the canal", lat:52.3622,lng:4.8983, web:"", tags:["terras","caf\u00e9"] },
   { name:"Parlotte", area:"Jordaan", hearts:0, note:"French, with a good glass of wine", lat:52.3783,lng:4.8818, web:"", tags:["frans","wijn"] },
   { name:"De Willem", area:"Haarlemmerplein", hearts:0, note:"Good food, nice atmosphere", lat:52.3849,lng:4.8829, web:"", tags:["restaurant"] },
   { name:"Cantine de Caron", area:"West", hearts:0, note:"French in an old warehouse, very cool", lat:52.3863,lng:4.8728, web:"", tags:["frans","restaurant"] },
-  { name:"Binnenvisser", area:"Oud-West", hearts:0, note:"High on the list", lat:52.3715,lng:4.8704, web:"", tags:["wijn","natural wine"] },
   { name:"Caf\u00e9 Bern", area:"Nieuwmarkt", hearts:0, note:"Cheese fondue, cosy", lat:52.3725,lng:4.9010, web:"", tags:["fondue","zwitsers"] },
   { name:"Bar Jules", area:"Oud-Zuid", hearts:0, note:"Lovely for lunch", lat:52.3530,lng:4.8634, web:"", tags:["lunch","bar"] },
   { name:"Toscanini", area:"Jordaan", hearts:0, note:"Good Italian, on the pricey side", lat:52.3801,lng:4.8854, web:"", tags:["italiaans","\u20ac\u20ac\u20ac"] },
@@ -1675,7 +1662,7 @@ const places = [
   { name:"Brio", area:"De Pijp", hearts:0, note:"Still a bit undiscovered. Book a seat at the bar for Italian food and good wine", lat:52.3550,lng:4.8960, web:"", tags:["italiaans","wijn","restaurant"] },
   { name:"Caf\u00e9 De Klepel", area:"Jordaan", hearts:0, note:"The one if you have something to celebrate. Fantastic wines, great sommeliers, excellent food", lat:52.3791,lng:4.8872, web:"https://cafedeklepel.nl", tags:["frans","wijn","restaurant"] },
   { name:"Le Petit Bouillon", area:"Oud-Zuid", hearts:0, note:"Cheap and good, exactly what it is known for. Nothing special atmosphere-wise, but always solid", lat:52.3457,lng:4.8763, web:"", tags:["frans","restaurant","terras"] },
-  { name:"Caf\u00e9-Restaurant Meyer", area:"Amstelveld", hearts:0, note:"Same owner as Marcella, just as cosy", lat:52.3625,lng:4.8957, web:"", tags:["caf\u00e9","restaurant","terras"] },
+  { name:"Caf\u00e9-Restaurant Meyer", area:"Centrum", hearts:0, note:"Same owner as Marcella, just as cosy", lat:52.3625,lng:4.8957, web:"", tags:["caf\u00e9","restaurant","terras"] },
   { name:"Caf\u00e9 De Blaffende Vis", area:"Jordaan", hearts:0, note:"Heart of the Jordaan, good food or the dish of the day for very little", lat:52.3788,lng:4.8818, web:"", tags:["caf\u00e9","bruin caf\u00e9","terras"] },
   { name:"SALUT", area:"De Pijp", hearts:0, note:"Fun, hip and funny. A bit trashy, but in the best way", lat:52.3564,lng:4.8936, web:"", tags:["restaurant","terras"] },
   { name:"De Wasserette", area:"De Pijp", hearts:0, note:"Come here for breakfast. The smashed avo roll with chicken and parmesan is a winner", lat:52.3553,lng:4.8933, web:"", tags:["ontbijt","brunch","lunch"] },
@@ -1716,7 +1703,10 @@ const areaGroups = {
   'Jordaan': ['Jordaan'],
   'De Pijp': ['De Pijp'],
   'Zuid': ['Oud-Zuid'],
-  'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt'],
+  'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt', 'Haarlemmerplein'],
+  'West': ['West'],
+  'Oost': ['Oost'],
+  'Noord': ['Noord'],
 };
 const overigAreas = [...new Set(places.map(p => p.area))].filter(a => !Object.values(areaGroups).flat().includes(a));
 areaGroups['Other'] = overigAreas;
@@ -1726,7 +1716,11 @@ allAreaBtn.textContent = 'All areas';
 allAreaBtn.className = 'active';
 allAreaBtn.onclick = () => { activeArea = null; applyFilters(); };
 areaFiltersEl.appendChild(allAreaBtn);
-['Jordaan','De Pijp','Zuid','Centrum','Other'].forEach(label => {
+// Alleen wijken tonen waar ook echt plekken in zitten; 'Overig' verdwijnt
+// vanzelf zodra elke area onder een eigen wijk valt.
+const wijkLabels = ['Jordaan','De Pijp','Zuid','Centrum','West','Oost','Noord','Other']
+  .filter(l => areaGroups[l] && places.some(pl => areaGroups[l].includes(pl.area)));
+wijkLabels.forEach(label => {
   const btn = document.createElement('button');
   btn.textContent = label;
   btn.onclick = () => { activeArea = label; applyFilters(); };
@@ -1810,7 +1804,7 @@ function toggleRow(row, force) {
 
 // ═══ CAROUSELS PER WIJK ═══
 const carouselsEl = document.getElementById('carousels');
-const wijkOrder = ['Jordaan','De Pijp','Zuid','Centrum','Other'];
+const wijkOrder = wijkLabels;
 const carouselRows = {};
 
 wijkOrder.forEach(wijk => {
@@ -1828,7 +1822,7 @@ wijkOrder.forEach(wijk => {
   header.className = 'carousel-header';
   header.setAttribute('aria-expanded', 'false');
   header.setAttribute('aria-controls', bodyId);
-  header.innerHTML = `<h2>${wijk}</h2><span class="count">${wijkPlaces.length} places</span>` +
+  header.innerHTML = `<h2>${wijk}</h2><span class="count">${wijkPlaces.length} ${wijkPlaces.length === 1 ? 'place' : 'places'}</span>` +
     `<svg class="chev" width="13" height="9" viewBox="0 0 13 9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1.5 L6.5 7 L12 1.5"/></svg>`;
   header.onclick = () => toggleRow(row);
 
@@ -1901,7 +1895,7 @@ const spinnerAreaGroups = {
   'Jordaan': ['Jordaan'],
   'De Pijp': ['De Pijp'],
   'Zuid': ['Oud-Zuid'],
-  'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt'],
+  'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt', 'Haarlemmerplein'],
 };
 
 function getFilteredPlaces() {
