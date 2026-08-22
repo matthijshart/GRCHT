@@ -5,9 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>SWIPE & DINE — (W)ETEN WAAR.</title>
 <meta property="og:title" content="SWIPE & DINE — (W)ETEN WAAR.">
-<meta property="og:description" content="Swipe together through the best places in Amsterdam">
-<meta property="og:image" content="https://matthijshart.github.io/GRCHT/og-image.png">
-<meta property="og:url" content="https://matthijshart.github.io/GRCHT/en/duo.html">
+<meta property="og:description" content="Decide together where to eat. You both swipe, and a match settles it.">
+<meta property="og:image" content="https://www.wetenwaar.nl/og-image-en.png">
+<meta property="og:url" content="https://www.wetenwaar.nl/en/duo.html">
+<meta name="description" content="Decide together where to eat. You both swipe, and a match settles it.">
+<link rel="canonical" href="https://www.wetenwaar.nl/en/duo.html">
+<meta property="og:site_name" content="(W)ETEN WAAR.">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="nl_NL">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="theme-color" content="#123029">
+<link rel="apple-touch-icon" href="https://www.wetenwaar.nl/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%231a4d43'/><rect width='4' height='32' x='4' fill='%23ded8c6'/><rect width='4' height='32' x='8' fill='%231a4d43'/><rect width='4' height='32' x='12' fill='%23ded8c6'/><rect width='4' height='32' x='16' fill='%231a4d43'/><rect width='4' height='32' x='20' fill='%23ded8c6'/><rect width='4' height='32' x='24' fill='%231a4d43'/><rect width='4' height='32' x='28' fill='%23ded8c6'/></svg>">
@@ -771,30 +780,40 @@ if (!db) {
   ));
 }
 
+// Tags staan in de data in het Nederlands; hier vertaald voor weergave.
+const tagLabels = {
+  aziatisch:'Asian', bar:'Bar', bistro:'Bistro', borrel:'Drinks', 'bruin cafe':'Brown cafe',
+  brunch:'Brunch', cafe:'Cafe', chic:'Smart', cocktails:'Cocktails', fondue:'Fondue',
+  frans:'French', 'happy hour':'Happy hour', indonesisch:'Indonesian', industrieel:'Industrial',
+  italiaans:'Italian', lunch:'Lunch', 'natural wine':'Natural wine', oesters:'Oysters',
+  ontbijt:'Breakfast', pasta:'Pasta', pizza:'Pizza', restaurant:'Restaurant', spaans:'Spanish',
+  speakeasy:'Speakeasy', steak:'Steak', sushi:'Sushi', tapas:'Tapas', terras:'Terrace',
+  vis:'Fish', wijn:'Wine', zwitsers:'Swiss',
+};
+
 // ═══ PLACES DATA ═══
 const places = [
   { name:"Caffe Pico", area:"De Pijp", note:"Good food, relaxed vibe", lat:52.3552,lng:4.8900, tags:["restaurant"] },
-  { name:"Peps", area:"Oud-West", note:"Happy hour 4-6pm, always a good time", lat:52.3675,lng:4.8716, tags:["tapas","happy hour"] },
+  { name:"Peps", area:"West", note:"Happy hour 4-6pm, always a good time", lat:52.3675,lng:4.8716, tags:["tapas","happy hour"] },
   { name:"Arie", area:"De Pijp", note:"Good food, good drinks", lat:52.3567,lng:4.8905, tags:["restaurant","bar"] },
   { name:"Cafe Ente", area:"Jordaan", note:"Warm French bistro, deep red interior, a short menu done well", lat:52.3804,lng:4.8869, tags:["oesters","bistro"] },
   { name:"Libertine", area:"Jordaan", note:"Lovely for brunch", lat:52.3802,lng:4.8876, tags:["cafe","brunch"] },
   { name:"Zum Barbarossa", area:"Centrum", note:"Speakeasy, good cocktails", lat:52.3686,lng:4.8906, tags:["cocktails","speakeasy"] },
   { name:"Cafe Sonneveld", area:"Jordaan", note:"Spare ribs and apple pie", lat:52.3763,lng:4.8823, tags:["cafe","bruin cafe"] },
-  { name:"Cafe Amsterdam (Cradam)", area:"West", note:"Tip van Rick", lat:52.3841,lng:4.8683, tags:["restaurant"] },
+  { name:"Cafe Amsterdam (Cradam)", area:"West", note:"Cosy neighbourhood restaurant", lat:52.3841,lng:4.8683, tags:["restaurant"] },
   { name:"Cafe Tabac", area:"Jordaan", note:"Basket of bar snacks, but a surprisingly good rijsttafel too", lat:52.3802,lng:4.8885, tags:["borrel","indonesisch"] },
   { name:"A-Fusion", area:"Zeedijk", note:"Asian, quick and good", lat:52.3732,lng:4.9001, tags:["aziatisch","sushi"] },
   { name:"Ela", area:"Jordaan", note:"Comfortable, tiny, great food", lat:52.3695,lng:4.8809, tags:["oesters","bar"] },
-  { name:"Pata Negra", area:"Utrechtsestraat", note:"Tapas, always busy but worth it", lat:52.3614,lng:4.8991, tags:["tapas","spaans"] },
+  { name:"Pata Negra", area:"Centrum", note:"Tapas, always busy but worth it", lat:52.3614,lng:4.8991, tags:["tapas","spaans"] },
   { name:"Troef", area:"Oost", note:"French bistro, quiet", lat:52.3492,lng:4.9137, tags:["restaurant","frans"] },
   { name:"The Seafood Bar", area:"Oud-Zuid", note:"Happy hour 3-5pm, Van Baerlestraat", lat:52.3600,lng:4.8775, tags:["vis","happy hour"] },
   { name:"Badcuyp", area:"De Pijp", note:"Good neighbourhood restaurant", lat:52.3566,lng:4.8971, tags:["restaurant"] },
   { name:"L'Entrecote et les Dames", area:"Oud-Zuid", note:"Steak, ask for the extra refill", lat:52.3557,lng:4.8805, tags:["steak","frans"] },
-  { name:"Bouwman", area:"Utrechtsestraat", note:"Easy place for a drink", lat:52.3623,lng:4.8988, tags:["borrel","bruin cafe"] },
-  { name:"Cafe Marcella", area:"Amstelveld", note:"Beautiful terrace on the canal", lat:52.3622,lng:4.8983, tags:["terras","cafe"] },
+  { name:"Bouwman", area:"Centrum", note:"Easy place for a drink", lat:52.3623,lng:4.8988, tags:["borrel","bruin cafe"] },
+  { name:"Cafe Marcella", area:"Centrum", note:"Beautiful terrace on the canal", lat:52.3622,lng:4.8983, tags:["terras","cafe"] },
   { name:"Parlotte", area:"Jordaan", note:"French, with a good glass of wine", lat:52.3783,lng:4.8818, tags:["frans","wijn"] },
-  { name:"De Willem", area:"Haarlemmerplein", note:"Favo van Rick", lat:52.3849,lng:4.8829, tags:["restaurant"] },
+  { name:"De Willem", area:"Haarlemmerplein", note:"Good food, nice atmosphere", lat:52.3849,lng:4.8829, tags:["restaurant"] },
   { name:"Cantine de Caron", area:"West", note:"French in an old warehouse, very cool", lat:52.3863,lng:4.8728, tags:["frans","restaurant"] },
-  { name:"Binnenvisser", area:"Oud-West", note:"Staat hoog op de lijst, tip van Rick", lat:52.3715,lng:4.8704, tags:["wijn","natural wine"] },
   { name:"Cafe Bern", area:"Nieuwmarkt", note:"Cheese fondue, cosy", lat:52.3725,lng:4.9010, tags:["fondue","zwitsers"] },
   { name:"Bar Jules", area:"Oud-Zuid", note:"Lovely for lunch", lat:52.3530,lng:4.8634, tags:["lunch","bar"] },
   { name:"Toscanini", area:"Jordaan", note:"Good Italian, on the pricey side", lat:52.3801,lng:4.8854, tags:["italiaans","\u20ac\u20ac\u20ac"] },
@@ -802,7 +821,7 @@ const places = [
   { name:"Borello Aperitivo", area:"Zeedijk", note:"Cocktails and pizza, great atmosphere", lat:52.3754,lng:4.9012, tags:["cocktails","bar"] },
   { name:"Polly Goudvis", area:"Noord", note:"Brunch by the ferry", lat:52.3825,lng:4.9033, tags:["brunch","bar"] },
   { name:"Roest", area:"Oost", note:"Industrial, always relaxed", lat:52.3720,lng:4.9266, tags:["bar","industrieel"] },
-  { name:"No Nonsense", area:"Centrum", note:"Gezellig bruin cafe", lat:52.3759,lng:4.9027, tags:["bar","cafe"] },
+  { name:"No Nonsense", area:"Centrum", note:"Cosy brown cafe", lat:52.3759,lng:4.9027, tags:["bar","cafe"] },
   { name:"Bar Grill Marathonweg", area:"Oud-Zuid", note:"Good for a bite on the Marathonweg", lat:52.3460,lng:4.8650, tags:["bar","restaurant"] },
   { name:"Cafe Kiebert", area:"Oud-Zuid", note:"Open fire, cosy spot on the Marathonweg", lat:52.3458,lng:4.8645, tags:["cafe","restaurant"] },
   { name:"Bar Bonnie", area:"Oud-Zuid", note:"Cosy", lat:52.3465,lng:4.8655, tags:["bar"] },
@@ -818,13 +837,16 @@ const places = [
   { name:"Cafe Thijssen", area:"Jordaan", note:"Easy-going, coffee or a beer on the Brouwersgracht", lat:52.3820,lng:4.8848, tags:["cafe","brunch"] },
   { name:"Ilario", area:"De Pijp", note:"Our favourite. An Aperol and a very good pasta", lat:52.3554,lng:4.8960, tags:["italiaans","bar","pasta","terras"] },
   { name:"Samuel's", area:"De Pijp", note:"Hip, delicious, just brilliant", lat:52.3546,lng:4.8920, tags:["restaurant","terras"] },
-  { name:"Brio", area:"De Pijp", note:"Nog een beetje onontdekt, reserveer aan de bar voor Italiaans en goede wijn", lat:52.3550,lng:4.8960, tags:["italiaans","wijn","restaurant"] },
+  { name:"Brio", area:"De Pijp", note:"Still a bit undiscovered. Book a seat at the bar for Italian food and good wine", lat:52.3550,lng:4.8960, tags:["italiaans","wijn","restaurant"] },
   { name:"Cafe De Klepel", area:"Jordaan", note:"The one if you have something to celebrate. Fantastic wines, great sommeliers, excellent food", lat:52.3791,lng:4.8872, tags:["frans","wijn","restaurant"] },
   { name:"Le Petit Bouillon", area:"Oud-Zuid", note:"Cheap and good, exactly what it is known for. Nothing special atmosphere-wise, but always solid", lat:52.3457,lng:4.8763, tags:["frans","restaurant","terras"] },
-  { name:"Cafe-Restaurant Meyer", area:"Amstelveld", note:"Same owner as Marcella, just as cosy", lat:52.3625,lng:4.8957, tags:["cafe","restaurant","terras"] },
+  { name:"Cafe-Restaurant Meyer", area:"Centrum", note:"Same owner as Marcella, just as cosy", lat:52.3625,lng:4.8957, tags:["cafe","restaurant","terras"] },
   { name:"Cafe De Blaffende Vis", area:"Jordaan", note:"Heart of the Jordaan, good food or the dish of the day for very little", lat:52.3788,lng:4.8818, tags:["cafe","bruin cafe","terras"] },
   { name:"SALUT", area:"De Pijp", note:"Fun, hip and funny. A bit trashy, but in the best way", lat:52.3564,lng:4.8936, tags:["restaurant","terras"] },
-  { name:"De Wasserette", area:"De Pijp", note:"Ga hier ontbijten, broodje smashed avo met kip en parmezaan is een topper", lat:52.3553,lng:4.8933, tags:["ontbijt","brunch","lunch"] },
+  { name:"De Wasserette", area:"De Pijp", note:"Come here for breakfast. The smashed avo roll with chicken and parmesan is a winner", lat:52.3553,lng:4.8933, tags:["ontbijt","brunch","lunch"] },
+  { name:"Kikkie van de Prinsensluis", area:"Jordaan", note:"Good wine, a stool out on the street and a smashburger", lat:52.3791,lng:4.8865, tags:["cafe","wijn","terras"] },
+  { name:"Cafe Twee Prinsen", area:"Jordaan", note:"For when there is no room at Kikkie", lat:52.3790,lng:4.8867, tags:["wijn","bar","terras"] },
+  { name:"De Sluyswacht", area:"Centrum", note:"A drink looking out over the water, always space. No kitchen, but bitterballen and cheese", lat:52.3690,lng:4.9015, tags:["bar","terras","borrel"] },
 ];
 
 // Shuffle places consistently per session using a seeded random
@@ -1086,7 +1108,7 @@ function renderCard() {
   document.getElementById('card-note').textContent = place.note;
 
   const tagsEl = document.getElementById('card-tags');
-  tagsEl.innerHTML = place.tags.map(t => `<span class="card-tag">${t}</span>`).join('');
+  tagsEl.innerHTML = place.tags.map(t => `<span class="card-tag">${tagLabels[t] || t}</span>`).join('');
 
   document.getElementById('progress-text').textContent = `${currentIndex + 1} / ${shuffledPlaces.length} places`;
   document.getElementById('progress-fill').style.width = `${((currentIndex) / shuffledPlaces.length) * 100}%`;
