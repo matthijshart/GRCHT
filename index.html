@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>(W)ETEN WAAR. &mdash; eten &amp; drinken in Amsterdam</title>
 <meta property="og:title" content="(W)ETEN WAAR.">
-<meta property="og:description" content="Alle plekken in Amsterdam waar we zelf hebben gegeten en gedronken.">
+<meta property="og:description" content="Eten en drinken in Amsterdam. Onze eigen lijst, per wijk.">
 <meta property="og:image" content="https://www.wetenwaar.nl/og-image.png">
 <meta property="og:url" content="https://www.wetenwaar.nl/">
 <link rel="alternate" hreflang="nl" href="https://www.wetenwaar.nl/">
 <link rel="alternate" hreflang="en" href="https://www.wetenwaar.nl/en/">
 <link rel="alternate" hreflang="x-default" href="https://www.wetenwaar.nl/">
-<meta name="description" content="Alle plekken in Amsterdam waar we zelf hebben gegeten en gedronken. Geen algoritme, geen influencers.">
+<meta name="description" content="Eten en drinken in Amsterdam. Onze eigen lijst, per wijk.">
 <link rel="canonical" href="https://www.wetenwaar.nl/">
 <meta property="og:site_name" content="(W)ETEN WAAR.">
 <meta property="og:locale" content="nl_NL">
@@ -146,6 +146,45 @@ nav .links a {
 }
 nav .links a:hover { opacity: 0.5; }
 
+nav .steden {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+}
+nav .steden a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 0.42rem 0.85rem;
+  white-space: nowrap;
+  transition: background 0.25s, color 0.25s;
+}
+nav .steden a[aria-current="true"] {
+  background: var(--white);
+  color: var(--black);
+}
+@media (max-width: 600px) {
+  nav .steden a { font-size: 0.58rem; padding: 0.4rem 0.6rem; letter-spacing: 0.08em; }
+}
+nav .lang-kort { display: none; }
+@media (max-width: 600px) {
+  /* De nav draagt op mobiel logo, stad en taal; alles krijgt minder ruimte
+     zodat het op een telefoon op een regel past. */
+  /* 'Amsterdam' past niet naast het logo, dus de stadskeuze krijgt op een
+     telefoon een eigen regel en de volle breedte. */
+  nav { padding: 0.85rem 0.9rem; gap: 0.5rem; flex-wrap: wrap; row-gap: 0.55rem; }
+  nav .logo { order: 1; font-size: 1.1rem; letter-spacing: 0.1em; white-space: nowrap; }
+  nav .lang-switch { order: 2; padding: 0.45rem 0.7rem; letter-spacing: 0.08em; }
+  nav .steden { order: 3; flex-basis: 100%; }
+  nav .steden a { flex: 1; text-align: center; font-size: 0.62rem; padding: 0.45rem 0.4rem; letter-spacing: 0.1em; }
+  nav .lang-lang { display: none; }
+  nav .lang-kort { display: inline; }
+}
 nav .lang-switch {
   border: 1px solid var(--white);
   color: var(--white);
@@ -1353,7 +1392,11 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
     <a href="#kaart">Kaart</a>
     <a href="#plekken">Plekken</a>
   </div>
-  <a class="lang-switch" href="en/" hreflang="en" lang="en">English</a>
+  <div class="steden" id="steden">
+    <a href="?stad=amsterdam" data-stad="amsterdam">Amsterdam</a>
+    <a href="?stad=xabia" data-stad="xabia">X&agrave;bia</a>
+  </div>
+  <a class="lang-switch" href="en/" hreflang="en" lang="en"><span class="lang-lang">English</span><span class="lang-kort">EN</span></a>
 </nav>
 
 <!-- ═══ HERO ═══ -->
@@ -1362,13 +1405,8 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
     <span class="note-tape" aria-hidden="true"></span>
     <h1><small>(W)</small>ETEN WAAR.</h1>
   </div>
-  <p class="sub">Geen algoritme. Geen influencers. Gewoon plekken waar wij &eacute;cht komen.</p>
   <span class="updated">Laatst bijgewerkt &mdash; augustus 2026</span>
   <div class="hero-spotify">
-    <div class="spotify-hint">
-      <span>speel af &amp; kijk lekker rond</span>
-      <svg width="28" height="32" viewBox="0 0 28 32" fill="none" stroke="var(--olive)" stroke-width="2" stroke-linecap="round"><path d="M14 2 C10 8, 6 14, 8 20 C10 26, 14 28, 14 30"/><path d="M8 25 L14 30 L18 24"/></svg>
-    </div>
     <iframe id="spotifyPlayer" src="" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media" loading="lazy"></iframe>
     <script>
     (function(){
@@ -1385,7 +1423,7 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
   </div>
   <a class="scroll-hint" href="#anecdotes" onclick="event.preventDefault();slowScroll(document.getElementById('anecdotes'))">
     <svg width="20" height="28" viewBox="0 0 20 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 1 C8 6, 4 10, 6 16 C8 22, 10 24, 10 27"/><path d="M5 22 L10 27 L14 21"/></svg>
-    <span>scroll &mdash; en lees onderaan wat je niet wist</span>
+    <span>scroll</span>
   </a>
 </section>
 
@@ -1393,7 +1431,7 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
 <div class="stripe-band">
   <div class="band-inner" id="bandInner1"></div>
   <div class="band-text">
-    <span>ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; ETEN &nbsp;&middot;&nbsp; DRINKEN &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; </span>
+    <span id="bandTekst"></span>
   </div>
 </div>
 
@@ -1405,7 +1443,7 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
     <div class="swipe-banner-inner reveal">
       <div class="swipe-banner-new">Nieuw</div>
       <div class="swipe-banner-title">SWIPE &amp;<br><em>DINE</em></div>
-      <p class="swipe-banner-sub">Samen kiezen waar je eet. Ieder swipet, bij een match weet je het meteen.</p>
+      <p class="swipe-banner-sub">Ieder swipet. Bij een match weet je het meteen.</p>
       <a class="swipe-banner-btn" href="duo.html">Start sessie &rarr;</a>
     </div>
   </div>
@@ -1415,13 +1453,11 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
   <div class="map-section" id="kaart">
     <div class="section-head reveal">
       <h2>Waar het allemaal ligt</h2>
-      <p>Elke stip is een plek waar we zelf zijn geweest.</p>
     </div>
     <div id="map" class="reveal-zoom"></div>
     <div class="stats reveal" id="stats">
       <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">plekken</div></div>
       <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">buurten</div></div>
-      <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">influencers</div></div>
     </div>
     <p class="stats-note reveal"><span class="handwritten">&mdash; en ja, we zijn er allemaal zelf geweest</span></p>
   </div>
@@ -1443,8 +1479,7 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
       <img src="today.jpg" alt="Zomer aan de Italiaanse kust"
            onerror="this.closest('.photo-band').remove()">
     </div>
-    <figcaption>Waar we het allemaal voor doen.</figcaption>
-  </figure>
+      </figure>
 
   <!-- GEEN IDEE SPINNER -->
   <div class="spinner-wrap" id="geen-idee">
@@ -1463,13 +1498,7 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
       </div>
       <div class="spinner-question">
         <div class="spinner-q-label">Welke wijk?</div>
-        <div class="wijk-btns" id="wijkBtns">
-          <button class="selected" data-wijk="">Maakt niet uit</button>
-          <button data-wijk="Jordaan">Jordaan</button>
-          <button data-wijk="De Pijp">De Pijp</button>
-          <button data-wijk="Zuid">Zuid</button>
-          <button data-wijk="Centrum">Centrum</button>
-        </div>
+        <div class="wijk-btns" id="wijkBtns"></div>
       </div>
       <div class="slot-wrapper">
         <div class="slot-reel" id="slotReel"></div>
@@ -1635,8 +1664,43 @@ window.addEventListener('scroll', () => {
   if (introComplete) onScroll();
 }, { passive: true });
 
+// ═══ STAD ═══
+// Twee steden in één pagina; de keuze staat in de URL zodat je hem kunt delen.
+const steden = ['amsterdam', 'xabia'];
+const stad = (() => {
+  const uit = new URLSearchParams(location.search).get('stad');
+  if (steden.includes(uit)) { try { localStorage.setItem('stad', uit); } catch (e) {} return uit; }
+  try { const bewaard = localStorage.getItem('stad'); if (steden.includes(bewaard)) return bewaard; } catch (e) {}
+  return 'amsterdam';
+})();
+document.documentElement.dataset.stad = stad;
+
+// Stadsafhankelijke teksten en links
+(() => {
+  const info = {
+    amsterdam: { band: 'ETEN  \u00b7  DRINKEN  \u00b7  AMSTERDAM', titel: '', desc: '' },
+    xabia: { band: 'ETEN  \u00b7  DRINKEN  \u00b7  X\u00c0BIA',
+             titel: '(W)ETEN WAAR. \u2014 eten & drinken in X\u00e0bia',
+             desc: 'Eten en drinken in X\u00e0bia en J\u00e1vea. Onze eigen lijst, per buurt.' },
+  };
+  const i = info[stad];
+  const band = document.getElementById('bandTekst');
+  if (band) band.textContent = (i.band + '  \u00b7  ').repeat(3);
+  document.querySelectorAll('#steden a').forEach(a => {
+    if (a.dataset.stad === stad) a.setAttribute('aria-current', 'true');
+  });
+  // De taalknop houdt de gekozen stad vast
+  const taal = document.querySelector('nav .lang-switch');
+  if (taal && stad !== 'amsterdam') taal.setAttribute('href', taal.getAttribute('href') + '?stad=' + stad);
+  if (stad !== 'amsterdam') {
+    document.title = i.titel;
+    const d = document.querySelector('meta[name="description"]');
+    if (d) d.setAttribute('content', i.desc);
+  }
+})();
+
 // ═══ PLACES DATA ═══
-const places = [
+const plekkenAmsterdam = [
   { name:"Caff\u00e8 Pico", area:"De Pijp", fav:true, note:"Goed eten, chill sfeertje", lat:52.3552,lng:4.8900, web:"https://www.caffepico.com/", tags:["restaurant"] },
   { name:"Peps", area:"West", hearts:0, note:"Happy hour 16\u201318u, altijd gezellig", lat:52.3675,lng:4.8716, web:"https://www.peps-amsterdam.nl", tags:["tapas","happy hour"] },
   { name:"Arie", area:"De Pijp", fav:true, note:"Lekker eten en drinken", lat:52.3567,lng:4.8905, web:"https://www.arie-amsterdam.nl", tags:["restaurant","bar"] },
@@ -1693,8 +1757,29 @@ const places = [
   { name:"De Sluyswacht", area:"Centrum", hearts:0, note:"Drankje met uitzicht op het water, altijd plek. Geen keuken, wel bitterballen en kaas \u2014 verrassend goed voor een aperol", lat:52.3690,lng:4.9015, web:"", tags:["bar","terras","borrel"] },
 ];
 
+const plekkenXabia = [
+  { name:"Mira Luna", area:"Haven", hearts:0, note:"Lekker lunchen bij de haven", lat:38.7935,lng:0.1826, web:"https://www.facebook.com/Mira.Luna.Javea/", tags:["lunch","terras"] },
+  { name:"Lulu Beachclub", area:"Kust", hearts:0, note:"Vrijdagmiddagborrel. Mediterraan met een Japanse draai", lat:38.7660,lng:0.1930, web:"https://lulubeachclub.com/", tags:["strandclub","borrel","restaurant"] },
+  { name:"Montgo di Bongo", area:"Arenal", hearts:0, note:"Drankje aan zee. Alleen in het seizoen open", lat:38.7735,lng:0.1866, web:"https://montgodibongo.com/", tags:["bar","terras"] },
+  { name:"Restaurante A Bordo", area:"Haven", hearts:0, note:"Vis bij de haven, en goede rijstgerechten", lat:38.7955,lng:0.1856, web:"https://www.abordorestaurante.com/en/", tags:["vis","rijst","restaurant"] },
+  { name:"A La Mar", area:"Haven", hearts:0, note:"Ontbijten aan de vissershaven", lat:38.7947,lng:0.1841, web:"https://www.instagram.com/alamarjavea/", tags:["ontbijt","terras"] },
+  { name:"Cocktail Bar La Esquina", area:"Haven", hearts:0, note:"Cocktails aan de haven", lat:38.7929,lng:0.1818, web:"https://www.facebook.com/esquinajavea/", tags:["cocktails","bar"] },
+  { name:"Amantes de Moraira", area:"Buiten X\u00e0bia", hearts:0, note:"Vaak live muziek. Reken op zo'n 40 euro per persoon", lat:38.6935,lng:0.1470, web:"https://www.facebook.com/amantesdemoraira/", tags:["restaurant","\u20ac\u20ac\u20ac"] },
+  { name:"Cala Clemence", area:"Kust", hearts:0, note:"Weekendfeestje overdag, aan de Cala Portitxol", lat:38.7495,lng:0.2210, web:"https://calaclemence.com/", tags:["strandclub","terras"] },
+  { name:"La Trastienda Wine Bar", area:"Oude centrum", fav:true, note:"Onze favoriet. Om 19:00 open, wie er dan is pakt de buitentafels", lat:38.7899,lng:0.1662, web:"https://www.latrastiendajavea.es/en/", tags:["wijn","bar"] },
+  { name:"Bar Tal Cual", area:"Oude centrum", hearts:0, note:"", lat:38.7905,lng:0.1671, web:"https://www.bartalcual.com/", tags:["bar","tapas"] },
+  { name:"La Siesta", area:"Arenal", hearts:0, note:"Dagelijks open vanaf 9:00 tot diep in de nacht", lat:38.7742,lng:0.1858, web:"https://siestajavea.com/", tags:["bar","terras"] },
+  { name:"9\u2026donde Fabrizio", area:"Oude centrum", hearts:0, note:"Italiaans-mediterraan in het oude centrum", lat:38.7893,lng:0.1650, web:"https://www.instagram.com/9dondefabrizio/", tags:["italiaans","restaurant"] },
+  { name:"Bar Mercat", area:"Oude centrum", hearts:0, note:"Zit sinds 1968 in de markthal", lat:38.7902,lng:0.1645, web:"https://www.barmercat.com/es/", tags:["bar","lunch"] },
+  { name:"La Bambula", area:"Arenal", hearts:0, note:"Van 's ochtends tot diep in de nacht", lat:38.7729,lng:0.1880, web:"https://labambula.es/", tags:["bar","terras"] },
+  { name:"Vall de Cavall", area:"Buiten X\u00e0bia", fav:true, note:"Onze favoriet. Twintig minuten rijden en reserveren is echt nodig", lat:38.7620,lng:0.0980, web:"https://valldecavall.es/en/", tags:["restaurant","wijn"] },
+  { name:"Temblor", area:"Oude centrum", hearts:0, note:"De originele vestiging, in het casco antiguo", lat:38.7896,lng:0.1655, web:"https://www.instagram.com/temblor_javea/", tags:["bar","tapas"] },
+];
+
+const places = stad === 'xabia' ? plekkenXabia : plekkenAmsterdam;
+
 // ═══ MAP ═══
-const map = L.map('map', { scrollWheelZoom: false, attributionControl: false }).setView([52.3676, 4.9041], 13);
+const map = L.map('map', { scrollWheelZoom: false, attributionControl: false }).setView(stad === 'xabia' ? [38.785, 0.175] : [52.3676, 4.9041], 13);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   maxZoom: 18
 }).addTo(map);
@@ -1724,15 +1809,25 @@ map.fitBounds(bounds, { padding: [30, 30] });
 let activeArea = null;
 let activeTag = null;
 
-const areaGroups = {
-  'Jordaan': ['Jordaan'],
-  'De Pijp': ['De Pijp'],
-  'Zuid': ['Oud-Zuid'],
-  'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt', 'Haarlemmerplein'],
-  'West': ['West'],
-  'Oost': ['Oost'],
-  'Noord': ['Noord'],
+const wijkIndeling = {
+  amsterdam: {
+    'Jordaan': ['Jordaan'],
+    'De Pijp': ['De Pijp'],
+    'Zuid': ['Oud-Zuid'],
+    'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt', 'Haarlemmerplein'],
+    'West': ['West'],
+    'Oost': ['Oost'],
+    'Noord': ['Noord'],
+  },
+  xabia: {
+    'Haven': ['Haven'],
+    'Oude centrum': ['Oude centrum'],
+    'Arenal': ['Arenal'],
+    'Kust': ['Kust'],
+    'Buiten X\u00e0bia': ['Buiten X\u00e0bia'],
+  },
 };
+const areaGroups = wijkIndeling[stad];
 const overigAreas = [...new Set(places.map(p => p.area))].filter(a => !Object.values(areaGroups).flat().includes(a));
 areaGroups['Overig'] = overigAreas;
 const areaFiltersEl = document.getElementById('area-filters');
@@ -1743,7 +1838,7 @@ allAreaBtn.onclick = () => { activeArea = null; applyFilters(); };
 areaFiltersEl.appendChild(allAreaBtn);
 // Alleen wijken tonen waar ook echt plekken in zitten; 'Overig' verdwijnt
 // vanzelf zodra elke area onder een eigen wijk valt.
-const wijkLabels = ['Jordaan','De Pijp','Zuid','Centrum','West','Oost','Noord','Overig']
+const wijkLabels = Object.keys(areaGroups).concat('Overig')
   .filter(l => areaGroups[l] && places.some(pl => areaGroups[l].includes(pl.area)));
 wijkLabels.forEach(label => {
   const btn = document.createElement('button');
@@ -1753,14 +1848,14 @@ wijkLabels.forEach(label => {
 });
 
 const allTags = [...new Set(places.flatMap(p => p.tags))].sort();
-const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wijn', italiaans:'Italiaans', frans:'Frans', vis:'Vis', oesters:'Oesters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terras', borrel:'Borrel', ontbijt:'Ontbijt', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Kaas', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Chic', aziatisch:'Aziatisch', bistro:'Bistro', 'bruin caf\u00e9':'Bruin caf\u00e9', caf\u00e9:'Caf\u00e9', fondue:'Fondue', indonesisch:'Indonesisch', industrieel:'Industrieel', pizza:'Pizza', spaans:'Spaans', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Zwitsers', 'natural wine':'Natural wine' };
+const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wijn', italiaans:'Italiaans', frans:'Frans', vis:'Vis', oesters:'Oesters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terras', borrel:'Borrel', ontbijt:'Ontbijt', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Kaas', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Chic', aziatisch:'Aziatisch', bistro:'Bistro', 'bruin caf\u00e9':'Bruin caf\u00e9', caf\u00e9:'Caf\u00e9', fondue:'Fondue', indonesisch:'Indonesisch', industrieel:'Industrieel', pizza:'Pizza', spaans:'Spaans', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Zwitsers', 'natural wine':'Natural wine', strandclub:'Strandclub', rijst:'Rijst' };
 const filtersEl = document.getElementById('filters');
 const allBtn = document.createElement('button');
 allBtn.textContent = 'Alles';
 allBtn.className = 'active';
 allBtn.onclick = () => { activeTag = null; applyFilters(); };
 filtersEl.appendChild(allBtn);
-const showTags = ['restaurant','bar','italiaans','frans','tapas','wijn','oesters','vis','cocktails','brunch','lunch','terras','steak','ontbijt','happy hour'];
+const showTags = ['restaurant','bar','italiaans','frans','tapas','wijn','oesters','vis','cocktails','brunch','lunch','terras','steak','ontbijt','happy hour','strandclub','rijst'];
 showTags.forEach(tag => {
   if (!allTags.includes(tag)) return;
   const btn = document.createElement('button');
@@ -1907,6 +2002,11 @@ spinPersonBtns.forEach(btn => {
     selectedPersons = parseInt(btn.dataset.n);
   };
 });
+const wijkBtnsEl = document.getElementById('wijkBtns');
+wijkBtnsEl.innerHTML = '<button class="selected" data-wijk="">Maakt niet uit</button>' +
+  Object.keys(areaGroups)
+    .filter(w => places.some(pl => areaGroups[w].includes(pl.area)))
+    .map(w => `<button data-wijk="${w}">${w}</button>`).join('');
 const wijkBtns = document.querySelectorAll('#wijkBtns button');
 wijkBtns.forEach(btn => {
   btn.onclick = () => {
@@ -1916,12 +2016,7 @@ wijkBtns.forEach(btn => {
   };
 });
 
-const spinnerAreaGroups = {
-  'Jordaan': ['Jordaan'],
-  'De Pijp': ['De Pijp'],
-  'Zuid': ['Oud-Zuid'],
-  'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt', 'Haarlemmerplein'],
-};
+const spinnerAreaGroups = areaGroups;
 
 function getFilteredPlaces() {
   if (!selectedWijk) return places;
