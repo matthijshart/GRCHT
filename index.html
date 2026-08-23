@@ -956,28 +956,35 @@ nav .lang-switch:hover { opacity: 0.55; }
 
 /* ═══ HERO-AFBEELDING ═══
    Wordt pas actief als hero-note.jpg bestaat; zonder dat bestand blijft de
-   hero precies zoals hij was, met de CSS-strepen. */
+   hero precies zoals hij was, met de CSS-strepen.
+
+   De foto krijgt het eerste scherm helemaal voor zich, de tekst staat er
+   direct onder op groen. Tekst over de foto leggen werkt niet: het briefje
+   is staand en vult vrijwel het hele beeld, dus elke regel landt op het
+   lichte papier en valt weg. */
 html.has-hero-image .stripes-bg,
 html.has-hero-image .stripes-overlay { display: none; }
 html.has-hero-image .hero {
   background: var(--black);
-  padding-top: 6rem;
-  padding-bottom: 5rem;
+  min-height: 0;
+  justify-content: flex-start;
+  padding: 0 0 clamp(3rem, 6vw, 4.5rem);
 }
-/* Het briefje is een staande foto. De kaart krijgt exact dezelfde verhouding,
-   zodat 'cover' niets wegsnijdt op welk scherm dan ook. */
-html.has-hero-image .note-card {
-  aspect-ratio: 1122 / 1402;
-  height: min(56vh, 500px);
-  width: auto;
-  max-width: 86vw;
-  background: url('hero-note.jpg') center / cover no-repeat;
-  box-shadow: 0 20px 48px rgba(0,0,0,0.42);
-  transform: none;
-  padding: 0;
+html.has-hero-image .hero::before {
+  content: '';
+  align-self: stretch;
+  height: 74svh;
+  background-image: url('hero-note.jpg');
+  background-size: cover;
+  /* Op breede schermen snijdt 'cover' boven en onder weg; centreren houdt
+     het handschrift in beeld. */
+  background-position: center 50%;
+  background-repeat: no-repeat;
+  margin-bottom: clamp(1.8rem, 4vw, 2.8rem);
 }
+html.has-hero-image .note-card,
 html.has-hero-image .note-tape { display: none; }
-/* De foto draagt het woordmerk zelf; de h1 blijft voor screenreaders. */
+/* De foto draagt het briefje zelf; de h1 blijft voor screenreaders. */
 html.has-hero-image .hero h1 {
   position: absolute;
   width: 1px; height: 1px;
@@ -989,14 +996,19 @@ html.has-hero-image .hero h1 {
 }
 html.has-hero-image .hero .sub,
 html.has-hero-image .hero .updated { color: var(--cream); }
-html.has-hero-image .hero .sub { margin-top: 1.8rem; }
+html.has-hero-image .hero .sub { margin-top: 0; padding: 0 1.6rem; }
 html.has-hero-image .hero .updated { opacity: 0.8; }
 html.has-hero-image .hero .scroll-hint,
 html.has-hero-image .spotify-hint { color: var(--cream); }
 html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
+html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
 @media (max-width: 600px) {
-  html.has-hero-image .hero { padding-top: 5rem; padding-bottom: 4rem; }
-  html.has-hero-image .note-card { height: min(46vh, 380px); }
+  /* Op een telefoon mag de foto bijna het hele scherm hebben. */
+  html.has-hero-image .hero::before { height: 84svh; background-position: center top; }
+  html.has-hero-image .hero .sub { font-size: 0.95rem; }
+  html.has-hero-image .hero-spotify { margin-top: 1.4rem; max-width: 300px; }
+  /* Dit schuine zinnetje botste met het handschrift op het briefje. */
+  html.has-hero-image .spotify-hint { display: none; }
 }
 
 /* ═══ SFEERFOTO ═══ */
@@ -1102,6 +1114,10 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
 }
 .section-head.in .eyebrow::after { transform: scaleX(1); }
+.section-head {
+  border-top: 1px solid #d7cfba;
+  padding-top: clamp(1.4rem, 3vw, 2rem);
+}
 .section-head h2 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(2.2rem, 5.5vw, 3.6rem);
@@ -1282,7 +1298,9 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   .person-btns button { width: 46px; height: 46px; font-size: 1.2rem; }
   .wijk-btns button { padding: 0.72rem 1.1rem; font-size: 0.8rem; }
   .filter-row button { padding: 0.62rem 1rem; font-size: 0.75rem; }
-  .filter-row.area-row button { padding: 0.45rem 1.1rem; font-size: 1.25rem; }
+  /* Acht wijken namen vier regels in beslag; compacter past het in twee. */
+  .filter-row.area-row { gap: 0.45rem; }
+  .filter-row.area-row button { padding: 0.5rem 0.8rem; font-size: 1rem; }
   .carousel-header { padding: 1.35rem 1rem; }
   nav .lang-switch { padding: 0.6rem 0.95rem; }
   nav .logo { padding: 0.4rem 0; }
@@ -1385,7 +1403,6 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   <!-- SWIPE & DINE — SLOTSECTIE -->
   <div class="swipe-banner" id="swipe">
     <div class="swipe-banner-inner reveal">
-      <div class="spinner-eyebrow">01 &mdash; Kun je niet kiezen?</div>
       <div class="swipe-banner-new">Nieuw</div>
       <div class="swipe-banner-title">SWIPE &amp;<br><em>DINE</em></div>
       <p class="swipe-banner-sub">Samen kiezen waar je eet. Ieder swipet, bij een match weet je het meteen.</p>
@@ -1397,9 +1414,8 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   <!-- KAART -->
   <div class="map-section" id="kaart">
     <div class="section-head reveal">
-      <div class="eyebrow">02 &mdash; De kaart</div>
       <h2>Waar het allemaal ligt</h2>
-      <p>Elke stip is een plek waar we zelf zijn geweest. Tik erop, of kies hieronder een wijk.</p>
+      <p>Elke stip is een plek waar we zelf zijn geweest.</p>
     </div>
     <div id="map" class="reveal-zoom"></div>
     <div class="stats reveal" id="stats">
@@ -1414,9 +1430,7 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   <!-- FILTERS + CARDS -->
   <div class="filters-section" id="plekken">
     <div class="section-head reveal">
-      <div class="eyebrow">03 &mdash; De lijst</div>
       <h2>Alle plekken</h2>
-      <p>Alles hieronder hebben we zelf gegeten en gedronken. Klap een wijk open en tik een kaartje aan om het op de kaart te vinden.</p>
     </div>
     <div class="filter-row area-row reveal" id="area-filters"></div>
     <div class="filter-row reveal" id="filters"></div>
@@ -1435,9 +1449,8 @@ html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
   <!-- GEEN IDEE SPINNER -->
   <div class="spinner-wrap" id="geen-idee">
     <div class="spinner-section reveal">
-      <div class="spinner-eyebrow">04 &mdash; Nog steeds geen idee?</div>
       <div class="spinner-title">Wij kiezen voor je<span>.</span></div>
-      <p class="spinner-sub">Zeg met hoeveel en waar, wij doen de rest.</p>
+      <p class="spinner-sub">Zeg met hoeveel en waar.</p>
       <div class="spinner-question">
         <div class="spinner-q-label">Hoeveel zijn jullie?</div>
         <div class="person-btns" id="personBtns">
