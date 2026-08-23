@@ -1126,6 +1126,70 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
 }
 .map-section .stats-note { padding-left: 0; padding-right: 0; max-width: none; }
 
+/* ═══ SFEER: FILMKORREL ═══
+   Een vaste, heel lichte ruislaag over de pagina. Maakt het geheel drukwerk
+   in plaats van scherm, en past bij de textuur van het doek en het papier. */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  will-change: transform;
+  animation: korrel 8s steps(1) infinite;
+}
+@keyframes korrel {
+  0%   { transform: translate(0, 0); }
+  12%  { transform: translate(-1%, -1%); }
+  25%  { transform: translate(1%, -0.5%); }
+  37%  { transform: translate(-0.5%, 1%); }
+  50%  { transform: translate(0.5%, 0.5%); }
+  62%  { transform: translate(-1%, 0.5%); }
+  75%  { transform: translate(1%, 1%); }
+  87%  { transform: translate(-0.5%, -1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ═══ KOPPEN DIE ONDER EEN RAND VANDAAN KOMEN ═══
+   De regel schuift omhoog achter een onzichtbare rand vandaan; dat leest als
+   drukwerk dat wordt opgelegd, niet als een element dat komt aanvliegen. */
+.masker { display: block; overflow: hidden; }
+.masker > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--d, 0ms);
+}
+.in .masker > span,
+.masker.in > span { transform: translateY(0); }
+
+/* ═══ CARROUSEL: ZACHTE RANDEN ═══
+   De kaartjes lopen uit beeld in plaats van te worden afgesneden. */
+.carousel-track {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 20px, #000 calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 20px, #000 calc(100% - 28px), transparent 100%);
+}
+
+/* ═══ SCROLL-GEDREVEN BEWEGING ═══
+   De variabelen worden vanuit JS gezet; alleen transform, dus de browser
+   hoeft niets opnieuw te tekenen. */
+html.has-hero-image .hero::before {
+  transform: translate3d(0, var(--hero-y, 0px), 0) scale(var(--hero-s, 1));
+  transform-origin: center 30%;
+  will-change: transform;
+}
+.stripe-band .band-text {
+  transform: translate3d(var(--band-x, 0px), 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { animation: none !important; }
+  .masker > span { transform: none !important; transition: none !important; }
+  html.has-hero-image .hero::before { transform: none !important; }
+  .stripe-band .band-text { transform: none !important; }
+}
+
 /* ═══ SECTIEKOPPEN ═══ */
 .section-head {
   max-width: 1200px;
@@ -1377,6 +1441,7 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
 })();
 </script>
 
+<div class="grain" aria-hidden="true"></div>
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- ═══ STRIPES ACHTERGROND ═══ -->
@@ -2167,6 +2232,56 @@ document.querySelectorAll('.carousel-track').forEach(track => {
   });
 });
 observeReveals();
+
+// ═══ KOPPEN ONDER EEN MASKER ═══
+// De tekst wordt in een extra span gezet zodat hij achter een rand vandaan
+// kan schuiven. In de opmaak blijft het gewoon een kop.
+if (!reduceMotion) {
+  document.querySelectorAll('.section-head h2, .spinner-title, .swipe-banner-title')
+    .forEach(el => {
+      const inhoud = el.innerHTML;
+      el.innerHTML = '<span class="masker"><span>' + inhoud + '</span></span>';
+    });
+}
+
+// ═══ SCROLL-GEDREVEN BEWEGING ═══
+// Eén rAF-lus voor alles wat met scrollen meebeweegt, en alleen transforms,
+// zodat een iPhone er niet op inzakt.
+(() => {
+  if (reduceMotion) return;
+  const hero = document.querySelector('.hero');
+  const band = document.querySelector('.stripe-band .band-text');
+  let vorigeY = window.scrollY;
+  let bandX = 0;
+  let bezig = false;
+
+  const stap = () => {
+    const y = window.scrollY;
+    const delta = y - vorigeY;
+    vorigeY = y;
+
+    // De foto blijft iets achter en zoomt heel licht in: diepte zonder truc.
+    // De klasse verschijnt pas als de foto geladen is, dus elke keer kijken.
+    if (hero && document.documentElement.classList.contains('has-hero-image')) {
+      const h = hero.offsetHeight || 1;
+      const p = Math.min(Math.max(y / h, 0), 1);
+      hero.style.setProperty('--hero-y', (p * 90).toFixed(1) + 'px');
+      hero.style.setProperty('--hero-s', (1 + p * 0.06).toFixed(4));
+    }
+    // De band schuift mee met de richting waarin je scrollt.
+    if (band) {
+      bandX = Math.max(-90, Math.min(90, bandX - delta * 0.35));
+      bandX *= 0.94;
+      band.style.setProperty('--band-x', bandX.toFixed(1) + 'px');
+    }
+    bezig = false;
+  };
+
+  const opScroll = () => { if (!bezig) { bezig = true; requestAnimationFrame(stap); } };
+  window.addEventListener('scroll', opScroll, { passive: true });
+  window.addEventListener('resize', opScroll, { passive: true });
+  stap();
+})();
 
 // ═══ TELLERS ═══
 const statsEl = document.getElementById('stats');
