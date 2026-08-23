@@ -1556,8 +1556,19 @@ function slowScroll(target) {
   requestAnimationFrame(step);
 }
 
+// ═══ STAD ═══
+// Twee steden in één pagina; de keuze staat in de URL zodat je hem kunt delen.
+const steden = ['amsterdam', 'xabia'];
+const stad = (() => {
+  const uit = new URLSearchParams(location.search).get('stad');
+  if (steden.includes(uit)) { try { localStorage.setItem('stad', uit); } catch (e) {} return uit; }
+  try { const bewaard = localStorage.getItem('stad'); if (steden.includes(bewaard)) return bewaard; } catch (e) {}
+  return 'amsterdam';
+})();
+
 // ═══ ANECDOTES ═══
-const anecdotes = [
+const weetjes = {
+  amsterdam: [
   "The Jordaan is not named after the river Jordan, but after a 17th-century cheese merchant called Hendrik de Jordaan who opened the first shop there.",
   "Amsterdam has more bridges than Venice, though the city officially counts only 1,281 because anything under three metres does not make the list.",
   "The most crooked canal houses did not sink that way. They were built leaning forward on purpose, so residents could hoist furniture in through the windows.",
@@ -1591,7 +1602,33 @@ const anecdotes = [
   "The Rijksmuseum is positioned so precisely that on King's Day the sun falls through the middle window of the Night Watch gallery.",
   "The ferry to Noord has been free since 1924 because an alderman accidentally tabled the wrong motion. Nobody has ever reversed it.",
   "Streets in the Jordaan were originally named after flowers. The Rozenstraat is the only one that kept its original name.",
-];
+  ],
+  xabia: [
+  "The Montgó is locally known as 'the elephant' because from a distance it looks like a sleeping elephant. People who see it up close keep insisting on it anyway.",
+  "Xàbia and Jávea are the same place. Which of the two names you use says more about you than about the place.",
+  "The old town is built from tosca, the sandstone of the Montgó. That makes it exactly four degrees cooler in August, which nobody has ever measured.",
+  "In the harbour there is an unwritten rule that you do not dine before nine. Anyone who does is served politely and judged silently.",
+  "There are more Dutch people living in Xàbia than there are people in the Netherlands who know where Xàbia is.",
+  "The Arenal is the only sandy beach in the municipality. The rest is pebbles, which residents call character and visitors call ouch.",
+  "A municipal ordinance from 1971 states that a terrace may not open a parasol until the shadow of the Montgó has reached the church.",
+  "The levante brings rain, the tramuntana brings cold, and the ponent brings people who tell you it used to be better.",
+  "Gata de Gorgos is known for guitar making and wicker baskets. Everyone who drives through buys exactly one of the two and never uses it.",
+  "Paella is officially only eaten at midday here. Restaurants that serve it in the evening are doing it for tourists, and they know that you know.",
+  "The little island off the Portitxol is officially called Illa del Descobridor. Everyone says 'the island', including people who have never looked at it.",
+  "The roundabout at the Arenal is the only one in Spain where traffic stays in the marked lane. This has never been established but is widely believed.",
+  "Summer in Xàbia runs from May to November. The remaining months are called the quiet season, which residents then complain about the entire time.",
+  "From Cap de la Nau you can see Ibiza on a clear day. On a less clear day as well, provided somebody says so first.",
+  "The name Xàbia comes from an Arabic word for water reservoir. It rains there an average of 42 days a year.",
+  "The streets in the casco antiguo are deliberately too narrow for cars. This is not a design choice but a fourteenth-century accident that people have taken credit for ever since.",
+  "There are more restaurants with a sea view in Xàbia than there are places from which the sea can actually be seen.",
+  "If you want a table by the water in the harbour you need to be there at seven. At five past seven it is too late, and it stays that way all season.",
+  "The supermarket on the Arenal sells more sunscreen than bread in July. In January it is the other way round, but not by much.",
+  "Every Dutch person in Xàbia knows a better place than the one you are sitting in. They never go there themselves.",
+  "The Fogueres are celebrated in June with fire, music and the annual resolution to go to bed earlier next year.",
+  "It takes a newcomer roughly two summers to stop saying that it is 'quite warm'.",
+  ],
+};
+const anecdotes = weetjes[stad];
 let lastAnecdoteIndex = -1;
 function showRandomAnecdote() {
   let idx;
@@ -1664,15 +1701,6 @@ window.addEventListener('scroll', () => {
   if (introComplete) onScroll();
 }, { passive: true });
 
-// ═══ STAD ═══
-// Twee steden in één pagina; de keuze staat in de URL zodat je hem kunt delen.
-const steden = ['amsterdam', 'xabia'];
-const stad = (() => {
-  const uit = new URLSearchParams(location.search).get('stad');
-  if (steden.includes(uit)) { try { localStorage.setItem('stad', uit); } catch (e) {} return uit; }
-  try { const bewaard = localStorage.getItem('stad'); if (steden.includes(bewaard)) return bewaard; } catch (e) {}
-  return 'amsterdam';
-})();
 document.documentElement.dataset.stad = stad;
 
 // Stadsafhankelijke teksten en links
@@ -1759,13 +1787,13 @@ const plekkenAmsterdam = [
 
 const plekkenXabia = [
   { name:"Mira Luna", area:"Harbour", hearts:0, note:"Good lunch by the harbour", lat:38.7935,lng:0.1826, web:"https://www.facebook.com/Mira.Luna.Javea/", tags:["lunch","terras"] },
-  { name:"Lulu Beachclub", area:"Coast", hearts:0, note:"Friday afternoon drinks. Mediterranean with a Japanese twist", lat:38.7660,lng:0.1930, web:"https://lulubeachclub.com/", tags:["strandclub","borrel","restaurant"] },
+  { name:"Lulu Beachclub", area:"Other", hearts:0, note:"Friday afternoon drinks. Mediterranean with a Japanese twist", lat:38.7660,lng:0.1930, web:"https://lulubeachclub.com/", tags:["strandclub","borrel","restaurant"] },
   { name:"Montgo di Bongo", area:"Arenal", hearts:0, note:"A drink by the sea. Only open in season", lat:38.7735,lng:0.1866, web:"https://montgodibongo.com/", tags:["bar","terras"] },
   { name:"Restaurante A Bordo", area:"Harbour", hearts:0, note:"Fish by the harbour, and good rice dishes", lat:38.7955,lng:0.1856, web:"https://www.abordorestaurante.com/en/", tags:["vis","rijst","restaurant"] },
   { name:"A La Mar", area:"Harbour", hearts:0, note:"Breakfast on the fishing quay", lat:38.7947,lng:0.1841, web:"https://www.instagram.com/alamarjavea/", tags:["ontbijt","terras"] },
   { name:"Cocktail Bar La Esquina", area:"Harbour", hearts:0, note:"Cocktails by the harbour", lat:38.7929,lng:0.1818, web:"https://www.facebook.com/esquinajavea/", tags:["cocktails","bar"] },
   { name:"Amantes de Moraira", area:"Outside X\u00e0bia", hearts:0, note:"Often live music. Reckon on about 40 euro a head", lat:38.6935,lng:0.1470, web:"https://www.facebook.com/amantesdemoraira/", tags:["restaurant","\u20ac\u20ac\u20ac"] },
-  { name:"Cala Clemence", area:"Coast", hearts:0, note:"Daytime weekend party, on the Cala Portitxol", lat:38.7495,lng:0.2210, web:"https://calaclemence.com/", tags:["strandclub","terras"] },
+  { name:"Cala Clemence", area:"Other", hearts:0, note:"Daytime weekend party, on the Cala Portitxol", lat:38.7495,lng:0.2210, web:"https://calaclemence.com/", tags:["strandclub","terras"] },
   { name:"La Trastienda Wine Bar", area:"Old town", fav:true, note:"Our favourite. Opens at 19:00, whoever is there first gets the outside tables", lat:38.7899,lng:0.1662, web:"https://www.latrastiendajavea.es/en/", tags:["wijn","bar"] },
   { name:"Bar Tal Cual", area:"Old town", hearts:0, note:"", lat:38.7905,lng:0.1671, web:"https://www.bartalcual.com/", tags:["bar","tapas"] },
   { name:"La Siesta", area:"Arenal", hearts:0, note:"Open daily from 9:00 until late", lat:38.7742,lng:0.1858, web:"https://siestajavea.com/", tags:["bar","terras"] },
@@ -1823,13 +1851,15 @@ const wijkIndeling = {
     'Harbour': ['Harbour'],
     'Old town': ['Old town'],
     'Arenal': ['Arenal'],
-    'Coast': ['Coast'],
     'Outside X\u00e0bia': ['Outside X\u00e0bia'],
+    'Other': ['Other'],
   },
 };
 const areaGroups = wijkIndeling[stad];
 const overigAreas = [...new Set(places.map(p => p.area))].filter(a => !Object.values(areaGroups).flat().includes(a));
-areaGroups['Other'] = overigAreas;
+// Areas zonder eigen wijk vallen terug op deze groep, zonder een
+// bestaande groep met dezelfde naam te overschrijven.
+areaGroups['Other'] = (areaGroups['Other'] || []).concat(overigAreas);
 const areaFiltersEl = document.getElementById('area-filters');
 const allAreaBtn = document.createElement('button');
 allAreaBtn.textContent = 'All areas';
@@ -1838,7 +1868,7 @@ allAreaBtn.onclick = () => { activeArea = null; applyFilters(); };
 areaFiltersEl.appendChild(allAreaBtn);
 // Alleen wijken tonen waar ook echt plekken in zitten; 'Overig' verdwijnt
 // vanzelf zodra elke area onder een eigen wijk valt.
-const wijkLabels = Object.keys(areaGroups).concat('Other')
+const wijkLabels = [...new Set(Object.keys(areaGroups).concat('Other'))]
   .filter(l => areaGroups[l] && places.some(pl => areaGroups[l].includes(pl.area)));
 wijkLabels.forEach(label => {
   const btn = document.createElement('button');
