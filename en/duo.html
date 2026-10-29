@@ -15,32 +15,32 @@
 <meta property="og:locale:alternate" content="nl_NL">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="theme-color" content="#123029">
+<meta name="theme-color" content="#3d1428">
 <link rel="apple-touch-icon" href="https://www.wetenwaar.nl/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%231a4d43'/><rect width='4' height='32' x='4' fill='%23ded8c6'/><rect width='4' height='32' x='8' fill='%231a4d43'/><rect width='4' height='32' x='12' fill='%23ded8c6'/><rect width='4' height='32' x='16' fill='%231a4d43'/><rect width='4' height='32' x='20' fill='%23ded8c6'/><rect width='4' height='32' x='24' fill='%231a4d43'/><rect width='4' height='32' x='28' fill='%23ded8c6'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%236b2a3a'/><rect width='4' height='32' x='4' fill='%23e8ddd8'/><rect width='4' height='32' x='8' fill='%236b2a3a'/><rect width='4' height='32' x='12' fill='%23e8ddd8'/><rect width='4' height='32' x='16' fill='%236b2a3a'/><rect width='4' height='32' x='20' fill='%23e8ddd8'/><rect width='4' height='32' x='24' fill='%236b2a3a'/><rect width='4' height='32' x='28' fill='%23e8ddd8'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  /* Oud-mediterraan: flessengroen + linnen (foto 1), gedempte salie (foto 2),
-     krantengroen (foto 3), zacht oker als enige warme accent. Geen rood. */
-  --black: #123029;
-  --ink: #16382f;
-  --ink-mid: #4c5a52;
-  --cream: #e9e4d5;
-  --white: #f4f1e6;
-  --stripe-white: #ded8c6;
-  --gray: #6f6a5b;
-  --gray-light: #a09a89;
-  --blue: #8faa93;
-  --olive: #1a4d43;
-  --coral: #84621f;
-  --amber: #d8ab5c;
-  --red: #6b4e18;
+  /* Bordeaux: diep wijnpaars als donkere kleur, oudroze voor de strepen,
+     warm creme, en messing als enige warme accent. */
+  --black: #3d1428;
+  --ink: #4a1a30;
+  --ink-mid: #6e4656;
+  --cream: #efe7e2;
+  --white: #f7f2ee;
+  --stripe-white: #e8ddd8;
+  --gray: #7a6b6e;
+  --gray-light: #a89a9c;
+  --blue: #a97c82;
+  --olive: #6b2a3a;
+  --coral: #8a6a30;
+  --amber: #c9a45c;
+  --red: #4a1a30;
 }
 html { scroll-behavior: auto; }
 body {
@@ -423,8 +423,8 @@ body {
 }
 .stamp-ja {
   right: 1.5rem;
-  color: #2a6a55;
-  border-color: #2a6a55;
+  color: #8a6a30;
+  border-color: #8a6a30;
 }
 .stamp-nee {
   left: 1.5rem;
@@ -455,12 +455,12 @@ body {
   background: var(--white);
   color: var(--red);
 }
-.swipe-btn-nee:hover { background: #e6e0cf; transform: scale(1.08); }
+.swipe-btn-nee:hover { background: #ece0dc; transform: scale(1.08); }
 .swipe-btn-ja {
   background: var(--white);
-  color: #2a6a55;
+  color: #8a6a30;
 }
-.swipe-btn-ja:hover { background: #dfe8de; transform: scale(1.08); }
+.swipe-btn-ja:hover { background: #efe4d2; transform: scale(1.08); }
 
 .waiting-status {
   margin-top: 1rem;
@@ -788,7 +788,7 @@ const tagLabels = {
   italiaans:'Italian', lunch:'Lunch', 'natural wine':'Natural wine', oesters:'Oysters',
   ontbijt:'Breakfast', pasta:'Pasta', pizza:'Pizza', restaurant:'Restaurant', spaans:'Spanish',
   speakeasy:'Speakeasy', steak:'Steak', sushi:'Sushi', tapas:'Tapas', terras:'Terrace',
-  vis:'Fish', wijn:'Wine', zwitsers:'Swiss',
+  vis:'Fish', wijn:'Wine', zwitsers:'Swiss', burger:'Burger', strandclub:'Beach club', rijst:'Rice',
 };
 
 // ═══ PLACES DATA ═══
@@ -824,7 +824,7 @@ const places = [
   { name:"No Nonsense", area:"Centrum", note:"Cosy brown cafe", lat:52.3759,lng:4.9027, tags:["bar","cafe"] },
   { name:"Bar Grill Marathonweg", area:"Oud-Zuid", note:"Good for a bite on the Marathonweg", lat:52.3460,lng:4.8650, tags:["bar","restaurant"] },
   { name:"Cafe Kiebert", area:"Oud-Zuid", note:"Open fire, cosy spot on the Marathonweg", lat:52.3458,lng:4.8645, tags:["cafe","restaurant"] },
-  { name:"Bar Bonnie", area:"Oud-Zuid", note:"Cosy", lat:52.3465,lng:4.8655, tags:["bar"] },
+  { name:"Bar Bonnie", area:"Oud-Zuid", note:"Modern take on a brown cafe. Known for the smashburger and the steak", lat:52.3480,lng:4.8565, tags:["bar","burger","steak"] },
   { name:"'t Smalle", area:"Jordaan", note:"A beer or a meatball roll, never wrong", lat:52.3758,lng:4.8838, tags:["cafe","bruin cafe"] },
   { name:"Papeneiland", area:"Jordaan", note:"Terrace when the sun is out", lat:52.3826,lng:4.8871, tags:["terras","cafe"] },
   { name:"Bistro Feline", area:"Jordaan", note:"In the Michelin guide, order the lobster orzo", lat:52.3769,lng:4.8832, tags:["restaurant","frans"] },
@@ -847,6 +847,9 @@ const places = [
   { name:"Kikkie van de Prinsensluis", area:"Jordaan", note:"Good wine, a stool out on the street and a smashburger", lat:52.3791,lng:4.8865, tags:["cafe","wijn","terras"] },
   { name:"Cafe Twee Prinsen", area:"Jordaan", note:"For when there is no room at Kikkie", lat:52.3790,lng:4.8867, tags:["wijn","bar","terras"] },
   { name:"De Sluyswacht", area:"Centrum", note:"A drink looking out over the water, always space. No kitchen, but bitterballen and cheese", lat:52.3690,lng:4.9015, tags:["bar","terras","borrel"] },
+  { name:"Bar Buuf", area:"De Pijp", note:"Neighbourhood bistro with Parisian charm. Three courses for 39.50", lat:52.3512,lng:4.8915, tags:["restaurant","frans","wijn"] },
+  { name:"'t Blauwe Theehuis", area:"Vondelpark", note:"Big terrace in the middle of the park. A beer in the sun", lat:52.3581,lng:4.8688, tags:["terras","borrel","cafe"] },
+  { name:"Pazzi", area:"Jordaan", note:"Wood-fired pizza, thin and crisp", lat:52.3719,lng:4.8802, tags:["italiaans","pizza"] },
 ];
 
 // Shuffle places consistently per session using a seeded random
@@ -1338,7 +1341,7 @@ function updateWaitingStatus(data) {
 function spawnConfetti() {
   const container = document.getElementById('confetti-container');
   container.innerHTML = '';
-  const colors = ['#1a4d43', '#8faa93', '#e9e4d5', '#2a6a55', '#d8ab5c', '#ded8c6', '#123029'];
+  const colors = ['#6b2a3a', '#a97c82', '#efe7e2', '#8a6a30', '#c9a45c', '#e8ddd8', '#3d1428'];
 
   for (let i = 0; i < 60; i++) {
     const piece = document.createElement('div');

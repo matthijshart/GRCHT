@@ -18,32 +18,32 @@
 <meta property="og:locale:alternate" content="nl_NL">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="theme-color" content="#123029">
+<meta name="theme-color" content="#3d1428">
 <link rel="apple-touch-icon" href="https://www.wetenwaar.nl/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%231a4d43'/><rect width='4' height='32' x='4' fill='%23ded8c6'/><rect width='4' height='32' x='8' fill='%231a4d43'/><rect width='4' height='32' x='12' fill='%23ded8c6'/><rect width='4' height='32' x='16' fill='%231a4d43'/><rect width='4' height='32' x='20' fill='%23ded8c6'/><rect width='4' height='32' x='24' fill='%231a4d43'/><rect width='4' height='32' x='28' fill='%23ded8c6'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%236b2a3a'/><rect width='4' height='32' x='4' fill='%23e8ddd8'/><rect width='4' height='32' x='8' fill='%236b2a3a'/><rect width='4' height='32' x='12' fill='%23e8ddd8'/><rect width='4' height='32' x='16' fill='%236b2a3a'/><rect width='4' height='32' x='20' fill='%23e8ddd8'/><rect width='4' height='32' x='24' fill='%236b2a3a'/><rect width='4' height='32' x='28' fill='%23e8ddd8'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  /* Oud-mediterraan: flessengroen + linnen (foto 1), gedempte salie (foto 2),
-     krantengroen (foto 3), zacht oker als enige warme accent. Geen rood. */
-  --black: #123029;
-  --ink: #16382f;
-  --ink-mid: #4c5a52;
-  --cream: #e9e4d5;
-  --white: #f4f1e6;
-  --stripe-white: #ded8c6;
-  --gray: #6f6a5b;
-  --gray-light: #a09a89;
-  --blue: #8faa93;
-  --olive: #1a4d43;
-  --coral: #84621f;
-  --amber: #d8ab5c;
-  --red: #6b4e18;
+  /* Bordeaux: diep wijnpaars als donkere kleur, oudroze voor de strepen,
+     warm creme, en messing als enige warme accent. */
+  --black: #3d1428;
+  --ink: #4a1a30;
+  --ink-mid: #6e4656;
+  --cream: #efe7e2;
+  --white: #f7f2ee;
+  --stripe-white: #e8ddd8;
+  --gray: #7a6b6e;
+  --gray-light: #a89a9c;
+  --blue: #a97c82;
+  --olive: #6b2a3a;
+  --coral: #8a6a30;
+  --amber: #c9a45c;
+  --red: #4a1a30;
 }
 html { scroll-behavior: auto; }
 body {
@@ -106,7 +106,7 @@ body {
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 1;
   pointer-events: none;
-  background: rgba(18, 48, 41, 0.18);
+  background: rgba(61, 20, 40, 0.18);
   opacity: 0;
   animation: overlayFadeIn 1s ease 1.8s forwards;
 }
@@ -125,7 +125,16 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  mix-blend-mode: difference;
+  /* Geen difference-blend meer: creme min wijnpaars levert mintgroen op.
+     De nav is transparant over de hero en wordt bij scrollen een
+     halfdoorzichtig wijnpaars balkje, zodat hij leesbaar blijft op creme. */
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+nav.scrolled {
+  background: rgba(61, 20, 40, 0.84);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 rgba(239,231,226,0.08);
 }
 nav .logo {
   font-family: 'Bebas Neue', sans-serif;
@@ -238,8 +247,8 @@ nav .lang-switch:hover { opacity: 0.55; }
     linear-gradient(158deg, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.035) 100%),
     #e7e2d6;
   box-shadow:
-    0 1px 1px rgba(18,48,41,0.10),
-    0 14px 34px rgba(18,48,41,0.22);
+    0 1px 1px rgba(61,20,40,0.10),
+    0 14px 34px rgba(61,20,40,0.22);
   transform: rotate(-0.6deg);
 }
 .note-tape {
@@ -251,7 +260,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   height: 52px;
   transform: translateX(-50%) rotate(-1.2deg);
   background: linear-gradient(100deg, rgba(214,200,150,0.85), rgba(226,214,170,0.92) 45%, rgba(208,192,140,0.85));
-  box-shadow: 0 1px 2px rgba(18,48,41,0.12);
+  box-shadow: 0 1px 2px rgba(61,20,40,0.12);
   /* gerafelde randen links en rechts */
   clip-path: polygon(2% 6%, 98% 0%, 100% 92%, 0% 100%);
 }
@@ -274,7 +283,7 @@ nav .lang-switch:hover { opacity: 0.55; }
 .hero .sub {
   margin-top: 2rem;
   font-size: 1.1rem;
-  color: #33392f;
+  color: #3a2a30;
   max-width: 400px;
   line-height: 1.6;
 }
@@ -286,7 +295,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #33392f;
+  color: #3a2a30;
   opacity: 0.65;
   font-weight: 500;
 }
@@ -458,7 +467,7 @@ nav .lang-switch:hover { opacity: 0.55; }
 }
 .filter-row button {
   padding: 0.35rem 0.9rem; border-radius: 20px;
-  border: 1px solid #d3ccb8; background: var(--white);
+  border: 1px solid #d6c8c3; background: var(--white);
   font-family: 'Outfit', sans-serif; font-size: 0.78rem;
   color: var(--ink-mid); cursor: pointer; transition: all 0.2s;
   font-weight: 400;
@@ -501,9 +510,9 @@ nav .lang-switch:hover { opacity: 0.55; }
   max-width: 1400px; margin: 0 auto; padding: 0.5rem 0 3rem;
 }
 .carousel-row {
-  border-bottom: 1px solid #d7cfba;
+  border-bottom: 1px solid #dccfc9;
 }
-.carousel-row:first-child { border-top: 1px solid #d7cfba; }
+.carousel-row:first-child { border-top: 1px solid #dccfc9; }
 .carousel-row.hidden { display: none; }
 .carousel-header {
   display: flex;
@@ -519,7 +528,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   color: inherit;
   transition: background 0.2s;
 }
-.carousel-header:hover { background: rgba(26, 77, 67, 0.045); }
+.carousel-header:hover { background: rgba(107, 42, 58, 0.045); }
 .carousel-header h2 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(1.5rem, 4vw, 2rem);
@@ -567,7 +576,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   border-radius: 10px;
   padding: 1rem 1.2rem;
   cursor: pointer;
-  border: 1px solid #ddd5c1;
+  border: 1px solid #e0d4cf;
   transition: transform 0.2s, box-shadow 0.2s;
   scroll-snap-align: start;
 }
@@ -594,7 +603,7 @@ nav .lang-switch:hover { opacity: 0.55; }
 .card .meta span { display: inline-flex; align-items: center; gap: 0.2rem; }
 .card .tag {
   display: inline-block; padding: 0.12rem 0.45rem; border-radius: 10px;
-  background: #ded6c2; font-size: 0.68rem; color: var(--ink-mid);
+  background: #e6dad6; font-size: 0.68rem; color: var(--ink-mid);
 }
 .card .link {
   display: inline-block; margin-top: 0.5rem;
@@ -635,7 +644,7 @@ nav .lang-switch:hover { opacity: 0.55; }
 .swipe-banner {
   background: var(--white);
   color: var(--ink);
-  border-bottom: 1px solid #d7cfba;
+  border-bottom: 1px solid #dccfc9;
   padding: clamp(4rem, 9vw, 6.5rem) 1.5rem clamp(4rem, 9vw, 6rem);
   text-align: center;
   position: relative;
@@ -689,7 +698,7 @@ nav .lang-switch:hover { opacity: 0.55; }
 .swipe-banner-new {
   display: inline-block;
   padding: 0.25rem 0.85rem;
-  border: 1px solid rgba(26, 77, 67, 0.3);
+  border: 1px solid rgba(107, 42, 58, 0.3);
   color: var(--olive);
   font-size: 0.6rem;
   font-weight: 500;
@@ -701,8 +710,8 @@ nav .lang-switch:hover { opacity: 0.55; }
 /* ═══ GEEN IDEE SPINNER ═══ */
 .spinner-wrap {
   background: var(--white);
-  border-top: 1px solid #d7cfba;
-  border-bottom: 1px solid #d7cfba;
+  border-top: 1px solid #dccfc9;
+  border-bottom: 1px solid #dccfc9;
   padding: clamp(3.5rem, 8vw, 6rem) 1rem;
   position: relative;
 }
@@ -813,11 +822,11 @@ nav .lang-switch:hover { opacity: 0.55; }
 }
 .slot-wrapper::before {
   top: 0;
-  background: linear-gradient(to bottom, rgba(244,241,230,0.95), transparent);
+  background: linear-gradient(to bottom, rgba(247,242,238,0.95), transparent);
 }
 .slot-wrapper::after {
   bottom: 0;
-  background: linear-gradient(to top, rgba(244,241,230,0.95), transparent);
+  background: linear-gradient(to top, rgba(247,242,238,0.95), transparent);
 }
 .slot-reel {
   position: absolute;
@@ -902,7 +911,10 @@ nav .lang-switch:hover { opacity: 0.55; }
   gap: 0.6rem;
   margin-top: 0.8rem;
 }
-.spin-result .result-actions a {
+.spin-result .result-actions a,
+.spin-result .result-actions button {
+  /* ook de 'opnieuw'-knop is een <button>; zonder deze regel mist die de pil-opmaak */
+  font-family: inherit;
   padding: 0.45rem 1.2rem;
   border-radius: 25px;
   font-size: 0.82rem;
@@ -970,7 +982,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   gap: 0.4rem;
   margin-top: 2rem;
   padding: 0.45rem 1.1rem;
-  border: 1px solid rgba(26,77,67,0.25);
+  border: 1px solid rgba(107,42,58,0.25);
   border-radius: 20px;
   background: transparent;
   color: var(--olive);
@@ -983,8 +995,8 @@ nav .lang-switch:hover { opacity: 0.55; }
 }
 .anecdote-btn:hover {
   opacity: 1;
-  background: rgba(26,77,67,0.08);
-  border-color: rgba(26,77,67,0.4);
+  background: rgba(107,42,58,0.08);
+  border-color: rgba(107,42,58,0.4);
 }
 .anecdote-btn svg {
   transition: transform 0.4s;
@@ -1073,7 +1085,7 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(18,48,41,0.12) 0%, rgba(18,48,41,0) 35%, rgba(18,48,41,0.55) 100%);
+  background: linear-gradient(to bottom, rgba(61,20,40,0.12) 0%, rgba(61,20,40,0) 35%, rgba(61,20,40,0.55) 100%);
   pointer-events: none;
 }
 .photo-band figcaption {
@@ -1108,7 +1120,7 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
   content: '';
   flex: 1;
   height: 1px;
-  background: #d7cfba;
+  background: #dccfc9;
 }
 .handwritten {
   font-family: 'Caveat', 'Bradley Hand', cursive;
@@ -1218,7 +1230,7 @@ html.has-hero-image .hero::before {
 }
 .section-head.in .eyebrow::after { transform: scaleX(1); }
 .section-head {
-  border-top: 1px solid #d7cfba;
+  border-top: 1px solid #dccfc9;
   padding-top: clamp(1.4rem, 3vw, 2rem);
 }
 .section-head h2 {
@@ -1247,7 +1259,7 @@ html.has-hero-image .hero::before {
   display: flex;
   flex-wrap: wrap;
   gap: 2.5rem;
-  border-top: 1px solid #d7cfba;
+  border-top: 1px solid #dccfc9;
 }
 .stat .num {
   font-family: 'Bebas Neue', sans-serif;
@@ -1828,7 +1840,7 @@ const plekkenAmsterdam = [
   { name:"No Nonsense", area:"Centrum", hearts:0, note:"Cosy brown cafe", lat:52.3759,lng:4.9027, web:"", tags:["bar","caf\u00e9"] },
   { name:"Bar Grill Marathonweg", area:"Oud-Zuid", fav:true, note:"Good for a bite on the Marathonweg", lat:52.3460,lng:4.8650, web:"", tags:["bar","restaurant"] },
   { name:"Caf\u00e9 Kieb\u00eart", area:"Oud-Zuid", hearts:0, note:"Open fire, cosy spot on the Marathonweg", lat:52.3458,lng:4.8645, web:"", tags:["caf\u00e9","restaurant"] },
-  { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"Cosy", lat:52.3465,lng:4.8655, web:"", tags:["bar"] },
+  { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"Modern take on a brown cafe. Known for the smashburger and the steak", lat:52.3480,lng:4.8565, web:"", tags:["bar","burger","steak"] },
   { name:"'t Smalle", area:"Jordaan", hearts:0, note:"A beer or a meatball roll, never wrong", lat:52.3758,lng:4.8838, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
   { name:"Papeneiland", area:"Jordaan", fav:true, note:"Terrace when the sun is out", lat:52.3826,lng:4.8871, web:"", tags:["terras","caf\u00e9"] },
   { name:"Bistro Feline", area:"Jordaan", hearts:0, note:"In the Michelin guide, order the lobster orzo", lat:52.3769,lng:4.8832, web:"", tags:["restaurant","frans"] },
@@ -1851,6 +1863,9 @@ const plekkenAmsterdam = [
   { name:"Kikkie van de Prinsensluis", area:"Jordaan", hearts:0, note:"Good wine, a stool out on the street and a smashburger", lat:52.3791,lng:4.8865, web:"", tags:["caf\u00e9","wijn","terras"] },
   { name:"Caf\u00e9 Twee Prinsen", area:"Jordaan", hearts:0, note:"For when there is no room at Kikkie", lat:52.3790,lng:4.8867, web:"", tags:["wijn","bar","terras"] },
   { name:"De Sluyswacht", area:"Centrum", hearts:0, note:"A drink looking out over the water, always space. No kitchen, but bitterballen and cheese \u2014 surprisingly good for an Aperol", lat:52.3690,lng:4.9015, web:"", tags:["bar","terras","borrel"] },
+  { name:"Bar Buuf", area:"De Pijp", hearts:0, note:"Neighbourhood bistro with Parisian charm. Three courses for 39.50", lat:52.3512,lng:4.8915, web:"", tags:["restaurant","frans","wijn"] },
+  { name:"'t Blauwe Theehuis", area:"Vondelpark", hearts:0, note:"Big terrace in the middle of the park. A beer in the sun", lat:52.3581,lng:4.8688, web:"", tags:["terras","borrel","caf\u00e9"] },
+  { name:"Pazzi", area:"Jordaan", hearts:0, note:"Wood-fired pizza, thin and crisp", lat:52.3719,lng:4.8802, web:"", tags:["italiaans","pizza"] },
 ];
 
 const plekkenXabia = [
@@ -1879,16 +1894,16 @@ const map = L.map('map', { scrollWheelZoom: false, attributionControl: false }).
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   maxZoom: 18
 }).addTo(map);
-document.querySelector('.leaflet-tile-pane').style.filter = 'saturate(0.45) contrast(1.02) sepia(0.18) hue-rotate(-8deg)';
+document.querySelector('.leaflet-tile-pane').style.filter = 'saturate(0.45) contrast(1.02) sepia(0.22) hue-rotate(-22deg)';
 
 const bounds = [];
 const markers = [];
 places.forEach((p, i) => {
   const size = 10;
-  const color = '#1a4d43';
+  const color = '#6b2a3a';
   const icon = L.divIcon({
     className: '',
-    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid #f4f1e6;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,0.25);"></div>`,
+    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid #f7f2ee;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,0.25);"></div>`,
     iconSize: [size, size], iconAnchor: [size/2, size/2]
   });
   const marker = L.marker([p.lat, p.lng], { icon }).addTo(map);
@@ -1909,7 +1924,7 @@ const wijkIndeling = {
   amsterdam: {
     'Jordaan': ['Jordaan'],
     'De Pijp': ['De Pijp'],
-    'Zuid': ['Oud-Zuid'],
+    'Zuid': ['Oud-Zuid', 'Vondelpark'],
     'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt', 'Haarlemmerplein'],
     'West': ['West'],
     'Oost': ['Oost'],
@@ -1946,7 +1961,7 @@ wijkLabels.forEach(label => {
 });
 
 const allTags = [...new Set(places.flatMap(p => p.tags))].sort();
-const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wine', italiaans:'Italian', frans:'French', vis:'Fish', oesters:'Oysters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terrace', borrel:'Drinks', ontbijt:'Breakfast', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Cheese', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Smart', aziatisch:'Asian', bistro:'Bistro', 'bruin caf\u00e9':'Brown cafe', caf\u00e9:'Cafe', fondue:'Fondue', indonesisch:'Indonesian', industrieel:'Industrial', pizza:'Pizza', spaans:'Spanish', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Swiss', 'natural wine':'Natural wine', strandclub:'Beach club', rijst:'Rice' };
+const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wine', italiaans:'Italian', frans:'French', vis:'Fish', oesters:'Oysters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terrace', borrel:'Drinks', ontbijt:'Breakfast', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Cheese', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Smart', aziatisch:'Asian', bistro:'Bistro', 'bruin caf\u00e9':'Brown cafe', caf\u00e9:'Cafe', fondue:'Fondue', indonesisch:'Indonesian', industrieel:'Industrial', pizza:'Pizza', spaans:'Spanish', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Swiss', 'natural wine':'Natural wine', strandclub:'Beach club', rijst:'Rice', burger:'Burger' };
 const filtersEl = document.getElementById('filters');
 const allBtn = document.createElement('button');
 allBtn.textContent = 'All';
@@ -2260,6 +2275,7 @@ if (!reduceMotion) {
 
   const stap = () => {
     const y = window.scrollY;
+    document.querySelector('nav')?.classList.toggle('scrolled', y > 40);
     const delta = y - vorigeY;
     vorigeY = y;
 
