@@ -22,7 +22,7 @@
 <link rel="apple-touch-icon" href="https://www.wetenwaar.nl/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%236b2a3a'/><rect width='4' height='32' x='4' fill='%23e8ddd8'/><rect width='4' height='32' x='8' fill='%236b2a3a'/><rect width='4' height='32' x='12' fill='%23e8ddd8'/><rect width='4' height='32' x='16' fill='%236b2a3a'/><rect width='4' height='32' x='20' fill='%23e8ddd8'/><rect width='4' height='32' x='24' fill='%236b2a3a'/><rect width='4' height='32' x='28' fill='%23e8ddd8'/></svg>">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233d1428'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Helvetica,Arial,sans-serif' font-weight='700' font-size='17' fill='%23efe7e2'%3EW%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -55,66 +55,7 @@ body {
 }
 ::selection { background: var(--olive); color: var(--white); }
 
-/* ═══ ANIMATED STRIPES BACKGROUND (hero only) ═══ */
-.stripes-bg {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.stripes-bg .stripe {
-  position: absolute;
-  width: calc(100% / 14);
-  height: 100%;
-  will-change: transform;
-  transform: translateY(-100%);
-}
-.stripes-bg .stripe:nth-child(odd)  {
-  background: var(--blue);
-  animation: stripeInDown 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.stripes-bg .stripe:nth-child(even) {
-  background: var(--stripe-white);
-  animation: stripeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.stripes-bg .stripe:nth-child(1)  { animation-delay: 0.05s; }
-.stripes-bg .stripe:nth-child(2)  { animation-delay: 0.1s; }
-.stripes-bg .stripe:nth-child(3)  { animation-delay: 0.15s; }
-.stripes-bg .stripe:nth-child(4)  { animation-delay: 0.2s; }
-.stripes-bg .stripe:nth-child(5)  { animation-delay: 0.25s; }
-.stripes-bg .stripe:nth-child(6)  { animation-delay: 0.3s; }
-.stripes-bg .stripe:nth-child(7)  { animation-delay: 0.35s; }
-.stripes-bg .stripe:nth-child(8)  { animation-delay: 0.4s; }
-.stripes-bg .stripe:nth-child(9)  { animation-delay: 0.45s; }
-.stripes-bg .stripe:nth-child(10) { animation-delay: 0.5s; }
-.stripes-bg .stripe:nth-child(11) { animation-delay: 0.55s; }
-.stripes-bg .stripe:nth-child(12) { animation-delay: 0.6s; }
-.stripes-bg .stripe:nth-child(13) { animation-delay: 0.65s; }
-.stripes-bg .stripe:nth-child(14) { animation-delay: 0.7s; }
-@keyframes stripeInDown {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(0); }
-}
-@keyframes stripeInUp {
-  0%   { transform: translateY(100%); }
-  100% { transform: translateY(0); }
-}
-
-.stripes-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: rgba(61, 20, 40, 0.18);
-  opacity: 0;
-  animation: overlayFadeIn 1s ease 1.8s forwards;
-}
-
-body > *:not(.stripes-bg):not(.stripes-overlay) {
-  position: relative;
-  z-index: 2;
-}
+body > * { position: relative; z-index: 2; }
 
 /* ═══ NAV ═══ */
 nav {
@@ -155,31 +96,6 @@ nav .links a {
 }
 nav .links a:hover { opacity: 0.5; }
 
-nav .steden {
-  display: flex;
-  gap: 0;
-  border: 1px solid var(--white);
-  border-radius: 20px;
-  overflow: hidden;
-}
-nav .steden a {
-  color: var(--white);
-  text-decoration: none;
-  font-size: 0.66rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 500;
-  padding: 0.42rem 0.85rem;
-  white-space: nowrap;
-  transition: background 0.25s, color 0.25s;
-}
-nav .steden a[aria-current="true"] {
-  background: var(--white);
-  color: var(--black);
-}
-@media (max-width: 600px) {
-  nav .steden a { font-size: 0.58rem; padding: 0.4rem 0.6rem; letter-spacing: 0.08em; }
-}
 nav .lang-kort { display: none; }
 @media (max-width: 600px) {
   /* De nav draagt op mobiel logo, stad en taal; alles krijgt minder ruimte
@@ -189,8 +105,6 @@ nav .lang-kort { display: none; }
   nav { padding: 0.85rem 0.9rem; gap: 0.5rem; flex-wrap: wrap; row-gap: 0.55rem; }
   nav .logo { order: 1; font-size: 1.1rem; letter-spacing: 0.1em; white-space: nowrap; }
   nav .lang-switch { order: 2; padding: 0.45rem 0.7rem; letter-spacing: 0.08em; }
-  nav .steden { order: 3; flex-basis: 100%; }
-  nav .steden a { flex: 1; text-align: center; font-size: 0.62rem; padding: 0.45rem 0.4rem; letter-spacing: 0.1em; }
   nav .lang-lang { display: none; }
   nav .lang-kort { display: inline; }
 }
@@ -213,6 +127,7 @@ nav .lang-switch:hover { opacity: 0.55; }
 }
 /* ═══ HERO ═══ */
 .hero {
+  background: var(--black);
   min-height: 100vh;
   min-height: 100svh;
   animation: fadeIn 0.8s ease 1.5s both;
@@ -283,7 +198,7 @@ nav .lang-switch:hover { opacity: 0.55; }
 .hero .sub {
   margin-top: 2rem;
   font-size: 1.1rem;
-  color: #3a2a30;
+  color: var(--cream);
   max-width: 400px;
   line-height: 1.6;
 }
@@ -295,8 +210,8 @@ nav .lang-switch:hover { opacity: 0.55; }
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #3a2a30;
-  opacity: 0.65;
+  color: var(--cream);
+  opacity: 0.75;
   font-weight: 500;
 }
 .hero .updated::before {
@@ -304,7 +219,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--coral);
+  background: var(--amber);
 }
 .hero .scroll-hint {
   position: absolute;
@@ -315,7 +230,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   gap: 0.4rem;
   text-decoration: none;
   cursor: pointer;
-  color: var(--olive);
+  color: var(--cream);
   animation: pulse 2s infinite;
 }
 .hero .scroll-hint svg {
@@ -342,21 +257,11 @@ nav .lang-switch:hover { opacity: 0.55; }
 
 /* ═══ STRIPE BAND MARQUEE ═══ */
 .stripe-band {
+  background: var(--blue);
   height: 90px;
   overflow: hidden;
   position: relative;
 }
-.stripe-band .band-inner {
-  display: flex;
-  height: 100%;
-  width: 200%;
-}
-.stripe-band .band-stripe {
-  flex: 0 0 calc(100% / 28);
-  height: 100%;
-}
-.stripe-band .band-stripe:nth-child(odd)  { background: var(--blue); }
-.stripe-band .band-stripe:nth-child(even) { background: var(--stripe-white); }
 .stripe-band .band-text {
   position: absolute;
   inset: 0;
@@ -391,7 +296,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   align-items: flex-end;
   gap: 0.5rem;
   margin-bottom: 0.4rem;
-  color: var(--olive);
+  color: var(--cream);
   font-size: 0.85rem;
   font-style: italic;
   font-weight: 300;
@@ -1005,63 +910,6 @@ nav .lang-switch:hover { opacity: 0.55; }
   transform: rotate(360deg);
 }
 
-/* ═══ HERO-AFBEELDING ═══
-   Wordt pas actief als hero-note.jpg bestaat; zonder dat bestand blijft de
-   hero precies zoals hij was, met de CSS-strepen.
-
-   De foto krijgt het eerste scherm helemaal voor zich, de tekst staat er
-   direct onder op groen. Tekst over de foto leggen werkt niet: het briefje
-   is staand en vult vrijwel het hele beeld, dus elke regel landt op het
-   lichte papier en valt weg. */
-html.has-hero-image .stripes-bg,
-html.has-hero-image .stripes-overlay { display: none; }
-html.has-hero-image .hero {
-  background: var(--black);
-  min-height: 0;
-  justify-content: flex-start;
-  padding: 0 0 clamp(3rem, 6vw, 4.5rem);
-}
-html.has-hero-image .hero::before {
-  content: '';
-  align-self: stretch;
-  height: 74svh;
-  background-image: url('../hero-note.jpg');
-  background-size: cover;
-  /* Op breede schermen snijdt 'cover' boven en onder weg; centreren houdt
-     het handschrift in beeld. */
-  background-position: center 50%;
-  background-repeat: no-repeat;
-  margin-bottom: clamp(1.8rem, 4vw, 2.8rem);
-}
-html.has-hero-image .note-card,
-html.has-hero-image .note-tape { display: none; }
-/* De foto draagt het briefje zelf; de h1 blijft voor screenreaders. */
-html.has-hero-image .hero h1 {
-  position: absolute;
-  width: 1px; height: 1px;
-  margin: -1px; padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-html.has-hero-image .hero .sub,
-html.has-hero-image .hero .updated { color: var(--cream); }
-html.has-hero-image .hero .sub { margin-top: 0; padding: 0 1.6rem; }
-html.has-hero-image .hero .updated { opacity: 0.8; }
-html.has-hero-image .hero .scroll-hint,
-html.has-hero-image .spotify-hint { color: var(--cream); }
-html.has-hero-image .spotify-hint svg { stroke: var(--cream); }
-html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
-@media (max-width: 600px) {
-  /* Op een telefoon mag de foto bijna het hele scherm hebben. */
-  html.has-hero-image .hero::before { height: 84svh; background-position: center top; }
-  html.has-hero-image .hero .sub { font-size: 0.95rem; }
-  html.has-hero-image .hero-spotify { margin-top: 1.4rem; max-width: 300px; }
-  /* Dit schuine zinnetje botste met het handschrift op het briefje. */
-  html.has-hero-image .spotify-hint { display: none; }
-}
-
 /* ═══ SFEERFOTO ═══ */
 .photo-band {
   margin: clamp(2rem, 6vw, 4.5rem) 0 0;
@@ -1186,11 +1034,6 @@ html.has-hero-image .hero .scroll-hint { position: static; margin-top: 1.6rem; }
 /* ═══ SCROLL-GEDREVEN BEWEGING ═══
    De variabelen worden vanuit JS gezet; alleen transform, dus de browser
    hoeft niets opnieuw te tekenen. */
-html.has-hero-image .hero::before {
-  transform: translate3d(0, var(--hero-y, 0px), 0) scale(var(--hero-s, 1));
-  transform-origin: center 30%;
-  will-change: transform;
-}
 .stripe-band .band-text {
   transform: translate3d(var(--band-x, 0px), 0, 0);
 }
@@ -1198,7 +1041,6 @@ html.has-hero-image .hero::before {
 @media (prefers-reduced-motion: reduce) {
   .grain { animation: none !important; }
   .masker > span { transform: none !important; transition: none !important; }
-  html.has-hero-image .hero::before { transform: none !important; }
   .stripe-band .band-text { transform: none !important; }
 }
 
@@ -1443,22 +1285,10 @@ html.has-hero-image .hero::before {
 </head>
 <body>
 
-<script>
-// Zet de hero-afbeelding aan zodra hero-note.jpg geladen is; ontbreekt het
-// bestand, dan blijft de hero met CSS-strepen ongemoeid.
-(function () {
-  var img = new Image();
-  img.onload = function () { document.documentElement.classList.add('has-hero-image'); };
-  img.src = '../hero-note.jpg';
-})();
-</script>
-
 <div class="grain" aria-hidden="true"></div>
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- ═══ STRIPES ACHTERGROND ═══ -->
-<div class="stripes-bg" id="stripesBg"></div>
-<div class="stripes-overlay" id="stripesOverlay"></div>
 
 <!-- ═══ NAV ═══ -->
 <nav>
@@ -1468,10 +1298,6 @@ html.has-hero-image .hero::before {
     <a href="duo.html">Swipe &amp; Dine</a>
     <a href="#kaart">Map</a>
     <a href="#plekken">Places</a>
-  </div>
-  <div class="steden" id="steden">
-    <a href="?stad=amsterdam" data-stad="amsterdam">Amsterdam</a>
-    <a href="?stad=xabia" data-stad="xabia">X&agrave;bia</a>
   </div>
   <a class="lang-switch" href="../" hreflang="nl" lang="nl"><span class="lang-lang">Nederlands</span><span class="lang-kort">NL</span></a>
 </nav>
@@ -1506,9 +1332,8 @@ html.has-hero-image .hero::before {
 
 <!-- ═══ STRIPE BAND WITH SPOTIFY ═══ -->
 <div class="stripe-band">
-  <div class="band-inner" id="bandInner1"></div>
   <div class="band-text">
-    <span id="bandTekst"></span>
+    <span>EAT &nbsp;&middot;&nbsp; DRINK &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; EAT &nbsp;&middot;&nbsp; DRINK &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; EAT &nbsp;&middot;&nbsp; DRINK &nbsp;&middot;&nbsp; AMSTERDAM &nbsp;&middot;&nbsp; </span>
   </div>
 </div>
 
@@ -1633,82 +1458,42 @@ function slowScroll(target) {
   requestAnimationFrame(step);
 }
 
-// ═══ STAD ═══
-// Twee steden in één pagina; de keuze staat in de URL zodat je hem kunt delen.
-const steden = ['amsterdam', 'xabia'];
-const stad = (() => {
-  const uit = new URLSearchParams(location.search).get('stad');
-  if (steden.includes(uit)) { try { localStorage.setItem('stad', uit); } catch (e) {} return uit; }
-  try { const bewaard = localStorage.getItem('stad'); if (steden.includes(bewaard)) return bewaard; } catch (e) {}
-  return 'amsterdam';
-})();
-
 // ═══ ANECDOTES ═══
-const weetjes = {
-  amsterdam: [
-  "The Jordaan is not named after the river Jordan, but after a 17th-century cheese merchant called Hendrik de Jordaan who opened the first shop there.",
-  "Amsterdam has more bridges than Venice, though the city officially counts only 1,281 because anything under three metres does not make the list.",
-  "The most crooked canal houses did not sink that way. They were built leaning forward on purpose, so residents could hoist furniture in through the windows.",
-  "The word 'gezellig' was officially declared untranslatable in 1978 by the Royal Netherlands Academy of Arts and Sciences.",
-  "Amsterdam's first espresso bar opened on the Zeedijk in 1957 and accidentally served filter coffee with foamed milk, which they called 'a wrong cup'. The name stuck.",
-  "The Amstel is technically not a river but a tidal channel. Amsterdammers refuse to accept this.",
-  "In the 18th century it was illegal to whistle on the canals after midnight. The law has never been formally repealed.",
-  "The average Amsterdammer orders food 3.2 times a week, but will tell you in conversation that they always cook.",
-  "The Vondelpark was originally called 'New Park' but was renamed because nobody could remember it.",
-  "The colour of Amsterdam's street bricks is no accident. They are fired at 1,180 degrees specifically for that shade of dark red.",
-  "There are more coffee places per square kilometre in De Pijp than in all of Milan. This has never actually been researched.",
-  "In Oud-Zuid it has been socially unacceptable since 2019 to order a flat white without first mentioning that you just came from padel.",
-  "People in Oost claim their neighbourhood is 'the new centre'. The centre disagrees. Oost is not clever enough to understand this either.",
-  "In De Pijp every new place that opens is automatically called a hidden gem, even when there is already a 45-minute queue outside.",
-  "Research shows that 87% of everyone who says 'I know a nice little place' means exactly the same restaurant.",
-  "Oost is the only neighbourhood where you walk fifteen minutes for a decent bar and then call that character.",
-  "In the Jordaan it is impossible to walk into a brown cafe without someone saying 'I have been coming here for years'. On average that turns out to be 8 months.",
-  "People from Oost say 'it is only ten minutes by bike to De Pijp'. With a headwind it is 25 minutes and two existential crises.",
-  "Oost does not even have a yoga studio. Not even yoga studios want to be there.",
-  "Noord is officially Amsterdam, but the ferry feels like a border crossing. Residents call that the charm. Everyone else just calls it far.",
-  "Living in Noord is the Amsterdam way of saying you live in Amsterdam while actually living in Zaandam, but with a cooler postcode.",
-  "People move to Noord 'for the space'. After two winters of crossing on the ferry in the rain, they move back to a 40m2 studio in West.",
-  "Noord residents call themselves pioneers. The rest of Amsterdam calls them people who could not find a house on the right side of the IJ.",
-  "The Rivierenbuurt is De Pijp for people who find De Pijp too expensive but will never say so out loud.",
-  "Residents of the Rivierenbuurt give their location as 'near De Pijp' by default. It is not near De Pijp.",
-  "The canals were dug clockwise in the 17th century so the water would flow naturally towards the IJ. It still works to this day.",
-  "The Concertgebouw deliberately has no air conditioning, because in 1888 the acoustics were tuned to a hall temperature of exactly 19 degrees.",
-  "The red shutters you see on many canal houses are not decorative. They were slammed shut as a warning that the water was rising.",
-  "The Westertoren clock deliberately runs two minutes fast. This was set in 1681 so churchgoers would never be late.",
-  "The Magere Brug is whitewashed by hand twice a year by the same family that has done it since 1904.",
-  "The Rijksmuseum is positioned so precisely that on King's Day the sun falls through the middle window of the Night Watch gallery.",
-  "The ferry to Noord has been free since 1924 because an alderman accidentally tabled the wrong motion. Nobody has ever reversed it.",
-  "Streets in the Jordaan were originally named after flowers. The Rozenstraat is the only one that kept its original name.",
-  ],
-  xabia: [
-    "Nobody shows off in Xàbia. Buy a Lamborghini here and you park it in the garage and tell no one. In Marbella it is the other way round, and there they call that personality.",
-    "Xàbia has no high-rise. That is not an accident but policy: in the seventies the council decided you can look at Benidorm perfectly well from a distance.",
-    "There is not a single place in Xàbia where anything is still happening at four in the morning. Residents call that peace. Lloret de Mar calls it a missed opportunity.",
-    "If someone in Xàbia shows you their watch, they are showing you the time.",
-    "In Marbella you order a bottle to show that you can pay for it. In Xàbia you order a bottle because you are thirsty and it happens to be a good one.",
-    "You can spot a Xàbia resident by the car: clean, twelve years old and fully paid off.",
-    "The most expensive house in Xàbia cannot be seen from the road. That is the point.",
-    "Lloret de Mar has more Dutch people per square metre. Xàbia keeps them longer.",
-    "Benidorm is an hour's drive. Everyone in Xàbia knows this to the minute, because it is the answer to why they moved here.",
-    "The beach places on the Arenal have no doorman, no guest list and no table minimum. Here that counts as an amenity.",
-    "Anyone who says they are going to the Costa Blanca means Benidorm. Anyone who says they are going to Xàbia has been before.",
-    "Not one place in the old town has a menu in six languages. That is not a coincidence, it is the only entry requirement.",
-    "The most expensive car in the Portitxol car park usually belongs to someone who has been coming for twenty years with the same towel.",
-    "Nobody dances on the tables in Xàbia. People eat at the tables, which residents maintain was the original idea.",
-    "A Dutch person in Xàbia never says they live in Spain. They say they have 'a little place'.",
-    "In Xàbia it is rude to ask what someone does for a living. Not out of discretion, but because the answer is usually 'nothing anymore'.",
-    "The council once considered a cable car up the Montgó. The plan died when someone pointed out that it would put people on the Montgó.",
-    "The WHO is said to have once named Jávea one of the healthiest microclimates in the world. Nobody can find the source, everybody quotes it.",
-    "The Montgó is locally known as 'the elephant' because from a distance it looks like a sleeping elephant. People who see it up close keep insisting on it anyway.",
-    "Xàbia and Jávea are the same place. Which of the two names you use says more about you than about the place.",
-    "The levante brings rain, the tramuntana brings cold, and the ponent brings people who tell you it used to be better.",
-    "Gata de Gorgos is known for guitar making and wicker baskets. Everyone who drives through buys exactly one of the two and never uses it.",
-    "Every Dutch person in Xàbia knows a better place than the one you are sitting in. They never go there themselves.",
-    "It takes a newcomer roughly two summers to stop saying that it is 'quite warm'.",
-    "If you want a table by the water in the harbour you need to be there at seven. At five past seven it is too late, and it stays that way all season.",
-  ],
-};
-const anecdotes = weetjes[stad];
+const anecdotes = [
+"The Jordaan is not named after the river Jordan, but after a 17th-century cheese merchant called Hendrik de Jordaan who opened the first shop there.",
+"Amsterdam has more bridges than Venice, though the city officially counts only 1,281 because anything under three metres does not make the list.",
+"The most crooked canal houses did not sink that way. They were built leaning forward on purpose, so residents could hoist furniture in through the windows.",
+"The word 'gezellig' was officially declared untranslatable in 1978 by the Royal Netherlands Academy of Arts and Sciences.",
+"Amsterdam's first espresso bar opened on the Zeedijk in 1957 and accidentally served filter coffee with foamed milk, which they called 'a wrong cup'. The name stuck.",
+"The Amstel is technically not a river but a tidal channel. Amsterdammers refuse to accept this.",
+"In the 18th century it was illegal to whistle on the canals after midnight. The law has never been formally repealed.",
+"The average Amsterdammer orders food 3.2 times a week, but will tell you in conversation that they always cook.",
+"The Vondelpark was originally called 'New Park' but was renamed because nobody could remember it.",
+"The colour of Amsterdam's street bricks is no accident. They are fired at 1,180 degrees specifically for that shade of dark red.",
+"There are more coffee places per square kilometre in De Pijp than in all of Milan. This has never actually been researched.",
+"In Oud-Zuid it has been socially unacceptable since 2019 to order a flat white without first mentioning that you just came from padel.",
+"People in Oost claim their neighbourhood is 'the new centre'. The centre disagrees. Oost is not clever enough to understand this either.",
+"In De Pijp every new place that opens is automatically called a hidden gem, even when there is already a 45-minute queue outside.",
+"Research shows that 87% of everyone who says 'I know a nice little place' means exactly the same restaurant.",
+"Oost is the only neighbourhood where you walk fifteen minutes for a decent bar and then call that character.",
+"In the Jordaan it is impossible to walk into a brown cafe without someone saying 'I have been coming here for years'. On average that turns out to be 8 months.",
+"People from Oost say 'it is only ten minutes by bike to De Pijp'. With a headwind it is 25 minutes and two existential crises.",
+"Oost does not even have a yoga studio. Not even yoga studios want to be there.",
+"Noord is officially Amsterdam, but the ferry feels like a border crossing. Residents call that the charm. Everyone else just calls it far.",
+"Living in Noord is the Amsterdam way of saying you live in Amsterdam while actually living in Zaandam, but with a cooler postcode.",
+"People move to Noord 'for the space'. After two winters of crossing on the ferry in the rain, they move back to a 40m2 studio in West.",
+"Noord residents call themselves pioneers. The rest of Amsterdam calls them people who could not find a house on the right side of the IJ.",
+"The Rivierenbuurt is De Pijp for people who find De Pijp too expensive but will never say so out loud.",
+"Residents of the Rivierenbuurt give their location as 'near De Pijp' by default. It is not near De Pijp.",
+"The canals were dug clockwise in the 17th century so the water would flow naturally towards the IJ. It still works to this day.",
+"The Concertgebouw deliberately has no air conditioning, because in 1888 the acoustics were tuned to a hall temperature of exactly 19 degrees.",
+"The red shutters you see on many canal houses are not decorative. They were slammed shut as a warning that the water was rising.",
+"The Westertoren clock deliberately runs two minutes fast. This was set in 1681 so churchgoers would never be late.",
+"The Magere Brug is whitewashed by hand twice a year by the same family that has done it since 1904.",
+"The Rijksmuseum is positioned so precisely that on King's Day the sun falls through the middle window of the Night Watch gallery.",
+"The ferry to Noord has been free since 1924 because an alderman accidentally tabled the wrong motion. Nobody has ever reversed it.",
+"Streets in the Jordaan were originally named after flowers. The Rozenstraat is the only one that kept its original name.",
+];
 let lastAnecdoteIndex = -1;
 function showRandomAnecdote() {
   let idx;
@@ -1727,88 +1512,8 @@ document.getElementById('anecdoteBtn').addEventListener('click', showRandomAnecd
 
 <script>
 // ═══ GENERATE STRIPES ═══
-const stripesBg = document.getElementById('stripesBg');
-for (let i = 0; i < 14; i++) {
-  const s = document.createElement('div');
-  s.className = 'stripe';
-  s.style.left = `${(i / 14) * 100}%`;
-  s.dataset.speed = (0.08 + Math.random() * 0.06).toFixed(3);
-  s.dataset.dir = i % 2 === 0 ? '1' : '-1';
-  stripesBg.appendChild(s);
-}
-const bandEl = document.getElementById('bandInner1');
-for (let i = 0; i < 28; i++) {
-  const s = document.createElement('div');
-  s.className = 'band-stripe';
-  bandEl.appendChild(s);
-}
-
-// ═══ SCROLL PARALLAX ═══
-const overlay = document.getElementById('stripesOverlay');
-let ticking = false;
-function onScroll() {
-  if (ticking) return;
-  ticking = true;
-  requestAnimationFrame(() => {
-    const scrollY = window.scrollY;
-    const vh = window.innerHeight;
-    stripesBg.querySelectorAll('.stripe').forEach(s => {
-      const speed = parseFloat(s.dataset.speed);
-      const dir = parseFloat(s.dataset.dir);
-      s.style.transform = `translateY(${scrollY * speed * dir}px)`;
-    });
-    const heroEnd = vh * 0.8;
-    if (scrollY < heroEnd) {
-      overlay.style.opacity = 0.1 + (scrollY / heroEnd) * 0.2;
-    } else {
-      overlay.style.opacity = 0.3;
-    }
-    ticking = false;
-  });
-}
-// Wait for intro animation to finish before enabling parallax
-let introComplete = false;
-setTimeout(() => {
-  introComplete = true;
-  // Remove CSS animation so JS can take over transforms
-  stripesBg.querySelectorAll('.stripe').forEach(s => {
-    s.style.animation = 'none';
-    s.style.transform = 'translateY(0)';
-  });
-  onScroll();
-}, 2000);
-window.addEventListener('scroll', () => {
-  if (introComplete) onScroll();
-}, { passive: true });
-
-document.documentElement.dataset.stad = stad;
-
-// Stadsafhankelijke teksten en links
-(() => {
-  const info = {
-    amsterdam: { band: 'EAT  \u00b7  DRINK  \u00b7  AMSTERDAM', titel: '', desc: '' },
-    xabia: { band: 'EAT  \u00b7  DRINK  \u00b7  X\u00c0BIA',
-             titel: '(W)ETEN WAAR. \u2014 X\u00e0bia food guide',
-             desc: 'Eating and drinking in X\u00e0bia and J\u00e1vea. Our own list, by area.' },
-  };
-  const i = info[stad];
-  const band = document.getElementById('bandTekst');
-  if (band) band.textContent = (i.band + '  \u00b7  ').repeat(3);
-  document.querySelectorAll('#steden a').forEach(a => {
-    if (a.dataset.stad === stad) a.setAttribute('aria-current', 'true');
-  });
-  // De taalknop houdt de gekozen stad vast
-  const taal = document.querySelector('nav .lang-switch');
-  if (taal && stad !== 'amsterdam') taal.setAttribute('href', taal.getAttribute('href') + '?stad=' + stad);
-  if (stad !== 'amsterdam') {
-    document.title = i.titel;
-    const d = document.querySelector('meta[name="description"]');
-    if (d) d.setAttribute('content', i.desc);
-  }
-})();
-
 // ═══ PLACES DATA ═══
-const plekkenAmsterdam = [
+const places = [
   { name:"Caff\u00e8 Pico", area:"De Pijp", fav:true, note:"Good food, relaxed vibe", lat:52.3552,lng:4.8900, web:"https://www.caffepico.com/", tags:["restaurant"] },
   { name:"Peps", area:"West", hearts:0, note:"Happy hour 4-6pm, always a good time", lat:52.3675,lng:4.8716, web:"https://www.peps-amsterdam.nl", tags:["tapas","happy hour"] },
   { name:"Arie", area:"De Pijp", fav:true, note:"Good food, good drinks", lat:52.3567,lng:4.8905, web:"https://www.arie-amsterdam.nl", tags:["restaurant","bar"] },
@@ -1868,29 +1573,8 @@ const plekkenAmsterdam = [
   { name:"Pazzi", area:"Jordaan", hearts:0, note:"Wood-fired pizza, thin and crisp", lat:52.3719,lng:4.8802, web:"", tags:["italiaans","pizza"] },
 ];
 
-const plekkenXabia = [
-  { name:"Mira Luna", area:"Harbour", hearts:0, note:"Good lunch by the harbour", lat:38.7935,lng:0.1826, web:"https://www.facebook.com/Mira.Luna.Javea/", tags:["lunch","terras"] },
-  { name:"Lulu Beachclub", area:"Other", hearts:0, note:"Friday afternoon drinks. Mediterranean with a Japanese twist", lat:38.7660,lng:0.1930, web:"https://lulubeachclub.com/", tags:["strandclub","borrel","restaurant"] },
-  { name:"Montgo di Bongo", area:"Arenal", hearts:0, note:"A drink by the sea. Only open in season", lat:38.7735,lng:0.1866, web:"https://montgodibongo.com/", tags:["bar","terras"] },
-  { name:"Restaurante A Bordo", area:"Harbour", hearts:0, note:"Fish by the harbour, and good rice dishes", lat:38.7955,lng:0.1856, web:"https://www.abordorestaurante.com/en/", tags:["vis","rijst","restaurant"] },
-  { name:"A La Mar", area:"Harbour", hearts:0, note:"Breakfast on the fishing quay", lat:38.7947,lng:0.1841, web:"https://www.instagram.com/alamarjavea/", tags:["ontbijt","terras"] },
-  { name:"Cocktail Bar La Esquina", area:"Harbour", hearts:0, note:"Cocktails by the harbour", lat:38.7929,lng:0.1818, web:"https://www.facebook.com/esquinajavea/", tags:["cocktails","bar"] },
-  { name:"Amantes de Moraira", area:"Outside X\u00e0bia", hearts:0, note:"Often live music. Reckon on about 40 euro a head", lat:38.6935,lng:0.1470, web:"https://www.facebook.com/amantesdemoraira/", tags:["restaurant","\u20ac\u20ac\u20ac"] },
-  { name:"Cala Clemence", area:"Other", hearts:0, note:"Daytime weekend party, on the Cala Portitxol", lat:38.7495,lng:0.2210, web:"https://calaclemence.com/", tags:["strandclub","terras"] },
-  { name:"La Trastienda Wine Bar", area:"Old town", fav:true, note:"Our favourite. Opens at 19:00, whoever is there first gets the outside tables", lat:38.7899,lng:0.1662, web:"https://www.latrastiendajavea.es/en/", tags:["wijn","bar"] },
-  { name:"Bar Tal Cual", area:"Old town", hearts:0, note:"", lat:38.7905,lng:0.1671, web:"https://www.bartalcual.com/", tags:["bar","tapas"] },
-  { name:"La Siesta", area:"Arenal", hearts:0, note:"Open daily from 9:00 until late", lat:38.7742,lng:0.1858, web:"https://siestajavea.com/", tags:["bar","terras"] },
-  { name:"9\u2026donde Fabrizio", area:"Old town", hearts:0, note:"Italian-Mediterranean in the old town", lat:38.7893,lng:0.1650, web:"https://www.instagram.com/9dondefabrizio/", tags:["italiaans","restaurant"] },
-  { name:"Bar Mercat", area:"Old town", hearts:0, note:"In the market hall since 1968", lat:38.7902,lng:0.1645, web:"https://www.barmercat.com/es/", tags:["bar","lunch"] },
-  { name:"La Bambula", area:"Arenal", hearts:0, note:"From morning until late", lat:38.7729,lng:0.1880, web:"https://labambula.es/", tags:["bar","terras"] },
-  { name:"Vall de Cavall", area:"Outside X\u00e0bia", fav:true, note:"Our favourite. Twenty minutes drive, and booking really is necessary", lat:38.7620,lng:0.0980, web:"https://valldecavall.es/en/", tags:["restaurant","wijn"] },
-  { name:"Temblor", area:"Old town", hearts:0, note:"The original location, in the casco antiguo", lat:38.7896,lng:0.1655, web:"https://www.instagram.com/temblor_javea/", tags:["bar","tapas"] },
-];
-
-const places = stad === 'xabia' ? plekkenXabia : plekkenAmsterdam;
-
 // ═══ MAP ═══
-const map = L.map('map', { scrollWheelZoom: false, attributionControl: false }).setView(stad === 'xabia' ? [38.785, 0.175] : [52.3676, 4.9041], 13);
+const map = L.map('map', { scrollWheelZoom: false, attributionControl: false }).setView([52.3676, 4.9041], 13);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   maxZoom: 18
 }).addTo(map);
@@ -1920,25 +1604,15 @@ map.fitBounds(bounds, { padding: [30, 30] });
 let activeArea = null;
 let activeTag = null;
 
-const wijkIndeling = {
-  amsterdam: {
-    'Jordaan': ['Jordaan'],
-    'De Pijp': ['De Pijp'],
-    'Zuid': ['Oud-Zuid', 'Vondelpark'],
-    'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt', 'Haarlemmerplein'],
-    'West': ['West'],
-    'Oost': ['Oost'],
-    'Noord': ['Noord'],
-  },
-  xabia: {
-    'Harbour': ['Harbour'],
-    'Old town': ['Old town'],
-    'Arenal': ['Arenal'],
-    'Outside X\u00e0bia': ['Outside X\u00e0bia'],
-    'Other': ['Other'],
-  },
+const areaGroups = {
+  'Jordaan': ['Jordaan'],
+  'De Pijp': ['De Pijp'],
+  'Zuid': ['Oud-Zuid', 'Vondelpark'],
+  'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt', 'Haarlemmerplein'],
+  'West': ['West'],
+  'Oost': ['Oost'],
+  'Noord': ['Noord'],
 };
-const areaGroups = wijkIndeling[stad];
 const overigAreas = [...new Set(places.map(p => p.area))].filter(a => !Object.values(areaGroups).flat().includes(a));
 // Areas zonder eigen wijk vallen terug op deze groep, zonder een
 // bestaande groep met dezelfde naam te overschrijven.
@@ -1961,14 +1635,14 @@ wijkLabels.forEach(label => {
 });
 
 const allTags = [...new Set(places.flatMap(p => p.tags))].sort();
-const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wine', italiaans:'Italian', frans:'French', vis:'Fish', oesters:'Oysters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terrace', borrel:'Drinks', ontbijt:'Breakfast', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Cheese', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Smart', aziatisch:'Asian', bistro:'Bistro', 'bruin caf\u00e9':'Brown cafe', caf\u00e9:'Cafe', fondue:'Fondue', indonesisch:'Indonesian', industrieel:'Industrial', pizza:'Pizza', spaans:'Spanish', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Swiss', 'natural wine':'Natural wine', strandclub:'Beach club', rijst:'Rice', burger:'Burger' };
+const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wine', italiaans:'Italian', frans:'French', vis:'Fish', oesters:'Oysters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terrace', borrel:'Drinks', ontbijt:'Breakfast', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Cheese', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Smart', aziatisch:'Asian', bistro:'Bistro', 'bruin caf\u00e9':'Brown cafe', caf\u00e9:'Cafe', fondue:'Fondue', indonesisch:'Indonesian', industrieel:'Industrial', pizza:'Pizza', spaans:'Spanish', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Swiss', 'natural wine':'Natural wine', burger:'Burger' };
 const filtersEl = document.getElementById('filters');
 const allBtn = document.createElement('button');
 allBtn.textContent = 'All';
 allBtn.className = 'active';
 allBtn.onclick = () => { activeTag = null; applyFilters(); };
 filtersEl.appendChild(allBtn);
-const showTags = ['restaurant','bar','italiaans','frans','tapas','wijn','oesters','vis','cocktails','brunch','lunch','terras','steak','ontbijt','happy hour','strandclub','rijst'];
+const showTags = ['restaurant','bar','italiaans','frans','tapas','wijn','oesters','vis','cocktails','brunch','lunch','terras','steak','ontbijt','happy hour'];
 showTags.forEach(tag => {
   if (!allTags.includes(tag)) return;
   const btn = document.createElement('button');
@@ -2280,13 +1954,6 @@ if (!reduceMotion) {
     vorigeY = y;
 
     // De foto blijft iets achter en zoomt heel licht in: diepte zonder truc.
-    // De klasse verschijnt pas als de foto geladen is, dus elke keer kijken.
-    if (hero && document.documentElement.classList.contains('has-hero-image')) {
-      const h = hero.offsetHeight || 1;
-      const p = Math.min(Math.max(y / h, 0), 1);
-      hero.style.setProperty('--hero-y', (p * 90).toFixed(1) + 'px');
-      hero.style.setProperty('--hero-s', (1 + p * 0.06).toFixed(4));
-    }
     // De band schuift mee met de richting waarin je scrollt.
     if (band) {
       bandX = Math.max(-90, Math.min(90, bandX - delta * 0.35));

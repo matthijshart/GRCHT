@@ -19,7 +19,7 @@
 <link rel="apple-touch-icon" href="https://www.wetenwaar.nl/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='4' height='32' x='0' fill='%236b2a3a'/><rect width='4' height='32' x='4' fill='%23e8ddd8'/><rect width='4' height='32' x='8' fill='%236b2a3a'/><rect width='4' height='32' x='12' fill='%23e8ddd8'/><rect width='4' height='32' x='16' fill='%236b2a3a'/><rect width='4' height='32' x='20' fill='%23e8ddd8'/><rect width='4' height='32' x='24' fill='%236b2a3a'/><rect width='4' height='32' x='28' fill='%23e8ddd8'/></svg>">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233d1428'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Helvetica,Arial,sans-serif' font-weight='700' font-size='17' fill='%23efe7e2'%3EW%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
@@ -53,54 +53,6 @@ body {
   min-height: 100svh;
 }
 ::selection { background: var(--olive); color: var(--white); }
-
-/* ═══ STRIPES BACKGROUND ═══ */
-.stripes-bg {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.stripes-bg .stripe {
-  position: absolute;
-  width: calc(100% / 14);
-  height: 100%;
-  will-change: transform;
-  transform: translateY(-100%);
-}
-.stripes-bg .stripe:nth-child(odd) {
-  background: var(--blue);
-  opacity: 0.12;
-  animation: stripeInDown 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.stripes-bg .stripe:nth-child(even) {
-  background: var(--stripe-white);
-  opacity: 0.5;
-  animation: stripeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.stripes-bg .stripe:nth-child(1)  { left: calc(0 * 100% / 14); animation-delay: 0.05s; }
-.stripes-bg .stripe:nth-child(2)  { left: calc(1 * 100% / 14); animation-delay: 0.1s; }
-.stripes-bg .stripe:nth-child(3)  { left: calc(2 * 100% / 14); animation-delay: 0.15s; }
-.stripes-bg .stripe:nth-child(4)  { left: calc(3 * 100% / 14); animation-delay: 0.2s; }
-.stripes-bg .stripe:nth-child(5)  { left: calc(4 * 100% / 14); animation-delay: 0.25s; }
-.stripes-bg .stripe:nth-child(6)  { left: calc(5 * 100% / 14); animation-delay: 0.3s; }
-.stripes-bg .stripe:nth-child(7)  { left: calc(6 * 100% / 14); animation-delay: 0.35s; }
-.stripes-bg .stripe:nth-child(8)  { left: calc(7 * 100% / 14); animation-delay: 0.4s; }
-.stripes-bg .stripe:nth-child(9)  { left: calc(8 * 100% / 14); animation-delay: 0.45s; }
-.stripes-bg .stripe:nth-child(10) { left: calc(9 * 100% / 14); animation-delay: 0.5s; }
-.stripes-bg .stripe:nth-child(11) { left: calc(10 * 100% / 14); animation-delay: 0.55s; }
-.stripes-bg .stripe:nth-child(12) { left: calc(11 * 100% / 14); animation-delay: 0.6s; }
-.stripes-bg .stripe:nth-child(13) { left: calc(12 * 100% / 14); animation-delay: 0.65s; }
-.stripes-bg .stripe:nth-child(14) { left: calc(13 * 100% / 14); animation-delay: 0.7s; }
-@keyframes stripeInDown {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(0); }
-}
-@keyframes stripeInUp {
-  0%   { transform: translateY(100%); }
-  100% { transform: translateY(0); }
-}
 
 /* ═══ LAYOUT ═══ */
 .app {
@@ -647,9 +599,6 @@ body {
 </head>
 <body>
 
-<!-- Striped background -->
-<div class="stripes-bg">
-  <div class="stripe"></div><div class="stripe"></div>
   <div class="stripe"></div><div class="stripe"></div>
   <div class="stripe"></div><div class="stripe"></div>
   <div class="stripe"></div><div class="stripe"></div>
