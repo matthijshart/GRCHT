@@ -643,7 +643,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   line-height: 0.9;
   margin-bottom: 0.4rem;
 }
-.spinner-title span { color: var(--coral); }
+.spinner-title .punt { color: var(--coral); }
 .spinner-sub {
   font-size: 0.95rem;
   color: var(--ink-mid);
@@ -841,6 +841,67 @@ nav .lang-switch:hover { opacity: 0.55; }
 .spin-result .result-retry:hover {
   background: var(--ink);
   color: var(--cream);
+}
+
+/* ═══ WIE ZIJN WIJ ═══ */
+.about-wrap {
+  background: var(--cream);
+  border-top: 1px solid #dccfc9;
+  padding: clamp(4rem, 9vw, 6.5rem) 1.5rem;
+  text-align: center;
+  position: relative;
+}
+.about-inner {
+  max-width: 560px;
+  margin: 0 auto;
+}
+.about-label {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin-bottom: 1.2rem;
+}
+.about-names {
+  font-family: 'Caveat', 'Bradley Hand', cursive;
+  font-size: clamp(2.2rem, 7vw, 3.2rem);
+  font-weight: 600;
+  color: #26356b;
+  line-height: 1;
+  display: inline-block;
+  transform: rotate(-1.5deg);
+  margin-bottom: 0.9rem;
+}
+.about-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 5.5vw, 3rem);
+  letter-spacing: 0.03em;
+  line-height: 0.95;
+  color: var(--ink);
+  margin-bottom: 1.8rem;
+}
+.about-title .punt { color: var(--coral); }
+.about-text p {
+  font-size: clamp(0.98rem, 2vw, 1.1rem);
+  color: var(--ink-mid);
+  line-height: 1.65;
+  font-weight: 300;
+  margin: 0 auto 1rem;
+  max-width: 48ch;
+}
+.about-text p:last-child {
+  margin-bottom: 0;
+  color: var(--ink);
+  font-weight: 400;
+}
+.about-text p:last-child::before {
+  content: '';
+  display: block;
+  width: 34px;
+  height: 2px;
+  background: var(--olive);
+  margin: 1.6rem auto;
 }
 
 /* ═══ ANECDOTE FOOTER ═══ */
@@ -1205,6 +1266,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   .stat .num { font-size: 2.2rem; }
   .swipe-banner { padding: 3.5rem 1.2rem; }
   .anecdote-wrap { padding: 3.5rem 1.2rem; }
+  .about-wrap { padding: 3.5rem 1.2rem; }
   .card { flex: 0 0 250px; }
   .carousel-header { padding: 0 0.6rem; }
   .carousel-track { padding: 0.3rem 0.6rem 1rem; }
@@ -1298,6 +1360,7 @@ nav .lang-switch:hover { opacity: 0.55; }
     <a href="duo.html">Swipe &amp; Dine</a>
     <a href="#kaart">Map</a>
     <a href="#plekken">Places</a>
+    <a href="#about">Who are we?</a>
   </div>
   <a class="lang-switch" href="../" hreflang="nl" lang="nl"><span class="lang-lang">Nederlands</span><span class="lang-kort">NL</span></a>
 </nav>
@@ -1383,10 +1446,24 @@ nav .lang-switch:hover { opacity: 0.55; }
     </div>
       </figure>
 
+  <!-- WHO ARE WE -->
+  <div class="about-wrap" id="about">
+    <div class="about-inner reveal">
+      <div class="about-label">Who are we?</div>
+      <div class="about-names">Felix &amp; Coco</div>
+      <div class="about-title">Tested, tasted &amp; approved<span class="punt">.</span></div>
+      <div class="about-text">
+        <p>We're Felix &amp; Coco, two 25-year-old Amsterdammers with a love for good food, good wine and lively hotspots.</p>
+        <p>From hidden gems to buzzing wine bars and the best restaurants: on (W)etenwaar we only share places we've been to ourselves.</p>
+        <p>No sponsored lists, just our personal favourites.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- GEEN IDEE SPINNER -->
   <div class="spinner-wrap" id="geen-idee">
     <div class="spinner-section reveal">
-      <div class="spinner-title">We will pick for you<span>.</span></div>
+      <div class="spinner-title">We will pick for you<span class="punt">.</span></div>
       <p class="spinner-sub">Tell us how many and where.</p>
       <div class="spinner-question">
         <div class="spinner-q-label">How many of you?</div>
@@ -1929,7 +2006,7 @@ observeReveals();
 // De tekst wordt in een extra span gezet zodat hij achter een rand vandaan
 // kan schuiven. In de opmaak blijft het gewoon een kop.
 if (!reduceMotion) {
-  document.querySelectorAll('.section-head h2, .spinner-title, .swipe-banner-title')
+  document.querySelectorAll('.section-head h2, .spinner-title, .swipe-banner-title, .about-title')
     .forEach(el => {
       const inhoud = el.innerHTML;
       el.innerHTML = '<span class="masker"><span>' + inhoud + '</span></span>';
