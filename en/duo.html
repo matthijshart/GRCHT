@@ -3,52 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>SWIPE & DINE — (W)ETEN WAAR.</title>
-<meta property="og:title" content="SWIPE & DINE — (W)ETEN WAAR.">
+<title>Swipe & Dine — (W)etenwaar.</title>
+<meta property="og:title" content="Swipe & Dine — (W)etenwaar.">
 <meta property="og:description" content="You both swipe. A match tells you where you are going.">
 <meta property="og:image" content="https://www.wetenwaar.nl/og-image-en.png">
 <meta property="og:url" content="https://www.wetenwaar.nl/en/duo.html">
 <meta name="description" content="You both swipe. A match tells you where you are going.">
 <link rel="canonical" href="https://www.wetenwaar.nl/en/duo.html">
-<meta property="og:site_name" content="(W)ETEN WAAR.">
+<meta property="og:site_name" content="(W)etenwaar.">
 <meta property="og:locale" content="en_GB">
 <meta property="og:locale:alternate" content="nl_NL">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="theme-color" content="#3d1428">
+<meta name="theme-color" content="#481A30">
 <link rel="apple-touch-icon" href="https://www.wetenwaar.nl/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233d1428'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Helvetica,Arial,sans-serif' font-weight='700' font-size='17' fill='%23efe7e2'%3EW%3C/text%3E%3C/svg%3E">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23481A30'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,Times New Roman,serif' font-weight='500' font-size='18' fill='%23F2E5D8'%3EW%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  /* Bordeaux: diep wijnpaars als donkere kleur, oudroze voor de strepen,
-     warm creme, en messing als enige warme accent. */
-  --black: #3d1428;
-  --ink: #4a1a30;
-  --ink-mid: #6e4656;
-  --cream: #efe7e2;
-  --white: #f7f2ee;
-  --stripe-white: #e8ddd8;
-  --gray: #7a6b6e;
-  --gray-light: #a89a9c;
-  --blue: #a97c82;
-  --olive: #6b2a3a;
-  --coral: #8a6a30;
-  --amber: #c9a45c;
-  --red: #4a1a30;
+  /* Huisstijl uit de referentiefoto: diep bordeaux, warm creme, oudroze en
+     een vleugje champagnegoud. Espresso voor lopende tekst. */
+  --black: #481A30;        /* deep burgundy: hero, nav, afsluiting */
+  --ink: #481A30;          /* koppen en donkere knoppen */
+  --text: #241A1C;         /* espresso: lopende tekst */
+  --ink-mid: #733A48;      /* wine red: secundaire tekst, hover */
+  --cream: #F2E5D8;        /* warm cream: achtergrond */
+  --white: #FAF6F0;        /* soft ivory: kaarten */
+  --line: #E2D2C3;         /* fijne randen */
+  --rose: #B48A8E;         /* oudroze accent */
+  --rose-soft: #E9D6CE;    /* oudroze, licht: chips en intro */
+  --gold: #C49A75;         /* champagnegoud: kleine details */
+  --gray: #7A6A66;
+  --gray-light: #A8978F;
+  --blue: #B48A8E;
+  --olive: #733A48;
+  --coral: #A67C52;        /* goud, donker genoeg voor tekst */
+  --amber: #C49A75;
+  --red: #733A48;
+  --font-head: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 html { scroll-behavior: auto; }
 body {
-  font-family: 'Outfit', sans-serif;
-  background: var(--cream);
-  color: var(--ink);
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--cream);
   overflow-x: hidden;
-  font-weight: 300;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
   min-height: 100vh;
   min-height: 100svh;
 }
@@ -72,22 +79,23 @@ body {
   align-items: center;
 }
 .top-bar a {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1rem;
-  letter-spacing: 0.15em;
-  color: var(--ink-mid);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--cream);
   text-decoration: none;
-  opacity: 0.6;
+  opacity: 0.7;
   transition: opacity 0.3s;
 }
 .top-bar a:hover { opacity: 1; }
 
 .top-bar { justify-content: space-between; }
 .top-bar .lang-switch {
-  border: 1px solid var(--ink-mid);
-  color: var(--ink-mid);
+  border: 1px solid var(--cream);
+  color: var(--cream);
   text-decoration: none;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.62rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -121,16 +129,19 @@ body {
 
 /* ═══ LANDING ═══ */
 .landing-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(4rem, 18vw, 10rem);
-  line-height: 0.9;
-  color: var(--coral);
-  letter-spacing: -0.02em;
+  font-family: var(--font-head);
+  font-size: clamp(3rem, 13vw, 6rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--cream);
+  letter-spacing: -0.01em;
 }
+.landing-title em { font-style: italic; font-weight: 400; color: var(--gold); }
 .landing-subtitle {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   font-size: 1rem;
-  color: var(--ink-mid);
+  color: var(--cream);
+  opacity: 0.8;
   max-width: 300px;
   line-height: 1.5;
 }
@@ -146,39 +157,45 @@ body {
   display: block;
   padding: 1rem 2rem;
   border: none;
-  border-radius: 60px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.4rem;
-  letter-spacing: 0.1em;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
   text-align: center;
 }
 .btn-primary {
-  background: var(--coral);
-  color: var(--white);
+  background: var(--white);
+  color: var(--ink);
 }
-.btn-primary:hover { background: var(--olive); transform: scale(1.03); }
+.btn-primary:hover { background: var(--cream); transform: scale(1.03); }
 .btn-primary:active { transform: scale(0.98); }
 .btn-secondary {
-  background: var(--ink);
+  background: transparent;
   color: var(--cream);
+  border: 1px solid rgba(242,229,216,0.6);
 }
-.btn-secondary:hover { background: var(--ink-mid); transform: scale(1.03); }
+.btn-secondary:hover { border-color: var(--cream); transform: scale(1.03); }
+.btn:focus-visible, .swipe-btn:focus-visible, .btn-share:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 .btn-secondary:active { transform: scale(0.98); }
 
 /* ═══ CREATE / JOIN ═══ */
 .session-code {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(5rem, 20vw, 9rem);
-  color: var(--coral);
-  letter-spacing: 0.15em;
+  font-family: var(--font-head);
+  font-size: clamp(4.5rem, 18vw, 8rem);
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 0.12em;
   line-height: 1;
 }
 .session-msg {
   font-size: 0.95rem;
-  color: var(--ink-mid);
+  color: var(--cream);
+  opacity: 0.8;
   margin-top: 0.5rem;
   line-height: 1.5;
 }
@@ -193,13 +210,13 @@ body {
   75%  { content: '...'; }
 }
 .code-input {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-head);
   font-size: 3rem;
   letter-spacing: 0.3em;
   text-align: center;
   width: 220px;
   padding: 0.5rem 1rem;
-  border: 3px solid var(--ink);
+  border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--white);
   color: var(--ink);
@@ -208,7 +225,7 @@ body {
   margin-top: 1.5rem;
   transition: border-color 0.2s;
 }
-.code-input:focus { border-color: var(--coral); }
+.code-input:focus { border-color: var(--gold); }
 .code-input::placeholder {
   color: var(--gray-light);
   letter-spacing: 0.3em;
@@ -218,7 +235,7 @@ body {
   max-width: 300px;
   margin: 1.5rem auto 0;
   padding: 0.8rem 1rem;
-  border: 1px solid var(--olive);
+  border: 1px solid var(--gold);
   border-radius: 12px;
   background: var(--white);
   color: var(--ink);
@@ -226,7 +243,7 @@ body {
   line-height: 1.5;
 }
 .error-msg {
-  color: var(--red);
+  color: var(--gold);
   font-size: 0.85rem;
   margin-top: 0.5rem;
   min-height: 1.2em;
@@ -235,7 +252,7 @@ body {
   font-size: 0.7rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--gray);
+  color: var(--gold);
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
@@ -243,14 +260,15 @@ body {
   margin-top: 1.5rem;
   background: none;
   border: none;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.85rem;
-  color: var(--gray);
+  color: var(--cream);
+  opacity: 0.7;
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.btn-back:hover { color: var(--ink); }
+.btn-back:hover { opacity: 1; }
 
 .share-row {
   margin-top: 1.5rem;
@@ -259,17 +277,19 @@ body {
 }
 .btn-share {
   padding: 0.6rem 1.2rem;
-  border: 2px solid var(--ink);
-  border-radius: 40px;
-  background: var(--white);
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.8rem;
+  border: 1px solid rgba(242,229,216,0.6);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
   font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s;
-  color: var(--ink);
+  color: var(--cream);
 }
-.btn-share:hover { background: var(--ink); color: var(--white); }
+.btn-share:hover { background: var(--white); color: var(--ink); border-color: var(--white); }
 .btn-share:active { transform: scale(0.95); }
 
 /* ═══ SWIPE MODE ═══ */
@@ -279,23 +299,25 @@ body {
 }
 .progress-bar {
   font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  color: var(--gray);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.7;
   font-weight: 500;
   margin-bottom: 0.5rem;
 }
 .progress-track {
   width: 100%;
   max-width: 340px;
-  height: 4px;
-  background: rgba(0,0,0,0.08);
+  height: 3px;
+  background: rgba(242,229,216,0.18);
   border-radius: 2px;
   margin-bottom: 1.5rem;
   overflow: hidden;
 }
 .progress-fill {
   height: 100%;
-  background: var(--coral);
+  background: var(--gold);
   border-radius: 2px;
   transition: width 0.4s ease;
 }
@@ -310,12 +332,13 @@ body {
   position: absolute;
   inset: 0;
   background: var(--white);
-  border-radius: 24px;
+  border-radius: 20px;
   padding: 2rem 1.8rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid rgba(72,26,48,0.08);
+  box-shadow: 0 18px 50px rgba(20,6,14,0.35);
   touch-action: pan-y;
   user-select: none;
   cursor: grab;
@@ -324,23 +347,26 @@ body {
 }
 .card:active { cursor: grabbing; }
 .card-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.8rem;
+  font-family: var(--font-head);
+  font-size: 2.1rem;
+  font-weight: 500;
   color: var(--ink);
-  line-height: 1;
+  line-height: 1.05;
   letter-spacing: -0.01em;
 }
 .card-area {
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--coral);
   font-weight: 500;
-  margin-top: 0.5rem;
+  margin-top: 0.7rem;
 }
 .card-note {
   margin-top: 1rem;
-  font-size: 1rem;
+  font-family: var(--font-head);
+  font-style: italic;
+  font-size: 1.02rem;
   color: var(--ink-mid);
   line-height: 1.5;
 }
@@ -352,22 +378,24 @@ body {
 }
 .card-tag {
   padding: 0.3rem 0.8rem;
-  background: var(--cream);
+  background: var(--rose-soft);
   border-radius: 20px;
-  font-size: 0.72rem;
-  color: var(--gray);
+  font-size: 0.68rem;
+  color: var(--ink-mid);
+  text-transform: capitalize;
   font-weight: 400;
   letter-spacing: 0.03em;
 }
 .card-stamp {
   position: absolute;
   top: 1.5rem;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 3rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-head);
+  font-size: 2.2rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   padding: 0.2rem 0.8rem;
   border-radius: 8px;
-  border: 4px solid;
+  border: 3px solid;
   transform: rotate(-15deg);
   opacity: 0;
   pointer-events: none;
@@ -375,8 +403,8 @@ body {
 }
 .stamp-ja {
   right: 1.5rem;
-  color: #8a6a30;
-  border-color: #8a6a30;
+  color: #A67C52;
+  border-color: #A67C52;
 }
 .stamp-nee {
   left: 1.5rem;
@@ -400,24 +428,25 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 28px rgba(20,6,14,0.35);
 }
 .swipe-btn:active { transform: scale(0.9); }
 .swipe-btn-nee {
   background: var(--white);
   color: var(--red);
 }
-.swipe-btn-nee:hover { background: #ece0dc; transform: scale(1.08); }
+.swipe-btn-nee:hover { background: var(--rose-soft); transform: scale(1.08); }
 .swipe-btn-ja {
   background: var(--white);
-  color: #8a6a30;
+  color: var(--coral);
 }
-.swipe-btn-ja:hover { background: #efe4d2; transform: scale(1.08); }
+.swipe-btn-ja:hover { background: #F1E3D1; transform: scale(1.08); }
 
 .waiting-status {
   margin-top: 1rem;
   font-size: 0.85rem;
-  color: var(--gray);
+  color: var(--cream);
+  opacity: 0.7;
   min-height: 1.5em;
   transition: opacity 0.3s;
 }
@@ -428,7 +457,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(10,10,10,0.7);
+  background: rgba(36,8,22,0.82);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   flex-direction: column;
@@ -439,10 +468,12 @@ body {
 }
 .match-overlay.active { display: flex; }
 .match-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(4rem, 16vw, 8rem);
-  color: var(--coral);
-  line-height: 0.9;
+  font-family: var(--font-head);
+  font-style: italic;
+  font-size: clamp(3.2rem, 13vw, 6.5rem);
+  font-weight: 500;
+  color: var(--gold);
+  line-height: 0.95;
   animation: matchBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 @keyframes matchBounce {
@@ -451,15 +482,19 @@ body {
   100% { transform: scale(1); opacity: 1; }
 }
 .match-place {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2rem;
+  font-family: var(--font-head);
+  font-size: 1.9rem;
+  font-weight: 500;
   color: var(--white);
-  margin-top: 0.5rem;
-  letter-spacing: 0.05em;
+  margin-top: 0.8rem;
+  letter-spacing: 0;
 }
 .match-area-label {
-  font-size: 0.85rem;
-  color: var(--gray-light);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.7;
   margin-top: 0.3rem;
 }
 .match-actions {
@@ -475,10 +510,12 @@ body {
   padding: 0.9rem 1.5rem;
   background: var(--white);
   color: var(--ink);
-  border-radius: 50px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.2rem;
-  letter-spacing: 0.08em;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   text-decoration: none;
   text-align: center;
   transition: all 0.2s;
@@ -487,13 +524,14 @@ body {
 .btn-dismiss {
   background: none;
   border: none;
-  color: var(--gray-light);
-  font-family: 'Outfit', sans-serif;
+  color: var(--cream);
+  opacity: 0.7;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   cursor: pointer;
   padding: 0.5rem;
 }
-.btn-dismiss:hover { color: var(--white); }
+.btn-dismiss:hover { opacity: 1; }
 
 /* ═══ CONFETTI ═══ */
 .confetti-container {
@@ -522,14 +560,16 @@ body {
   padding-top: 2rem;
 }
 .results-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 3rem;
-  color: var(--coral);
+  font-family: var(--font-head);
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: var(--cream);
   margin-bottom: 0.3rem;
 }
 .results-sub {
   font-size: 0.9rem;
-  color: var(--gray);
+  color: var(--cream);
+  opacity: 0.75;
   margin-bottom: 2rem;
 }
 .results-list {
@@ -546,29 +586,31 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  gap: 1rem;
 }
 .result-info h3 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.4rem;
+  font-family: var(--font-head);
+  font-size: 1.25rem;
+  font-weight: 600;
   color: var(--ink);
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 .result-info span {
-  font-size: 0.75rem;
-  color: var(--gray);
+  font-size: 0.66rem;
+  color: var(--ink-mid);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .result-link {
   padding: 0.5rem 1rem;
-  background: var(--coral);
+  background: var(--ink);
   color: var(--white);
-  border-radius: 30px;
+  border-radius: 999px;
   text-decoration: none;
-  font-size: 0.75rem;
+  font-size: 0.64rem;
   font-weight: 500;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   white-space: nowrap;
   transition: all 0.2s;
 }
@@ -576,8 +618,11 @@ body {
 
 .no-matches {
   margin-top: 2rem;
-  font-size: 1.1rem;
-  color: var(--gray);
+  font-family: var(--font-head);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--cream);
+  opacity: 0.8;
 }
 
 .btn-restart {
@@ -588,35 +633,27 @@ body {
 @media (max-width: 420px) {
   .card-container { height: 340px; }
   .card { padding: 1.5rem; }
-  .card-name { font-size: 2.3rem; }
+  .card-name { font-size: 1.9rem; }
   .swipe-btn { width: 64px; height: 64px; font-size: 1.5rem; }
 }
 @media (max-height: 700px) {
   .card-container { height: 300px; }
-  .card-name { font-size: 2rem; }
+  .card-name { font-size: 1.7rem; }
 }
 </style>
 </head>
 <body>
 
-  <div class="stripe"></div><div class="stripe"></div>
-  <div class="stripe"></div><div class="stripe"></div>
-  <div class="stripe"></div><div class="stripe"></div>
-  <div class="stripe"></div><div class="stripe"></div>
-  <div class="stripe"></div><div class="stripe"></div>
-  <div class="stripe"></div><div class="stripe"></div>
-</div>
-
 <div class="app">
   <!-- Top Bar -->
   <div class="top-bar">
-    <a href="index.html">&larr; Back to (W)ETEN WAAR.</a>
+    <a href="index.html">&larr; Back to (W)etenwaar.</a>
     <a class="lang-switch" href="../duo.html">Nederlands</a>
   </div>
 
   <!-- SCREEN: Landing -->
   <div id="screen-landing" class="screen active">
-    <div class="landing-title">SWIPE<br>&amp; DINE</div>
+    <div class="landing-title">Swipe<br><em>&amp;</em> Dine</div>
     <p class="landing-subtitle">You both swipe. A match tells you where you are going.</p>
     <div class="btn-group">
       <button class="btn btn-primary" onclick="showScreen('create')">START SESSION</button>
@@ -662,15 +699,15 @@ body {
       </div>
     </div>
     <div class="swipe-buttons">
-      <button class="swipe-btn swipe-btn-nee" onclick="vote(false)">&#10060;</button>
-      <button class="swipe-btn swipe-btn-ja" onclick="vote(true)">&#128154;</button>
+      <button class="swipe-btn swipe-btn-nee" onclick="vote(false)" aria-label="Skip"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <button class="swipe-btn swipe-btn-ja" onclick="vote(true)" aria-label="Like"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.2-4.6-9.4-9A5.3 5.3 0 0 1 12 6.3a5.3 5.3 0 0 1 9.4 5.7C19.2 16.4 12 21 12 21z"/></svg></button>
     </div>
     <div class="waiting-status" id="waiting-status">&nbsp;</div>
   </div>
 
   <!-- SCREEN: Results -->
   <div id="screen-results" class="screen results-screen">
-    <div class="results-title">YOUR MATCHES</div>
+    <div class="results-title">Your matches</div>
     <p class="results-sub" id="results-sub"></p>
     <div class="results-list" id="results-list"></div>
     <button class="btn btn-primary btn-restart" onclick="location.reload()">START OVER</button>
@@ -679,7 +716,7 @@ body {
 
 <!-- Match Overlay -->
 <div class="match-overlay" id="match-overlay">
-  <div class="match-title">IT'S A<br>MATCH!</div>
+  <div class="match-title">It&rsquo;s a<br>match!</div>
   <div class="match-place" id="match-place-name"></div>
   <div class="match-area-label" id="match-area-label"></div>
   <div class="match-actions">
@@ -1010,7 +1047,7 @@ function copyCode() {
 function shareCode() {
   if (navigator.share) {
     navigator.share({
-      title: 'SWIPE & DINE - (W)ETEN WAAR.',
+      title: 'Swipe & Dine — (W)etenwaar.',
       text: `Join my session with code: ${sessionCode}`,
       url: window.location.href
     });
@@ -1290,7 +1327,7 @@ function updateWaitingStatus(data) {
 function spawnConfetti() {
   const container = document.getElementById('confetti-container');
   container.innerHTML = '';
-  const colors = ['#6b2a3a', '#a97c82', '#efe7e2', '#8a6a30', '#c9a45c', '#e8ddd8', '#3d1428'];
+  const colors = ['#733A48', '#a97c82', '#F2E5D8', '#A67C52', '#c9a45c', '#e8ddd8', '#481A30'];
 
   for (let i = 0; i < 60; i++) {
     const piece = document.createElement('div');
