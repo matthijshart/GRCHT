@@ -22,6 +22,7 @@
 <link rel="apple-touch-icon" href="https://www.wetenwaar.nl/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="../hero.webp" type="image/webp">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233d1428'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Helvetica,Arial,sans-serif' font-weight='700' font-size='17' fill='%23efe7e2'%3EW%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -84,7 +85,15 @@ nav .logo {
   color: var(--white);
   text-decoration: none;
 }
+nav .logo, nav .links a { white-space: nowrap; }
 nav .links { display: flex; gap: 2rem; }
+/* Tablet: vijf links plus logo en taalknop passen alleen met minder lucht. */
+@media (max-width: 1024px) {
+  nav { padding: 1.1rem 1.4rem; }
+  nav .links { gap: 1rem; }
+  nav .links a { font-size: 0.7rem; letter-spacing: 0.08em; }
+  nav .logo { font-size: 1.4rem; letter-spacing: 0.1em; }
+}
 nav .links a {
   color: var(--white);
   text-decoration: none;
@@ -133,11 +142,12 @@ nav .lang-switch:hover { opacity: 0.55; }
   animation: fadeIn 0.8s ease 1.5s both;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   text-align: center;
-  padding: 6rem 2rem 4rem;
+  padding: 6rem 2rem 7rem;
   position: relative;
+  overflow: hidden;
 }
 .hero-label {
   font-size: 0.75rem;
@@ -147,53 +157,55 @@ nav .lang-switch:hover { opacity: 0.55; }
   margin-bottom: 1.5rem;
   font-weight: 500;
 }
-/* ═══ HET BRIEFJE ═══
-   Papieren kaartje met plakband over het gestreepte doek, met het woordmerk
-   in handschrift. Echte tekst, dus schaalbaar en leesbaar voor screenreaders. */
-.note-card {
-  position: relative;
-  width: min(78vw, 420px);
-  aspect-ratio: 5 / 4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1.5rem;
-  background:
-    linear-gradient(158deg, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.035) 100%),
-    #e7e2d6;
-  box-shadow:
-    0 1px 1px rgba(61,20,40,0.10),
-    0 14px 34px rgba(61,20,40,0.22);
-  transform: rotate(-0.6deg);
-}
-.note-tape {
+/* ═══ DE FOTO ═══
+   De hero is één foto met het woordmerk erin gebakken. De h1 blijft als
+   echte tekst bestaan voor zoekmachines en screenreaders, maar is onzichtbaar.
+   Onderin een zachte overgang naar wijnpaars, zodat datum en speler leesbaar
+   blijven boven de tafel. */
+.hero-photo {
   position: absolute;
-  top: -26px;
-  left: 50%;
-  width: 46%;
-  max-width: 190px;
-  height: 52px;
-  transform: translateX(-50%) rotate(-1.2deg);
-  background: linear-gradient(100deg, rgba(214,200,150,0.85), rgba(226,214,170,0.92) 45%, rgba(208,192,140,0.85));
-  box-shadow: 0 1px 2px rgba(61,20,40,0.12);
-  /* gerafelde randen links en rechts */
-  clip-path: polygon(2% 6%, 98% 0%, 100% 92%, 0% 100%);
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
 }
+/* Staand (telefoon): de foto op volle breedte, bovenaan, en onderaan
+   vervloeiend in het wijnpaars. Zo wordt het woordmerk nooit aan de
+   zijkanten afgesneden, hoe lang het scherm ook is. */
+.hero-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+}
+/* Breder dan de foto zelf (tablet liggend, desktop): beeldvullend. */
+@media (min-aspect-ratio: 2/3) {
+  .hero-photo img {
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 38%;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(61,20,40,0.30) 0%,
+    rgba(61,20,40,0) 20%,
+    rgba(61,20,40,0) 58%,
+    rgba(61,20,40,0.82) 100%);
+}
+.hero > :not(.hero-photo) { position: relative; z-index: 1; }
 .hero h1 {
-  font-family: 'Caveat', 'Bradley Hand', 'Segoe Script', cursive;
-  font-size: clamp(1.5rem, 5.4vw, 2.6rem);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: 0.01em;
-  color: #26356b;
-  text-align: center;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
   white-space: nowrap;
-  transform: rotate(0.4deg) translateY(0.35em);
-}
-.hero h1 small {
-  font-size: 1em;
-  font-weight: 600;
-  letter-spacing: 0;
 }
 .hero .sub {
   margin-top: 2rem;
@@ -1250,7 +1262,6 @@ nav .lang-switch:hover { opacity: 0.55; }
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 768px) {
   nav .links { display: none; }
-  .note-card { width: min(82vw, 360px); }
   .hero .sub { font-size: 1rem; padding: 0 1rem; }
   .stripe-band { height: 80px; }
   .stripe-band .band-text { font-size: 1.2rem; }
@@ -1306,7 +1317,7 @@ nav .lang-switch:hover { opacity: 0.55; }
   nav { padding: 1rem 1.2rem; }
   nav .logo { font-size: 1.4rem; }
   /* Hero mobile */
-  .hero { padding: 5rem 1.5rem 3rem; min-height: 100svh; }
+  .hero { padding: 5rem 1.2rem 6.5rem; min-height: 100svh; }
   .hero-label { font-size: 0.65rem; letter-spacing: 0.2em; }
   .scroll-hint { bottom: 2rem; }
   .hero-spotify { max-width: 300px; }
@@ -1367,10 +1378,13 @@ nav .lang-switch:hover { opacity: 0.55; }
 
 <!-- ═══ HERO ═══ -->
 <section class="hero">
-  <div class="note-card">
-    <span class="note-tape" aria-hidden="true"></span>
-    <h1><small>(W)</small>ETEN WAAR.</h1>
+  <div class="hero-photo" aria-hidden="true">
+    <picture>
+      <source srcset="../hero.webp" type="image/webp">
+      <img src="../hero.jpg" width="1024" height="1536" alt="" fetchpriority="high" decoding="async">
+    </picture>
   </div>
+  <h1>(W)ETEN WAAR.</h1>
   <span class="updated">Last updated &mdash; August 2026</span>
   <div class="hero-spotify">
     <iframe id="spotifyPlayer" src="" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media" loading="lazy"></iframe>
