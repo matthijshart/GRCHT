@@ -1862,7 +1862,6 @@ const places = [
   { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"Modern take on a brown cafe. Known for the smashburger and the steak", lat:52.3480,lng:4.8565, web:"", tags:["bar","burger","steak"] },
   { name:"'t Smalle", area:"Jordaan", hearts:0, note:"A beer or a meatball roll, never wrong", lat:52.3758,lng:4.8838, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
   { name:"Papeneiland", area:"Jordaan", fav:true, note:"Terrace when the sun is out", lat:52.3826,lng:4.8871, web:"", tags:["terras","caf\u00e9"] },
-  { name:"Bistro Feline", area:"Jordaan", hearts:0, note:"In the Michelin guide, order the lobster orzo", lat:52.3769,lng:4.8832, web:"", tags:["restaurant","frans"] },
   { name:"La Perla", area:"Jordaan", hearts:0, note:"Just good pizza at the bar", lat:52.3737,lng:4.8810, web:"", tags:["italiaans","pizza"] },
   { name:"De Pizzakamer", area:"De Pijp", hearts:0, note:"Wood-fired pizza, terrace, always good", lat:52.3561,lng:4.8945, web:"", tags:["italiaans","pizza"] },
   { name:"Pilsvogel", area:"De Pijp", fav:true, note:"Terrace on the square, good beer", lat:52.3555,lng:4.8937, web:"", tags:["bar","terras"] },
@@ -1885,6 +1884,7 @@ const places = [
   { name:"Bar Buuf", area:"De Pijp", hearts:0, note:"Neighbourhood bistro with Parisian charm", lat:52.3512,lng:4.8915, web:"", tags:["restaurant","frans","wijn"] },
   { name:"'t Blauwe Theehuis", area:"Vondelpark", hearts:0, note:"Big terrace in the middle of the park. A beer in the sun", lat:52.3581,lng:4.8688, web:"", tags:["terras","borrel","caf\u00e9"] },
   { name:"Pazzi", area:"Jordaan", hearts:0, note:"Wood-fired pizza, thin and crisp", lat:52.3719,lng:4.8802, web:"", tags:["italiaans","pizza"] },
+  { name:"Ko Chang", area:"Jordaan", hearts:0, note:"Small and cosy, and a really good Thai", lat:52.3791,lng:4.8836, web:"", tags:["restaurant","aziatisch","thais"] },
 ];
 
 // ═══ MAP ═══
@@ -1958,7 +1958,7 @@ wijkLabels.forEach(label => {
 });
 
 const allTags = [...new Set(places.flatMap(p => p.tags))].sort();
-const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wine', italiaans:'Italian', frans:'French', vis:'Fish', oesters:'Oysters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terrace', borrel:'Drinks', ontbijt:'Breakfast', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Cheese', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Smart', aziatisch:'Asian', bistro:'Bistro', 'bruin caf\u00e9':'Brown cafe', caf\u00e9:'Cafe', fondue:'Fondue', indonesisch:'Indonesian', industrieel:'Industrial', pizza:'Pizza', spaans:'Spanish', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Swiss', 'natural wine':'Natural wine', burger:'Burger' };
+const tagLabels = { thais:'Thai', restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wine', italiaans:'Italian', frans:'French', vis:'Fish', oesters:'Oysters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terrace', borrel:'Drinks', ontbijt:'Breakfast', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Cheese', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Smart', aziatisch:'Asian', bistro:'Bistro', 'bruin caf\u00e9':'Brown cafe', caf\u00e9:'Cafe', fondue:'Fondue', indonesisch:'Indonesian', industrieel:'Industrial', pizza:'Pizza', spaans:'Spanish', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Swiss', 'natural wine':'Natural wine', burger:'Burger' };
 const filtersEl = document.getElementById('filters');
 const allBtn = document.createElement('button');
 allBtn.textContent = 'All';
