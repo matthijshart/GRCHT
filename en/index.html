@@ -706,6 +706,7 @@ html.menu-open, html.menu-open body { overflow: hidden; }
   margin-bottom: 0.2rem;
 }
 .card .actions { display: flex; align-items: center; flex-wrap: wrap; }
+.card.uitgelicht { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(196,154,117,0.35); }
 .card.hidden { display: none; }
 
 /* ═══ LEAFLET POPUP ═══ */
@@ -2079,6 +2080,26 @@ wijkOrder.forEach(wijk => {
   carouselsEl.appendChild(row);
   carouselRows[wijk] = row;
 });
+
+// ═══ DIEPE LINK NAAR ÉÉN PLEK (?plek=Naam) ═══
+// Swipe & Dine linkt na een afspraak hierheen: rij open, kaartje in beeld,
+// pin op de kaart open.
+(() => {
+  let naam = '';
+  try { naam = (new URL(location.href).searchParams.get('plek') || '').trim().toLowerCase(); } catch (e) {}
+  if (!naam) return;
+  const idx = places.findIndex(p => p.name.toLowerCase() === naam);
+  if (idx < 0) return;
+  const card = document.querySelector(`.card[data-original-index="${idx}"]`);
+  if (!card) return;
+  toggleRow(card.closest('.carousel-row'), true);
+  card.classList.add('uitgelicht');
+  setTimeout(() => {
+    card.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+    map.setView([places[idx].lat, places[idx].lng], 16);
+    markers[idx].openPopup();
+  }, 450);
+})();
 
 // ═══ GEEN IDEE SPINNER ═══
 let selectedPersons = 2;
