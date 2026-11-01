@@ -71,31 +71,28 @@ body {
   flex-direction: column;
 }
 
-/* ═══ TOP BAR ═══ */
+/* ═══ BALK ═══ */
 .top-bar {
   padding: 1rem 1.5rem;
+  padding-top: max(1rem, env(safe-area-inset-top));
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  gap: 0.8rem;
 }
 .top-bar a {
   font-family: var(--font-body);
   font-size: 0.8rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
   color: var(--cream);
   text-decoration: none;
   opacity: 0.7;
   transition: opacity 0.3s;
+  white-space: nowrap;
 }
 .top-bar a:hover { opacity: 1; }
-
-.top-bar { justify-content: space-between; }
+.top-bar .rechts { display: flex; align-items: center; gap: 0.6rem; }
 .top-bar .lang-switch {
   border: 1px solid var(--cream);
-  color: var(--cream);
-  text-decoration: none;
-  font-family: var(--font-body);
   font-size: 0.62rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -103,12 +100,28 @@ body {
   padding: 0.3rem 0.7rem;
   border-radius: 20px;
   opacity: 0.6;
-  white-space: nowrap;
-  transition: opacity 0.3s;
 }
-.top-bar .lang-switch:hover { opacity: 1; }
+.shortlist-knop {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  background: none;
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  min-height: 32px;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+}
+.shortlist-knop.zichtbaar { display: inline-flex; }
+.shortlist-knop b { font-weight: 500; }
 
-/* ═══ SCREENS ═══ */
+/* ═══ SCHERMEN ═══ */
 .screen {
   display: none;
   flex: 1;
@@ -116,47 +129,58 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2rem 1.5rem;
+  padding-bottom: max(2rem, env(safe-area-inset-bottom));
   text-align: center;
   animation: fadeIn 0.4s ease;
 }
-.screen.active {
-  display: flex;
-}
+.screen.active { display: flex; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ═══ LANDING ═══ */
-.landing-title {
+/* ═══ TYPOGRAFIE ═══ */
+.kop {
   font-family: var(--font-head);
-  font-size: clamp(3rem, 13vw, 6rem);
   font-weight: 500;
-  line-height: 1;
   color: var(--cream);
+  line-height: 1.05;
   letter-spacing: -0.01em;
 }
-.landing-title em { font-style: italic; font-weight: 400; color: var(--gold); }
-.landing-subtitle {
+.kop em { font-style: italic; font-weight: 400; color: var(--gold); }
+.landing-title { font-size: clamp(3rem, 13vw, 6rem); line-height: 1; }
+.sub {
   margin-top: 1.2rem;
   font-size: 1rem;
   color: var(--cream);
   opacity: 0.8;
-  max-width: 300px;
-  line-height: 1.5;
+  max-width: 320px;
+  line-height: 1.55;
 }
+.label {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 0.7rem;
+}
+.kop-klein { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+
+/* ═══ KNOPPEN ═══ */
 .btn-group {
   margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   width: 100%;
-  max-width: 280px;
+  max-width: 300px;
 }
 .btn {
   display: block;
+  width: 100%;
   padding: 1rem 2rem;
-  border: none;
+  border: 0;
   border-radius: 999px;
   font-family: var(--font-body);
   font-size: 0.8rem;
@@ -168,10 +192,7 @@ body {
   text-decoration: none;
   text-align: center;
 }
-.btn-primary {
-  background: var(--white);
-  color: var(--ink);
-}
+.btn-primary { background: var(--white); color: var(--ink); }
 .btn-primary:hover { background: var(--cream); transform: scale(1.03); }
 .btn-primary:active { transform: scale(0.98); }
 .btn-secondary {
@@ -180,10 +201,53 @@ body {
   border: 1px solid rgba(242,229,216,0.6);
 }
 .btn-secondary:hover { border-color: var(--cream); transform: scale(1.03); }
-.btn:focus-visible, .swipe-btn:focus-visible, .btn-share:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-.btn-secondary:active { transform: scale(0.98); }
+.btn[disabled] { opacity: 0.45; cursor: default; transform: none; }
+.btn:focus-visible, .swipe-btn:focus-visible, .pill:focus-visible, .sluit:focus-visible, .shortlist-knop:focus-visible {
+  outline: 2px solid var(--gold); outline-offset: 3px;
+}
+.btn-back {
+  margin-top: 1.5rem;
+  background: none;
+  border: 0;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--cream);
+  opacity: 0.7;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  min-height: 44px;
+}
+.btn-back:hover { opacity: 1; }
+.btn-back.zacht { font-size: 0.76rem; opacity: 0.5; }
 
-/* ═══ CREATE / JOIN ═══ */
+/* ═══ WIJKFILTER ═══ */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.6rem;
+  max-width: 360px;
+}
+.pill {
+  padding: 0.7rem 1.1rem;
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(242,229,216,0.55);
+  background: transparent;
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pill.selected { background: var(--white); color: var(--ink); border-color: var(--white); }
+.pill-telling { margin-top: 1.2rem; font-size: 0.8rem; opacity: 0.7; min-height: 1.2em; }
+
+/* ═══ CODE, DELEN, MEEDOEN ═══ */
 .session-code {
   font-family: var(--font-head);
   font-size: clamp(4.5rem, 18vw, 8rem);
@@ -191,6 +255,7 @@ body {
   color: var(--cream);
   letter-spacing: 0.12em;
   line-height: 1;
+  margin-top: 0.3rem;
 }
 .session-msg {
   font-size: 0.95rem;
@@ -199,15 +264,20 @@ body {
   margin-top: 0.5rem;
   line-height: 1.5;
 }
-.waiting-dots::after {
-  content: '';
-  animation: dots 1.5s steps(4, end) infinite;
-}
+.waiting-dots::after { content: ''; animation: dots 1.5s steps(4, end) infinite; }
 @keyframes dots {
   0%   { content: ''; }
   25%  { content: '.'; }
   50%  { content: '..'; }
   75%  { content: '...'; }
+}
+.share-col {
+  margin-top: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: 100%;
+  max-width: 300px;
 }
 .code-input {
   font-family: var(--font-head);
@@ -226,10 +296,7 @@ body {
   transition: border-color 0.2s;
 }
 .code-input:focus { border-color: var(--gold); }
-.code-input::placeholder {
-  color: var(--gray-light);
-  letter-spacing: 0.3em;
-}
+.code-input::placeholder { color: var(--gray-light); letter-spacing: 0.3em; }
 .conn-error {
   display: none;
   max-width: 300px;
@@ -242,90 +309,25 @@ body {
   font-size: 0.82rem;
   line-height: 1.5;
 }
-.error-msg {
-  color: var(--gold);
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
-  min-height: 1.2em;
-}
-.small-label {
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-.btn-back {
-  margin-top: 1.5rem;
-  background: none;
-  border: none;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  color: var(--cream);
-  opacity: 0.7;
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.btn-back:hover { opacity: 1; }
+.error-msg { color: var(--gold); font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2em; }
 
-.share-row {
-  margin-top: 1.5rem;
-  display: flex;
-  gap: 0.6rem;
-}
-.btn-share {
-  padding: 0.6rem 1.2rem;
-  border: 1px solid rgba(242,229,216,0.6);
-  border-radius: 999px;
-  background: transparent;
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: var(--cream);
-}
-.btn-share:hover { background: var(--white); color: var(--ink); border-color: var(--white); }
-.btn-share:active { transform: scale(0.95); }
-
-/* ═══ SWIPE MODE ═══ */
-.swipe-screen {
-  justify-content: flex-start;
-  padding-top: 1rem;
-}
-.progress-bar {
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--cream);
-  opacity: 0.7;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
+/* ═══ SWIPEN ═══ */
+.swipe-screen { justify-content: flex-start; padding-top: 0.6rem; }
 .progress-track {
   width: 100%;
   max-width: 340px;
-  height: 3px;
-  background: rgba(242,229,216,0.18);
+  height: 2px;
+  background: rgba(242,229,216,0.16);
   border-radius: 2px;
-  margin-bottom: 1.5rem;
+  margin: 0.2rem 0 1.4rem;
   overflow: hidden;
 }
-.progress-fill {
-  height: 100%;
-  background: var(--gold);
-  border-radius: 2px;
-  transition: width 0.4s ease;
-}
+.progress-fill { height: 100%; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
 .card-container {
   position: relative;
   width: 100%;
   max-width: 340px;
-  height: 380px;
+  height: 400px;
   perspective: 800px;
 }
 .card {
@@ -337,398 +339,426 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   border: 1px solid rgba(72,26,48,0.08);
   box-shadow: 0 18px 50px rgba(20,6,14,0.35);
   touch-action: pan-y;
   user-select: none;
+  -webkit-user-select: none;
   cursor: grab;
-  transition: box-shadow 0.2s;
   will-change: transform;
 }
 .card:active { cursor: grabbing; }
+.card-ornament { width: 28px; height: 1px; background: var(--gold); margin-bottom: 1.4rem; }
 .card-name {
   font-family: var(--font-head);
-  font-size: 2.1rem;
+  font-size: clamp(2rem, 8.5vw, 2.6rem);
   font-weight: 500;
   color: var(--ink);
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.01em;
+  text-align: center;
+  text-wrap: balance;
 }
 .card-area {
   font-size: 0.66rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--coral);
   font-weight: 500;
-  margin-top: 0.7rem;
-}
-.card-note {
   margin-top: 1rem;
-  font-family: var(--font-head);
-  font-style: italic;
-  font-size: 1.02rem;
-  color: var(--ink-mid);
-  line-height: 1.5;
-}
-.card-tags {
-  margin-top: 1.2rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-.card-tag {
-  padding: 0.3rem 0.8rem;
-  background: var(--rose-soft);
-  border-radius: 20px;
-  font-size: 0.68rem;
-  color: var(--ink-mid);
-  text-transform: capitalize;
-  font-weight: 400;
-  letter-spacing: 0.03em;
 }
 .card-stamp {
   position: absolute;
-  top: 1.5rem;
-  font-family: var(--font-head);
-  font-size: 2.2rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 0.2rem 0.8rem;
-  border-radius: 8px;
-  border: 3px solid;
-  transform: rotate(-15deg);
+  top: 1.2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s;
 }
-.stamp-ja {
-  right: 1.5rem;
-  color: #A67C52;
-  border-color: #A67C52;
-}
-.stamp-nee {
-  left: 1.5rem;
-  color: var(--red);
-  border-color: var(--red);
-}
-
-.swipe-buttons {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
+.stamp-ja { right: 1.2rem; color: var(--coral); border-color: var(--coral); }
+.stamp-nee { left: 1.2rem; color: var(--red); border-color: var(--red); }
+.swipe-buttons { display: flex; gap: 1.5rem; margin-top: 1.6rem; }
 .swipe-btn {
-  width: 72px;
-  height: 72px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
-  border: none;
-  font-size: 1.8rem;
+  border: 0;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--white);
   box-shadow: 0 10px 28px rgba(20,6,14,0.35);
 }
 .swipe-btn:active { transform: scale(0.9); }
-.swipe-btn-nee {
-  background: var(--white);
-  color: var(--red);
-}
-.swipe-btn-nee:hover { background: var(--rose-soft); transform: scale(1.08); }
-.swipe-btn-ja {
-  background: var(--white);
-  color: var(--coral);
-}
-.swipe-btn-ja:hover { background: #F1E3D1; transform: scale(1.08); }
+.swipe-btn-nee { color: var(--red); }
+.swipe-btn-nee:hover { background: var(--rose-soft); transform: scale(1.06); }
+.swipe-btn-ja { color: var(--coral); }
+.swipe-btn-ja:hover { background: #F1E3D1; transform: scale(1.06); }
+.swipe-status { margin-top: 1.1rem; font-size: 0.8rem; color: var(--cream); opacity: 0.6; min-height: 1.4em; }
 
-.waiting-status {
-  margin-top: 1rem;
-  font-size: 0.85rem;
-  color: var(--cream);
-  opacity: 0.7;
-  min-height: 1.5em;
-  transition: opacity 0.3s;
-}
+/* ═══ KLAAR ═══ */
+.done-title { font-size: clamp(2.2rem, 9vw, 3.2rem); }
+.done-sub { margin-top: 0.9rem; font-size: 0.95rem; opacity: 0.8; max-width: 320px; line-height: 1.55; }
 
-/* ═══ MATCH POPUP ═══ */
-.match-overlay {
+/* ═══ OVERLAYS: MATCH EN VOORSTEL ═══ */
+.overlay {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(36,8,22,0.82);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(36,8,22,0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
   animation: fadeIn 0.3s ease;
 }
-.match-overlay.active { display: flex; }
+.overlay.active { display: flex; }
+.overlay-inner { width: 100%; max-width: 360px; }
+/* Het hart: komt met een lichte overshoot binnen, klopt daarna rustig door,
+   en stuurt twee dunne ringen naar buiten. Geen confetti. */
+.match-heart { width: 64px; height: 64px; margin: 0 auto 1.4rem; position: relative; color: var(--gold); }
+.match-heart svg {
+  width: 100%; height: 100%; display: block;
+  animation: hartIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both, hartslag 2.6s ease-in-out 1.2s infinite;
+}
+.match-heart::before, .match-heart::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  opacity: 0;
+  animation: ring 1.6s ease-out 0.25s 2;
+}
+.match-heart::after { animation-delay: 0.7s; }
+@keyframes hartIn { 0% { transform: scale(0.4); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes hartslag { 0%, 100% { transform: scale(1); } 14% { transform: scale(1.08); } 28% { transform: scale(1); } 42% { transform: scale(1.06); } 56% { transform: scale(1); } }
+@keyframes ring { 0% { transform: scale(0.7); opacity: 0.8; } 100% { transform: scale(2.1); opacity: 0; } }
 .match-title {
   font-family: var(--font-head);
   font-style: italic;
-  font-size: clamp(3.2rem, 13vw, 6.5rem);
+  font-size: clamp(2.8rem, 12vw, 4.4rem);
   font-weight: 500;
   color: var(--gold);
-  line-height: 0.95;
-  animation: matchBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-@keyframes matchBounce {
-  0% { transform: scale(0.3); opacity: 0; }
-  60% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
+  line-height: 1;
 }
 .match-place {
   font-family: var(--font-head);
-  font-size: 1.9rem;
+  font-size: clamp(1.7rem, 7vw, 2.3rem);
   font-weight: 500;
   color: var(--white);
-  margin-top: 0.8rem;
-  letter-spacing: 0;
+  margin-top: 1.1rem;
+  line-height: 1.1;
+  text-wrap: balance;
 }
-.match-area-label {
+.match-area {
   font-size: 0.7rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--cream);
   opacity: 0.7;
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
 }
 .match-actions {
-  margin-top: 2rem;
+  margin: 2rem auto 0;
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
   width: 100%;
-  max-width: 260px;
+  max-width: 280px;
 }
-.btn-maps {
-  display: block;
-  padding: 0.9rem 1.5rem;
-  background: var(--white);
-  color: var(--ink);
-  border-radius: 999px;
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  text-align: center;
-  transition: all 0.2s;
-}
-.btn-maps:hover { transform: scale(1.03); background: var(--cream); }
-.btn-dismiss {
-  background: none;
-  border: none;
-  color: var(--cream);
-  opacity: 0.7;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-.btn-dismiss:hover { opacity: 1; }
+.overlay-note { margin-top: 1.1rem; font-size: 0.82rem; opacity: 0.7; line-height: 1.5; }
 
-/* ═══ CONFETTI ═══ */
-.confetti-container {
+/* ═══ SHORTLIST ═══ */
+.shortlist {
+  display: none;
   position: fixed;
   inset: 0;
-  z-index: 1001;
-  pointer-events: none;
-  overflow: hidden;
-}
-.confetti-piece {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  top: -10px;
-  animation: confettiFall 2.5s ease-in forwards;
-}
-@keyframes confettiFall {
-  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
-}
-
-/* ═══ RESULTS ═══ */
-.results-screen {
-  justify-content: flex-start;
-  padding-top: 2rem;
-}
-.results-title {
-  font-family: var(--font-head);
-  font-size: 2.4rem;
-  font-weight: 500;
-  color: var(--cream);
-  margin-bottom: 0.3rem;
-}
-.results-sub {
-  font-size: 0.9rem;
-  color: var(--cream);
-  opacity: 0.75;
-  margin-bottom: 2rem;
-}
-.results-list {
-  width: 100%;
-  max-width: 380px;
-  display: flex;
+  z-index: 900;
+  background: var(--black);
+  padding: 1.2rem 1.5rem 2rem;
+  padding-top: max(1.2rem, env(safe-area-inset-top));
   flex-direction: column;
-  gap: 0.8rem;
+  animation: fadeIn 0.3s ease;
+  overflow: auto;
 }
-.result-card {
+.shortlist.active { display: flex; }
+.shortlist-kop { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.4rem; width: 100%; max-width: 420px; margin-left: auto; margin-right: auto; }
+.shortlist-kop h2 { font-family: var(--font-head); font-weight: 500; font-size: 1.7rem; }
+.sluit {
+  background: none; border: 0; color: var(--cream); font-size: 1.6rem; cursor: pointer;
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; opacity: 0.8; margin-right: -10px;
+}
+.shortlist-list { display: flex; flex-direction: column; gap: 0.7rem; width: 100%; max-width: 420px; margin: 0 auto; }
+.shortlist-item {
   background: var(--white);
   border-radius: 16px;
-  padding: 1.2rem 1.4rem;
+  padding: 1.1rem 1.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  text-align: left;
 }
-.result-info h3 {
-  font-family: var(--font-head);
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--ink);
-  letter-spacing: 0;
-}
-.result-info span {
-  font-size: 0.66rem;
-  color: var(--ink-mid);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.result-link {
-  padding: 0.5rem 1rem;
+.shortlist-item h3 { font-family: var(--font-head); font-size: 1.2rem; font-weight: 600; color: var(--ink); letter-spacing: 0; line-height: 1.15; }
+.shortlist-item span { display: block; font-size: 0.64rem; color: var(--ink-mid); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 0.25rem; }
+.shortlist-item button {
+  flex-shrink: 0;
+  padding: 0.6rem 1rem;
+  min-height: 40px;
   background: var(--ink);
   color: var(--white);
+  border: 0;
   border-radius: 999px;
-  text-decoration: none;
-  font-size: 0.64rem;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s;
 }
-.result-link:hover { background: var(--olive); transform: scale(1.05); }
+.shortlist-leeg { text-align: center; margin-top: 3rem; font-family: var(--font-head); font-style: italic; font-size: 1.15rem; opacity: 0.8; }
+.shortlist-voet { margin-top: auto; padding-top: 2rem; text-align: center; }
 
-.no-matches {
-  margin-top: 2rem;
+/* ═══ AFGESPROKEN ═══ */
+.final-title { font-size: clamp(2rem, 8vw, 2.8rem); }
+.final-place {
   font-family: var(--font-head);
-  font-style: italic;
-  font-size: 1.15rem;
-  color: var(--cream);
-  opacity: 0.8;
+  font-size: clamp(2.2rem, 9.5vw, 3.2rem);
+  font-weight: 500;
+  margin-top: 1.4rem;
+  line-height: 1.05;
+  text-wrap: balance;
 }
 
-.btn-restart {
-  margin-top: 2rem;
+/* ═══ TOAST ═══ */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: max(1.4rem, env(safe-area-inset-bottom));
+  transform: translateX(-50%) translateY(20px);
+  background: var(--white);
+  color: var(--ink);
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 1100;
+  max-width: 90vw;
 }
+.toast.zichtbaar { opacity: 1; transform: translateX(-50%); }
 
-/* ═══ MOBILE ═══ */
+/* ═══ KLEINE SCHERMEN ═══ */
 @media (max-width: 420px) {
-  .card-container { height: 340px; }
-  .card { padding: 1.5rem; }
-  .card-name { font-size: 1.9rem; }
-  .swipe-btn { width: 64px; height: 64px; font-size: 1.5rem; }
+  .card-container { height: 360px; }
+  .swipe-btn { width: 62px; height: 62px; }
 }
 @media (max-height: 700px) {
   .card-container { height: 300px; }
-  .card-name { font-size: 1.7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .screen, .overlay, .shortlist { animation: none; }
+  .match-heart svg, .match-heart::before, .match-heart::after { animation: none !important; opacity: 1; }
+  .card, .toast, .progress-fill { transition: none !important; }
 }
 </style>
 </head>
 <body>
 
 <div class="app">
-  <!-- Top Bar -->
   <div class="top-bar">
     <a href="index.html">&larr; Terug naar (W)etenwaar.</a>
-    <a class="lang-switch" href="en/duo.html">English</a>
+    <div class="rechts">
+      <button class="shortlist-knop" id="shortlistKnop" type="button" onclick="openShortlist()">Shortlist <b id="shortlistTelling">0</b></button>
+      <a class="lang-switch" href="en/duo.html" hreflang="en" lang="en">English</a>
+    </div>
   </div>
 
-  <!-- SCREEN: Landing -->
+  <!-- START -->
   <div id="screen-landing" class="screen active">
-    <div class="landing-title">Swipe<br><em>&amp;</em> Dine</div>
-    <p class="landing-subtitle">Ieder swipet. Bij een match weet je waar je heen gaat.</p>
+    <div class="kop landing-title">Swipe<br><em>&amp;</em> Dine</div>
+    <p class="sub">Jullie swipen allebei, ieder in je eigen volgorde. Vinden jullie dezelfde plek leuk, dan is het een match.</p>
     <div class="btn-group">
-      <button class="btn btn-primary" onclick="showScreen('create')">START SESSIE</button>
-      <button class="btn btn-secondary" onclick="showScreen('join')">JOIN SESSIE</button>
+      <button class="btn btn-primary" type="button" onclick="showScreen('filter')">Start sessie</button>
+      <button class="btn btn-secondary" type="button" onclick="showScreen('join')">Ik heb een code</button>
     </div>
     <p class="conn-error" id="conn-error"></p>
   </div>
 
-  <!-- SCREEN: Create Session -->
-  <div id="screen-create" class="screen">
-    <div class="small-label">JOUW SESSIE CODE</div>
-    <div class="session-code" id="session-code-display">----</div>
-    <p class="session-msg">Deel deze code met je date<span class="waiting-dots"></span></p>
-    <div class="share-row">
-      <button class="btn-share" onclick="copyCode()">Kopieer code</button>
-      <button class="btn-share" onclick="shareCode()">Delen</button>
+  <!-- WIJKFILTER -->
+  <div id="screen-filter" class="screen">
+    <div class="label">Waar zoeken we?</div>
+    <div class="kop kop-klein">Kies een buurt. Of niet.</div>
+    <div class="pills" id="wijkPills"></div>
+    <p class="pill-telling" id="poolTelling"></p>
+    <div class="btn-group" style="margin-top:1.6rem">
+      <button class="btn btn-primary" type="button" id="maakBtn" onclick="createSession()">Maak sessie &rarr;</button>
     </div>
-    <p class="session-msg" id="waiting-msg" style="margin-top:1.5rem;">Wacht op speler 2<span class="waiting-dots"></span></p>
-    <button class="btn-back" onclick="cancelSession()">Annuleren</button>
+    <button class="btn-back" type="button" id="filterTerug" onclick="showScreen('landing')">Terug</button>
   </div>
 
-  <!-- SCREEN: Join Session -->
+  <!-- CODE EN LINK -->
+  <div id="screen-create" class="screen">
+    <div class="label">Jullie code</div>
+    <div class="session-code" id="session-code-display">----</div>
+    <p class="session-msg">Stuur de link, dan zit de ander er zo in.</p>
+    <div class="share-col">
+      <a class="btn btn-primary" id="waBtn" href="#" target="_blank" rel="noopener">Deel via WhatsApp</a>
+      <button class="btn btn-secondary" type="button" id="kopieerBtn" onclick="copyLink()">Kopieer link</button>
+    </div>
+    <p class="session-msg" style="margin-top:1.6rem">Wacht op de ander<span class="waiting-dots"></span></p>
+    <button class="btn-back" type="button" onclick="cancelSession()">Annuleren</button>
+  </div>
+
+  <!-- MEEDOEN -->
   <div id="screen-join" class="screen">
-    <div class="small-label">VOER DE CODE IN</div>
+    <div class="label">Voer de code in</div>
     <input class="code-input" id="join-input" type="text" maxlength="4" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false">
     <p class="error-msg" id="join-error">&nbsp;</p>
-    <button class="btn btn-primary" style="margin-top:1rem;max-width:220px;" onclick="joinSession()">JOIN</button>
-    <button class="btn-back" onclick="showScreen('landing')">Terug</button>
+    <button class="btn btn-primary" type="button" style="margin-top:1rem;max-width:220px;" onclick="joinSession()">Doe mee</button>
+    <button class="btn-back" type="button" onclick="showScreen('landing')">Terug</button>
   </div>
 
-  <!-- SCREEN: Swipe -->
+  <!-- SWIPEN -->
   <div id="screen-swipe" class="screen swipe-screen">
-    <div class="progress-bar" id="progress-text">&nbsp;</div>
-    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
     <div class="card-container" id="card-container">
       <div class="card" id="swipe-card">
-        <div class="card-stamp stamp-ja" id="stamp-ja">JA!</div>
-        <div class="card-stamp stamp-nee" id="stamp-nee">NEE</div>
+        <div class="card-stamp stamp-ja" id="stamp-ja" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.2-4.6-9.4-9A5.3 5.3 0 0 1 12 6.3a5.3 5.3 0 0 1 9.4 5.7C19.2 16.4 12 21 12 21z"/></svg></div>
+        <div class="card-stamp stamp-nee" id="stamp-nee" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></div>
+        <div class="card-ornament" aria-hidden="true"></div>
         <div class="card-name" id="card-name"></div>
         <div class="card-area" id="card-area"></div>
-        <div class="card-note" id="card-note"></div>
-        <div class="card-tags" id="card-tags"></div>
       </div>
     </div>
     <div class="swipe-buttons">
-      <button class="swipe-btn swipe-btn-nee" onclick="vote(false)" aria-label="Overslaan"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-      <button class="swipe-btn swipe-btn-ja" onclick="vote(true)" aria-label="Leuk"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.2-4.6-9.4-9A5.3 5.3 0 0 1 12 6.3a5.3 5.3 0 0 1 9.4 5.7C19.2 16.4 12 21 12 21z"/></svg></button>
+      <button class="swipe-btn swipe-btn-nee" type="button" onclick="vote(false)" aria-label="Overslaan"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <button class="swipe-btn swipe-btn-ja" type="button" onclick="vote(true)" aria-label="Leuk"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.2-4.6-9.4-9A5.3 5.3 0 0 1 12 6.3a5.3 5.3 0 0 1 9.4 5.7C19.2 16.4 12 21 12 21z"/></svg></button>
     </div>
-    <div class="waiting-status" id="waiting-status">&nbsp;</div>
+    <div class="swipe-status" id="swipe-status">&nbsp;</div>
+    <button class="btn-back zacht" type="button" onclick="leaveSession()">Verlaat sessie</button>
   </div>
 
-  <!-- SCREEN: Results -->
-  <div id="screen-results" class="screen results-screen">
-    <div class="results-title">Jullie matches</div>
-    <p class="results-sub" id="results-sub"></p>
-    <div class="results-list" id="results-list"></div>
-    <button class="btn btn-primary btn-restart" onclick="location.reload()">OPNIEUW</button>
+  <!-- KLAAR -->
+  <div id="screen-done" class="screen">
+    <div class="label" id="done-label">Je bent erdoor</div>
+    <div class="kop done-title" id="done-title"></div>
+    <p class="done-sub" id="done-sub"></p>
+    <div class="btn-group" id="done-actions"></div>
+    <button class="btn-back zacht" type="button" onclick="leaveSession()">Verlaat sessie</button>
+  </div>
+
+  <!-- AFGESPROKEN -->
+  <div id="screen-final" class="screen">
+    <div class="label">Afgesproken</div>
+    <div class="kop final-title">Hier gaan we eten<em>.</em></div>
+    <div class="final-place" id="final-name"></div>
+    <div class="match-area" id="final-area"></div>
+    <div class="btn-group" style="margin-top:2rem">
+      <a class="btn btn-primary" id="final-site" href="index.html">Bekijk op (W)etenwaar</a>
+      <a class="btn btn-secondary" id="final-route" href="#" target="_blank" rel="noopener">Route</a>
+    </div>
+    <button class="btn-back" type="button" onclick="leaveSession(false)">Nieuwe sessie</button>
   </div>
 </div>
 
-<!-- Match Overlay -->
-<div class="match-overlay" id="match-overlay">
-  <div class="match-title">It&rsquo;s a<br>match!</div>
-  <div class="match-place" id="match-place-name"></div>
-  <div class="match-area-label" id="match-area-label"></div>
-  <div class="match-actions">
-    <a class="btn-maps" id="match-maps-link" href="#" target="_blank">BRENG ME HIER &rarr;</a>
-    <button class="btn-dismiss" onclick="dismissMatch()">Verder swipen</button>
+<!-- MATCH -->
+<div class="overlay" id="match-overlay" role="dialog" aria-modal="true" aria-labelledby="match-title">
+  <div class="overlay-inner">
+    <div class="match-heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.2-4.6-9.4-9A5.3 5.3 0 0 1 12 6.3a5.3 5.3 0 0 1 9.4 5.7C19.2 16.4 12 21 12 21z"/></svg></div>
+    <div class="match-title" id="match-title">It&rsquo;s a match!</div>
+    <div class="match-place" id="match-place-name"></div>
+    <div class="match-area" id="match-area-label"></div>
+    <div class="match-actions">
+      <button class="btn btn-primary" type="button" onclick="proposeFromMatch()">Hier gaan we eten!</button>
+      <button class="btn btn-secondary" type="button" onclick="dismissMatch()">Nog even verder swipen</button>
+    </div>
   </div>
 </div>
 
-<!-- Confetti container -->
-<div class="confetti-container" id="confetti-container"></div>
+<!-- VOORSTEL -->
+<div class="overlay" id="proposal-overlay" role="dialog" aria-modal="true" aria-labelledby="proposal-label">
+  <div class="overlay-inner">
+    <div class="label" id="proposal-label">Voorstel</div>
+    <div class="match-place" id="proposal-name"></div>
+    <div class="match-area" id="proposal-area"></div>
+    <p class="overlay-note" id="proposal-note"></p>
+    <div class="match-actions" id="proposal-actions"></div>
+  </div>
+</div>
 
+<!-- SHORTLIST -->
+<div class="shortlist" id="shortlist" role="dialog" aria-modal="true" aria-labelledby="shortlist-titel">
+  <div class="shortlist-kop">
+    <h2 id="shortlist-titel">Shortlist</h2>
+    <button class="sluit" type="button" onclick="closeShortlist()" aria-label="Sluiten">&times;</button>
+  </div>
+  <div class="shortlist-list" id="shortlist-list"></div>
+  <div class="shortlist-voet"><button class="btn-back zacht" type="button" onclick="closeShortlist()">Terug naar swipen</button></div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
+// ═══ TEKSTEN ═══
+const T = {
+  offline: 'Geen verbinding met de server. Swipe & Dine heeft internet nodig — check je verbinding of een adblocker en probeer opnieuw.',
+  geenVerbinding: 'Geen verbinding met de server. Probeer het zo nog eens.',
+  geenCode: 'Het lukt even niet om een vrije code te vinden. Probeer het zo nog eens.',
+  geweigerd: 'De server weigert de verbinding. Waarschijnlijk zijn de databaseregels verlopen.',
+  aanmakenMislukt: 'Sessie aanmaken lukt niet. Check je internetverbinding en probeer opnieuw.',
+  vierLetters: 'Voer een code van 4 letters in',
+  nietGevonden: 'Sessie niet gevonden',
+  verlopen: 'Deze sessie is verlopen',
+  vol: 'Deze sessie is al vol',
+  joinMislukt: 'Meedoen lukt niet, probeer opnieuw',
+  gekopieerd: 'Link gekopieerd',
+  waTekst: (code, url) => `Swipe & Dine? Kies jij mee waar we gaan eten? Code ${code}: ${url}`,
+  overal: 'Overal',
+  plekken: n => `${n} ${n === 1 ? 'plek' : 'plekken'}`,
+  maakSessie: 'Maak sessie →',
+  startRonde: 'Start nieuwe ronde →',
+  anderKlaar: 'De ander is al klaar met swipen',
+  doneLabel: 'Je bent erdoor',
+  doneLabelBeide: 'Allebei klaar',
+  doneWachtKop: 'Nu is het aan de ander.',
+  doneWachtSub: n => n ? `Jullie hebben ${n === 1 ? 'één match' : n + ' matches'} in de shortlist. De ander swipet nog even verder.` : 'De ander swipet nog. Zodra jullie dezelfde plek leuk vinden, hoor je het.',
+  doneBeideKop: n => n ? 'Nu nog kiezen.' : 'Geen match deze ronde.',
+  doneBeideSub: n => n ? `${n === 1 ? 'Eén match' : n + ' matches'} in de shortlist. Stel er een voor, dan beslissen jullie samen.` : 'Niks aan de hand. Nog een ronde, of andere buurten?',
+  bekijkShortlist: 'Bekijk shortlist',
+  nogEenRonde: 'Nog een ronde',
+  andereWijken: 'Andere buurten',
+  voorstelVraag: 'De ander wil hier eten. Jij ook?',
+  jaHier: 'Ja, hier gaan we eten!',
+  lieverNiet: 'Liever nog even verder',
+  wachtAntwoord: 'Voorstel verstuurd. Wachten op de ander',
+  trekIn: 'Trek voorstel in',
+  afgewezen: 'Geen deal. De ander wil nog even verder kijken.',
+  verder: 'Verder swipen',
+  alVoorstel: 'Er ligt al een voorstel. Reageer daar eerst op.',
+  shortlistLeeg: 'Nog geen matches. Swipen maar.',
+  hierEten: 'Hier gaan we eten!',
+  voorgesteld: 'Voorgesteld',
+  verlaatBevestig: 'Sessie verlaten? Met de link kun je altijd weer terug.',
+  opslaanMislukt: 'Opslaan lukte niet, probeer het nog eens.',
+  sessieWeg: 'De sessie is gestopt.',
+};
+
 // ═══ FIREBASE ═══
 const firebaseConfig = {
   apiKey: "AIzaSyDh4VoWSlOPD5q1FRz1V6VHqViLVPeH3z8",
@@ -742,13 +772,11 @@ const firebaseConfig = {
 // Firebase mag nooit de hele pagina meenemen als het misgaat: zonder deze
 // guard sterft het script hier en doen alle knoppen daaronder niets.
 let db = null;
-let dbError = null;
 try {
   if (typeof firebase === 'undefined') throw new Error('offline');
   firebase.initializeApp(firebaseConfig);
   db = firebase.database();
 } catch (e) {
-  dbError = e;
   console.error('Firebase niet beschikbaar:', e);
 }
 
@@ -759,14 +787,7 @@ function showConnectionError(msg) {
   el.style.display = 'block';
 }
 
-// Waarschuw meteen op het startscherm in plaats van bij de eerste klik
-if (!db) {
-  document.addEventListener('DOMContentLoaded', () => showConnectionError(
-    'Geen verbinding met de server. Swipe & Dine heeft internet nodig — check je verbinding of een adblocker en probeer opnieuw.'
-  ));
-}
-
-// ═══ PLACES DATA ═══
+// ═══ PLEKKEN ═══
 const places = [
   { name:"Caffe Pico", area:"De Pijp", note:"Goed eten, chill sfeertje", lat:52.3552,lng:4.8900, tags:["restaurant"] },
   { name:"Peps", area:"West", note:"Happy hour 16\u201318u, altijd gezellig", lat:52.3675,lng:4.8716, tags:["tapas","happy hour"] },
@@ -827,381 +848,495 @@ const places = [
   { name:"Ko Chang", area:"Jordaan", note:"Gewoon klein en gezellig, en echt een goede Thai", lat:52.3791,lng:4.8836, tags:["restaurant","aziatisch","thais"] },
 ];
 
-// Shuffle places consistently per session using a seeded random
-function shufflePlaces(seed) {
-  const arr = [...places];
-  let s = seed;
-  function seededRandom() {
-    s = (s * 16807) % 2147483647;
-    return (s - 1) / 2147483646;
-  }
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(seededRandom() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
+// Dezelfde buurten als op de voorpagina, zodat een filter hier hetzelfde
+// betekent als daar.
+const areaGroups = {
+  'Jordaan': ['Jordaan'],
+  'De Pijp': ['De Pijp'],
+  'Zuid': ['Oud-Zuid', 'Vondelpark'],
+  'Centrum': ['Centrum', 'Zeedijk', 'Nieuwmarkt', 'Haarlemmerplein'],
+  'West': ['West'],
+  'Oost': ['Oost'],
+  'Noord': ['Noord'],
+};
+const KEY = name => name.replace(/[.#$/\[\]]/g, '_');
+const byKey = Object.fromEntries(places.map(p => [KEY(p.name), p]));
+const SESSION_TTL = 86400000;
+const OPSLAG = 'ww-duo';
+
+// Firebase geeft een lijst soms als array terug en soms als object met
+// cijfers als sleutel; hier wordt het altijd een array.
+const arr = v => Array.isArray(v) ? v.filter(x => x !== null && x !== undefined)
+  : Object.keys(v || {}).sort((a, b) => a - b).map(k => v[k]);
+
+function poolVoor(wijken) {
+  if (!wijken || !wijken.length) return places.map(p => KEY(p.name));
+  const areas = wijken.flatMap(w => areaGroups[w] || []);
+  return places.filter(p => areas.includes(p.area)).map(p => KEY(p.name));
 }
 
-// ═══ STATE ═══
-let sessionCode = null;
-let playerId = null; // 'player1' or 'player2'
-let otherPlayerId = null;
-let currentIndex = 0;
-let shuffledPlaces = [];
-let matches = [];
-let sessionRef = null;
-let votesRef = null;
-let isDragging = false;
-let startX = 0, startY = 0, currentX = 0;
-let matchQueue = [];
-let showingMatch = false;
-let swipeLocked = false;
+// Echte toevalsvolgorde, één keer per deelnemer per ronde. Niets aan de
+// volgorde van de ander ontleend.
+function schud(n) {
+  const a = [...Array(n).keys()];
+  const rnd = () => (crypto && crypto.getRandomValues)
+    ? crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296
+    : Math.random();
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function nieuwToken() {
+  return (crypto && crypto.randomUUID) ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36);
+}
 
-// ═══ FUN SESSION CODES ═══
+// ═══ STAAT ═══
+let sessionCode = null, playerId = null, otherId = null, token = null;
+let sessionRef = null, sessionData = null, luisteraar = null;
+let gekozenWijken = [];
+let currentKey = null, pendingKey = null, animating = false, swipeLocked = false;
+let isDragging = false, startX = 0, currentX = 0;
+let matchQueue = [], showingMatch = false, huidigeMatch = null, voorstelOpen = false;
+let gezien = new Set(), rondeGezien = null, orderCache = null, touchKlaar = false;
+let nieuweRondeMetFilter = false;
+
+// ═══ CODES ═══
 const funCodes = [
-  'PIJP','GROG','BIER','WIJN','ETEN','GEIT','KAAS','SOEP',
-  'BROOD','SAUS','TAART','KRAB','STOK','PLAK','GEUR','GOUD',
-  'STER','ZOET','ZOUT','WARM','KOEL','ROOK','GRIL','KLAP',
-  'PRIK','SCHUIM','DORP','STAD','FEEST','BOOT','TAFEL'
+  'PIJP','GROG','BIER','WIJN','ETEN','KAAS','SOEP','SAUS','KRAB','GOUD','STER','ZOET',
+  'ZOUT','WARM','KOEL','ROOK','PRIK','DORP','STAD','BOOT','OLIE','THEE','KOEK','VORK',
+  'GLAS','BORD','HAAS','PEER','NOOT','VIJG','MAIS','BRIE','GIST','MOUT','HOPS','KRUL',
+  'ZALM','TONG','KOOL','PREI','RAAP','KNOL','TIJM','MUNT','ANIJ','ROOM',
 ];
-
 function generateCode() {
-  // Try a fun code first, fall back to random
-  const code = funCodes[Math.floor(Math.random() * funCodes.length)];
-  // Ensure 4 chars
-  return code.substring(0, 4).toUpperCase();
+  return funCodes[Math.floor(Math.random() * funCodes.length)].substring(0, 4).toUpperCase();
 }
 
-function generateSeed(code) {
-  let hash = 0;
-  for (let i = 0; i < code.length; i++) {
-    hash = ((hash << 5) - hash) + code.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash) || 1;
+// ═══ OPSLAG (eigen stoel onthouden voor refresh en herverbinden) ═══
+const lees = () => { try { return JSON.parse(localStorage.getItem(OPSLAG) || 'null'); } catch (e) { return null; } };
+const bewaar = () => { try { localStorage.setItem(OPSLAG, JSON.stringify({ code: sessionCode, playerId, token })); } catch (e) {} };
+const vergeet = () => { try { localStorage.removeItem(OPSLAG); } catch (e) {} };
+const gezienSleutel = ronde => `${OPSLAG}-gezien-${sessionCode}-${ronde}`;
+function laadGezien(ronde) {
+  try { gezien = new Set(JSON.parse(localStorage.getItem(gezienSleutel(ronde)) || '[]')); } catch (e) { gezien = new Set(); }
+  rondeGezien = ronde;
+}
+function markeerGezien(key) {
+  gezien.add(key);
+  try { localStorage.setItem(gezienSleutel(rondeGezien), JSON.stringify([...gezien])); } catch (e) {}
 }
 
-// ═══ SCREEN MANAGEMENT ═══
+// ═══ SCHERMEN ═══
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById('screen-' + name);
-  if (el) {
+  if (el && !el.classList.contains('active')) {
     el.classList.add('active');
-    // Re-trigger animation
     el.style.animation = 'none';
     el.offsetHeight;
     el.style.animation = '';
+  } else if (el) {
+    el.classList.add('active');
   }
-  if (name === 'join') {
-    setTimeout(() => document.getElementById('join-input').focus(), 100);
+  if (name === 'join') setTimeout(() => document.getElementById('join-input').focus(), 100);
+  if (name === 'filter') {
+    document.getElementById('maakBtn').textContent = nieuweRondeMetFilter ? T.startRonde : T.maakSessie;
+    document.getElementById('maakBtn').onclick = nieuweRondeMetFilter ? () => startRonde(poolVoor(gekozenWijken)) : () => createSession();
+    document.getElementById('filterTerug').onclick = nieuweRondeMetFilter ? () => { nieuweRondeMetFilter = false; render(); } : () => showScreen('landing');
+    tekenPills();
   }
 }
+function huidigScherm() {
+  const el = document.querySelector('.screen.active');
+  return el ? el.id.replace('screen-', '') : null;
+}
+let toastTimer = null;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('zichtbaar');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('zichtbaar'), 2600);
+}
 
-// ═══ CREATE SESSION ═══
+// ═══ WIJKFILTER ═══
+function tekenPills() {
+  const wrap = document.getElementById('wijkPills');
+  const wijken = Object.keys(areaGroups).filter(w => places.some(p => areaGroups[w].includes(p.area)));
+  wrap.innerHTML = '';
+  const maak = (label, waarde) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'pill'; b.textContent = label; b.dataset.wijk = waarde;
+    b.setAttribute('aria-pressed', 'false');
+    b.onclick = () => {
+      if (!waarde) gekozenWijken = [];
+      else gekozenWijken = gekozenWijken.includes(waarde) ? gekozenWijken.filter(w => w !== waarde) : [...gekozenWijken, waarde];
+      tekenPills();
+    };
+    wrap.appendChild(b);
+  };
+  maak(T.overal, '');
+  wijken.forEach(w => maak(w, w));
+  [...wrap.children].forEach(b => {
+    const aan = b.dataset.wijk ? gekozenWijken.includes(b.dataset.wijk) : gekozenWijken.length === 0;
+    b.classList.toggle('selected', aan);
+    b.setAttribute('aria-pressed', String(aan));
+  });
+  const n = poolVoor(gekozenWijken).length;
+  document.getElementById('poolTelling').textContent = T.plekken(n);
+  document.getElementById('maakBtn').disabled = n === 0;
+}
+
+// ═══ SESSIE MAKEN ═══
 async function createSession(attempt = 0) {
-  if (!db) {
-    showScreen('landing');
-    showConnectionError('Geen verbinding met de server. Probeer het zo nog eens.');
-    return;
-  }
-
+  if (!db) { showScreen('landing'); showConnectionError(T.geenVerbinding); return; }
+  const pool = poolVoor(gekozenWijken);
+  if (!pool.length) return;
   const code = generateCode();
-  sessionCode = code;
-  playerId = 'player1';
-  otherPlayerId = 'player2';
-
-  sessionRef = db.ref('sessions/' + code);
-
+  const ref = db.ref('sessions/' + code);
   try {
-    // Check if code already exists and is less than 24h old
-    const snap = await sessionRef.once('value');
+    const snap = await ref.once('value');
     if (snap.exists()) {
       const data = snap.val();
-      if (data.created && Date.now() - data.created < 86400000) {
-        // Code in use, try again — begrensd, anders kan dit eindeloos doorgaan
-        if (attempt >= 10) {
-          showScreen('landing');
-          showConnectionError('Het lukt even niet om een vrije code te vinden. Probeer het zo nog eens.');
-          return;
-        }
+      if (data && data.created && Date.now() - data.created < SESSION_TTL) {
+        if (attempt >= 10) { showScreen('landing'); showConnectionError(T.geenCode); return; }
         return createSession(attempt + 1);
       }
     }
-
-    await sessionRef.set({
+    const tok = nieuwToken();
+    await ref.set({
       created: Date.now(),
-      players: { player1: true }
+      round: 1,
+      players: { player1: true },
+      tokens: { player1: tok },
+      filter: { wijken: gekozenWijken },
+      pool,
+      orders: { player1: { round: 1, list: schud(pool.length) } },
     });
+    sessionCode = code; playerId = 'player1'; otherId = 'player2'; token = tok; sessionRef = ref;
+    bewaar();
   } catch (e) {
     console.error('Sessie aanmaken mislukt:', e);
     showScreen('landing');
-    showConnectionError(
-      e && e.code === 'PERMISSION_DENIED'
-        ? 'De server weigert de verbinding. Waarschijnlijk zijn de databaseregels verlopen.'
-        : 'Sessie aanmaken lukt niet. Check je internetverbinding en probeer opnieuw.'
-    );
+    showConnectionError(e && e.code === 'PERMISSION_DENIED' ? T.geweigerd : T.aanmakenMislukt);
     return;
   }
-
-  document.getElementById('session-code-display').textContent = code;
+  zetLink();
   showScreen('create');
-
-  // Listen for player2 joining
-  sessionRef.child('players/player2').on('value', (snap) => {
-    if (snap.val() === true) {
-      startSwipeMode();
-    }
-  });
+  luister();
 }
 
-const startBtn = document.querySelector('[onclick="showScreen(\'create\')"]');
-if (startBtn) startBtn.onclick = function() { createSession(); };
-
-// ═══ JOIN SESSION ═══
-async function joinSession() {
+// ═══ MEEDOEN ═══
+async function joinSession(codeParam) {
   const input = document.getElementById('join-input');
-  const code = input.value.trim().toUpperCase();
+  const code = String(codeParam || input.value).trim().toUpperCase();
   const errorEl = document.getElementById('join-error');
+  const fout = msg => { errorEl.textContent = msg; showScreen('join'); input.value = code.length === 4 ? code : input.value; };
 
-  if (code.length !== 4) {
-    errorEl.textContent = 'Voer een code van 4 letters in';
-    return;
-  }
+  if (!/^[A-Z]{4}$/.test(code)) { fout(T.vierLetters); return; }
+  if (!db) { fout(T.geenVerbinding); return; }
 
-  if (!db) {
-    errorEl.textContent = 'Geen verbinding met de server';
-    return;
-  }
-
-  sessionRef = db.ref('sessions/' + code);
-
+  const ref = db.ref('sessions/' + code);
   try {
-    const snap = await sessionRef.once('value');
-
-    if (!snap.exists()) {
-      errorEl.textContent = 'Sessie niet gevonden';
-      return;
-    }
-
+    const snap = await ref.once('value');
+    if (!snap.exists()) { fout(T.nietGevonden); return; }
     const data = snap.val();
+    if (data.created && Date.now() - data.created > SESSION_TTL) { fout(T.verlopen); return; }
 
-    // Check if expired
-    if (data.created && Date.now() - data.created > 86400000) {
-      errorEl.textContent = 'Sessie is verlopen';
-      return;
+    // Zelfde toestel, link nog eens geopend: gewoon je eigen stoel weer innemen.
+    const saved = lees();
+    if (saved && saved.code === code && data.tokens && data.tokens[saved.playerId] === saved.token) {
+      if (await hervat(saved)) return;
     }
 
-    // Check if already full
-    if (data.players && data.players.player2) {
-      errorEl.textContent = 'Sessie is al vol';
-      return;
-    }
+    // Stoel twee claimen met een transactie: van twee gelijktijdige joiners
+    // komt er precies één door, een derde krijgt 'vol'.
+    const tx = await ref.child('players/player2').transaction(cur => cur === true ? undefined : true);
+    if (!tx.committed) { fout(T.vol); return; }
 
-    sessionCode = code;
-    playerId = 'player2';
-    otherPlayerId = 'player1';
-
-    await sessionRef.child('players/player2').set(true);
+    const tok = nieuwToken();
+    const pool = data.pool ? arr(data.pool) : poolVoor([]);
+    await ref.update({
+      'tokens/player2': tok,
+      'orders/player2': { round: data.round || 1, list: schud(pool.length) },
+    });
+    sessionCode = code; playerId = 'player2'; otherId = 'player1'; token = tok; sessionRef = ref;
+    bewaar();
   } catch (e) {
-    console.error('Joinen mislukt:', e);
-    errorEl.textContent = e && e.code === 'PERMISSION_DENIED'
-      ? 'De server weigert de verbinding'
-      : 'Verbinden lukt niet, probeer opnieuw';
+    console.error('Meedoen mislukt:', e);
+    fout(e && e.code === 'PERMISSION_DENIED' ? T.geweigerd : T.joinMislukt);
     return;
   }
-
-  startSwipeMode();
+  zetLink();
+  luister();
 }
 
-// Enter key on input
-document.getElementById('join-input').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') joinSession();
-});
-
-// Auto-uppercase
-document.getElementById('join-input').addEventListener('input', (e) => {
+document.getElementById('join-input').addEventListener('keydown', e => { if (e.key === 'Enter') joinSession(); });
+document.getElementById('join-input').addEventListener('input', e => {
   e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, '');
-  document.getElementById('join-error').textContent = '\u00a0';
+  document.getElementById('join-error').textContent = ' ';
 });
 
-// ═══ COPY / SHARE ═══
-function copyCode() {
-  navigator.clipboard.writeText(sessionCode).then(() => {
-    const btns = document.querySelectorAll('.btn-share');
-    btns[0].textContent = 'Gekopieerd!';
-    setTimeout(() => btns[0].textContent = 'Kopieer code', 1500);
-  });
-}
-
-function shareCode() {
-  if (navigator.share) {
-    navigator.share({
-      title: 'Swipe & Dine — (W)etenwaar.',
-      text: `Join mijn sessie met code: ${sessionCode}`,
-      url: window.location.href
-    });
-  } else {
-    copyCode();
+// ═══ HERVATTEN (refresh, herverbinden, link opnieuw geopend) ═══
+async function hervat(saved) {
+  try {
+    const ref = db.ref('sessions/' + saved.code);
+    const snap = await ref.once('value');
+    const data = snap.val();
+    const geldig = data && !(data.created && Date.now() - data.created > SESSION_TTL)
+      && data.tokens && data.tokens[saved.playerId] === saved.token;
+    if (!geldig) { vergeet(); return false; }
+    sessionCode = saved.code; playerId = saved.playerId; token = saved.token;
+    otherId = playerId === 'player1' ? 'player2' : 'player1';
+    sessionRef = ref;
+    gekozenWijken = arr(data.filter && data.filter.wijken);
+    zetLink();
+    luister();
+    return true;
+  } catch (e) {
+    console.error('Hervatten mislukt:', e);
+    return false;
   }
 }
 
-// ═══ CANCEL SESSION ═══
+// ═══ LINK DELEN ═══
+function uitnodigingsLink() {
+  return location.origin + location.pathname + '?code=' + sessionCode;
+}
+function zetLink() {
+  document.getElementById('session-code-display').textContent = sessionCode;
+  const link = uitnodigingsLink();
+  document.getElementById('waBtn').href = 'https://wa.me/?text=' + encodeURIComponent(T.waTekst(sessionCode, link));
+  try { history.replaceState(null, '', location.pathname + '?code=' + sessionCode); } catch (e) {}
+}
+function copyLink() {
+  const link = uitnodigingsLink();
+  const klaar = () => toast(T.gekopieerd);
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(klaar, () => prompt('', link));
+  else prompt('', link);
+}
+
+// ═══ STOPPEN ═══
+function stopLuisteren() {
+  if (luisteraar && sessionRef) sessionRef.off('value', luisteraar);
+  luisteraar = null;
+}
+function resetStaat() {
+  sessionCode = null; playerId = null; otherId = null; token = null; sessionRef = null; sessionData = null;
+  currentKey = null; pendingKey = null; animating = false; swipeLocked = false;
+  matchQueue = []; showingMatch = false; huidigeMatch = null; voorstelOpen = false; orderCache = null;
+  gezien = new Set(); rondeGezien = null; nieuweRondeMetFilter = false; gekozenWijken = [];
+  document.getElementById('match-overlay').classList.remove('active');
+  document.getElementById('proposal-overlay').classList.remove('active');
+  closeShortlist();
+  document.getElementById('shortlistKnop').classList.remove('zichtbaar');
+  try { history.replaceState(null, '', location.pathname); } catch (e) {}
+}
 function cancelSession() {
-  if (sessionRef) {
-    sessionRef.off();
-    if (playerId === 'player1') sessionRef.remove();
-  }
-  sessionCode = null;
-  playerId = null;
-  sessionRef = null;
+  stopLuisteren();
+  if (sessionRef && playerId === 'player1') sessionRef.remove().catch(() => {});
+  vergeet();
+  resetStaat();
+  showScreen('landing');
+}
+function leaveSession(vraag = true) {
+  if (vraag && !window.confirm(T.verlaatBevestig)) return;
+  stopLuisteren();
+  vergeet();
+  resetStaat();
   showScreen('landing');
 }
 
-// ═══ START SWIPE MODE ═══
-function startSwipeMode() {
-  const seed = generateSeed(sessionCode);
-  shuffledPlaces = shufflePlaces(seed);
-  currentIndex = 0;
-  matches = [];
-  matchQueue = [];
-
-  votesRef = db.ref('sessions/' + sessionCode + '/votes');
-
-  showScreen('swipe');
-  renderCard();
+// ═══ LUISTEREN: ÉÉN BRON VAN WAARHEID ═══
+// De hele sessie is klein (twee volgordes, hooguit ruim honderd stemmen),
+// dus één listener op de sessie en alles afleiden uit het snapshot. Zo
+// kloppen beide telefoons altijd met elkaar, ook na een refresh.
+function luister() {
+  stopLuisteren();
+  luisteraar = sessionRef.on('value', snap => {
+    sessionData = snap.val();
+    render();
+  }, err => {
+    console.error('Verbinding met sessie verloren:', err);
+    toast(T.geenVerbinding);
+  });
   setupTouch();
-  listenForMatches();
 }
 
-// ═══ RENDER CARD ═══
-function renderCard() {
-  if (currentIndex >= shuffledPlaces.length) {
-    showResults();
+function render() {
+  if (!sessionRef) return;
+  const d = sessionData;
+  if (!d) {
+    // Sessie verwijderd of verlopen.
+    toast(T.sessieWeg);
+    leaveSession(false);
     return;
   }
+  const pool = arr(d.pool);
+  const round = d.round || 1;
+  if (rondeGezien !== round) {
+    laadGezien(round);
+    matchQueue = []; showingMatch = false; huidigeMatch = null;
+    document.getElementById('match-overlay').classList.remove('active');
+    currentKey = null; orderCache = null;
+  }
 
-  const place = shuffledPlaces[currentIndex];
+  // Eigen volgorde: eenmalig per ronde. Ontbreekt hij (nieuwe ronde,
+  // mislukte schrijfactie), dan nu maken en wachten op de echo.
+  const mijnOrder = d.orders && d.orders[playerId];
+  if (!mijnOrder || mijnOrder.round !== round || arr(mijnOrder.list).length !== pool.length) {
+    if (!orderCache || orderCache.round !== round) {
+      orderCache = { round, list: schud(pool.length) };
+      sessionRef.child('orders/' + playerId).set(orderCache).catch(e => console.error(e));
+    }
+    return;
+  }
+  const volgorde = arr(mijnOrder.list).map(i => pool[i]).filter(Boolean);
+  const mijnStemmen = (d.votes && d.votes[playerId]) || {};
+  const anderStemmen = (d.votes && d.votes[otherId]) || {};
+  const volgende = volgorde.find(k => !(k in mijnStemmen));
+  const matches = pool.filter(k => mijnStemmen[k] === true && anderStemmen[k] === true);
+  const anderKlaar = pool.length > 0 && pool.every(k => k in anderStemmen);
+
+  // Shortlist-knop en -paneel
+  const knop = document.getElementById('shortlistKnop');
+  knop.classList.toggle('zichtbaar', matches.length > 0 && !(d.final && d.final.key));
+  document.getElementById('shortlistTelling').textContent = matches.length;
+  if (document.getElementById('shortlist').classList.contains('active')) tekenShortlist(matches, d);
+
+  // Definitief?
+  if (d.final && d.final.key) { toonFinal(d.final); return; }
+
+  // Speler 1 wacht nog op de ander
+  if (!d.players || !d.players.player2) { showScreen('create'); return; }
+
+  // Nieuwe ronde met andere buurten: de maker zit in het filterscherm
+  if (nieuweRondeMetFilter) { if (huidigScherm() !== 'filter') showScreen('filter'); return; }
+
+  // Voorstel: gaat voor op alles behalve de uitkomst
+  const p = d.proposal;
+  if (p && p.key && !p.accepted && !p.declined) {
+    toonVoorstel(p, p.by === playerId ? 'wachten' : 'inkomend');
+  } else if (p && p.key && p.declined && p.by === playerId) {
+    toonVoorstel(p, 'afgewezen');
+  } else {
+    sluitVoorstel();
+    if (p && p.key && p.accepted) {
+      // Allebei ja: vastleggen. Transactie, zodat het maar één keer gebeurt.
+      sessionRef.child('final').transaction(cur => cur ? undefined : { key: p.key, at: Date.now() }).catch(() => {});
+    }
+  }
+
+  // Nieuwe matches vieren, elk precies één keer, op beide telefoons
+  matches.forEach(k => {
+    if (gezien.has(k) || matchQueue.includes(k)) return;
+    matchQueue.push(k);
+    sessionRef.child('matches/' + k).transaction(cur => cur === null ? Date.now() : undefined).catch(() => {});
+  });
+  if (!showingMatch && matchQueue.length && !voorstelOpen) toonMatch();
+
+  // Swipen of klaar
+  if (volgende) {
+    if (huidigScherm() !== 'swipe') showScreen('swipe');
+    toonKaart(volgende, Object.keys(mijnStemmen).length, pool.length);
+    document.getElementById('swipe-status').textContent = anderKlaar ? T.anderKlaar : ' ';
+  } else {
+    toonDone(matches, anderKlaar, d);
+  }
+}
+
+// ═══ KAART ═══
+function toonKaart(key, geteld, totaal) {
+  document.getElementById('progress-fill').style.width = `${Math.round((geteld / Math.max(totaal, 1)) * 100)}%`;
+  if (key === currentKey) return;
+  if (animating) { pendingKey = key; return; }
+  const place = byKey[key];
+  if (!place) return;
+  currentKey = key; pendingKey = null;
   document.getElementById('card-name').textContent = place.name;
-  document.getElementById('card-area').textContent = place.area;
-  document.getElementById('card-note').textContent = place.note;
-
-  const tagsEl = document.getElementById('card-tags');
-  tagsEl.innerHTML = place.tags.map(t => `<span class="card-tag">${t}</span>`).join('');
-
-  document.getElementById('progress-text').textContent = `${currentIndex + 1} / ${shuffledPlaces.length} plekken`;
-  document.getElementById('progress-fill').style.width = `${((currentIndex) / shuffledPlaces.length) * 100}%`;
-
-  // Reset card position
+  document.getElementById('card-area').textContent = place.area || '';
   const card = document.getElementById('swipe-card');
   card.style.transition = 'none';
   card.style.transform = 'translateX(0) rotate(0deg)';
   card.style.opacity = '1';
-
   document.getElementById('stamp-ja').style.opacity = '0';
   document.getElementById('stamp-nee').style.opacity = '0';
-
-  document.getElementById('waiting-status').innerHTML = '&nbsp;';
-
   swipeLocked = false;
 }
 
-// ═══ VOTE ═══
+// ═══ STEMMEN ═══
 async function vote(liked) {
-  if (swipeLocked) return;
-  swipeLocked = true;
-
-  const place = shuffledPlaces[currentIndex];
-  const placeKey = place.name.replace(/[.#$/\[\]]/g, '_');
-
-  // Animate card off screen
+  if (swipeLocked || !currentKey || !sessionRef || huidigScherm() !== 'swipe') return;
+  swipeLocked = true; animating = true;
+  const key = currentKey;
   animateCardOff(liked);
-
-  // Save vote — een mislukte schrijfactie mag het swipen niet blokkeren
   try {
-    await votesRef.child(playerId).child(placeKey).set(liked);
+    await sessionRef.child('votes/' + playerId + '/' + key).set(!!liked);
   } catch (e) {
     console.error('Stem opslaan mislukt:', e);
+    toast(T.opslaanMislukt);
   }
-
-  // Move to next
   setTimeout(() => {
-    currentIndex++;
-    renderCard();
-  }, 350);
+    animating = false;
+    currentKey = null;
+    if (pendingKey) { const k = pendingKey; pendingKey = null; const d = sessionData || {}; toonKaart(k, Object.keys((d.votes && d.votes[playerId]) || {}).length, arr(d.pool).length); }
+    else render();
+  }, 360);
 }
-
 function animateCardOff(liked) {
   const card = document.getElementById('swipe-card');
   const dir = liked ? 1 : -1;
   card.style.transition = 'transform 0.35s ease, opacity 0.35s ease';
-  card.style.transform = `translateX(${dir * 120}%) rotate(${dir * 20}deg)`;
+  card.style.transform = `translateX(${dir * 120}%) rotate(${dir * 18}deg)`;
   card.style.opacity = '0';
 }
 
-// ═══ TOUCH SWIPE ═══
+// ═══ AANRAKEN, MUIS, TOETSENBORD ═══
 function setupTouch() {
+  if (touchKlaar) return;
+  touchKlaar = true;
   const card = document.getElementById('swipe-card');
-  const container = document.getElementById('card-container');
-
-  // Touch events
   card.addEventListener('touchstart', onPointerDown, { passive: true });
   card.addEventListener('touchmove', onPointerMove, { passive: false });
   card.addEventListener('touchend', onPointerUp);
-
-  // Mouse events for desktop
+  card.addEventListener('touchcancel', onPointerUp);
   card.addEventListener('mousedown', onPointerDown);
   document.addEventListener('mousemove', onPointerMove);
   document.addEventListener('mouseup', onPointerUp);
+  document.addEventListener('keydown', e => {
+    if (huidigScherm() !== 'swipe' || showingMatch || voorstelOpen) return;
+    if (document.getElementById('shortlist').classList.contains('active')) return;
+    if (e.key === 'ArrowRight') vote(true);
+    if (e.key === 'ArrowLeft') vote(false);
+  });
 }
-
-function getX(e) {
-  return e.touches ? e.touches[0].clientX : e.clientX;
-}
-
+const getX = e => e.touches ? e.touches[0].clientX : e.clientX;
 function onPointerDown(e) {
-  if (swipeLocked) return;
+  if (swipeLocked || !currentKey) return;
   isDragging = true;
   startX = getX(e);
   currentX = 0;
-  const card = document.getElementById('swipe-card');
-  card.style.transition = 'none';
+  document.getElementById('swipe-card').style.transition = 'none';
 }
-
 function onPointerMove(e) {
   if (!isDragging || swipeLocked) return;
-  if (e.cancelable) e.preventDefault();
-
   currentX = getX(e) - startX;
+  // Pas bij een duidelijke horizontale beweging de pagina-scroll afvangen,
+  // zodat verticaal scrollen geen onbedoelde swipe wordt.
+  if (Math.abs(currentX) > 12 && e.cancelable) e.preventDefault();
   const card = document.getElementById('swipe-card');
-  const rotation = currentX * 0.08;
-  card.style.transform = `translateX(${currentX}px) rotate(${rotation}deg)`;
-
-  // Show stamps
-  const threshold = 40;
-  const opacity = Math.min(Math.abs(currentX) / 100, 1);
-  if (currentX > threshold) {
-    document.getElementById('stamp-ja').style.opacity = opacity;
-    document.getElementById('stamp-nee').style.opacity = '0';
-  } else if (currentX < -threshold) {
-    document.getElementById('stamp-nee').style.opacity = opacity;
-    document.getElementById('stamp-ja').style.opacity = '0';
-  } else {
-    document.getElementById('stamp-ja').style.opacity = '0';
-    document.getElementById('stamp-nee').style.opacity = '0';
-  }
+  card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.07}deg)`;
+  const opacity = Math.min(Math.abs(currentX) / 110, 1);
+  document.getElementById('stamp-ja').style.opacity = currentX > 30 ? opacity : '0';
+  document.getElementById('stamp-nee').style.opacity = currentX < -30 ? opacity : '0';
 }
-
-function onPointerUp(e) {
+function onPointerUp() {
   if (!isDragging || swipeLocked) return;
   isDragging = false;
-
-  const swipeThreshold = 80;
-  if (currentX > swipeThreshold) {
-    vote(true);
-  } else if (currentX < -swipeThreshold) {
-    vote(false);
-  } else {
-    // Snap back
+  if (currentX > 80) vote(true);
+  else if (currentX < -80) vote(false);
+  else {
     const card = document.getElementById('swipe-card');
     card.style.transition = 'transform 0.3s ease';
     card.style.transform = 'translateX(0) rotate(0deg)';
@@ -1210,188 +1345,221 @@ function onPointerUp(e) {
   }
 }
 
-// ═══ LISTEN FOR MATCHES (REALTIME) ═══
-function listenForMatches() {
-  // Listen to the other player's votes
-  votesRef.child(otherPlayerId).on('child_added', (snap) => {
-    const placeKey = snap.key;
-    const otherVote = snap.val();
+// ═══ MATCH ═══
+function toonMatch() {
+  const key = matchQueue[0];
+  const place = byKey[key];
+  if (!place) { matchQueue.shift(); return; }
+  showingMatch = true; huidigeMatch = key;
+  document.getElementById('match-place-name').textContent = place.name;
+  document.getElementById('match-area-label').textContent = place.area || '';
+  const ov = document.getElementById('match-overlay');
+  ov.classList.remove('active'); ov.offsetHeight; ov.classList.add('active');
+  if (navigator.vibrate) { try { navigator.vibrate(30); } catch (e) {} }
+}
+function sluitMatch() {
+  if (huidigeMatch) markeerGezien(huidigeMatch);
+  matchQueue = matchQueue.filter(k => k !== huidigeMatch);
+  huidigeMatch = null; showingMatch = false;
+  document.getElementById('match-overlay').classList.remove('active');
+}
+function dismissMatch() {
+  sluitMatch();
+  setTimeout(render, 200);
+}
+function proposeFromMatch() {
+  const key = huidigeMatch;
+  sluitMatch();
+  propose(key);
+}
 
-    // Check if we also voted on this place
-    checkForMatch(placeKey, otherVote);
-  });
-
-  votesRef.child(otherPlayerId).on('child_changed', (snap) => {
-    const placeKey = snap.key;
-    const otherVote = snap.val();
-    checkForMatch(placeKey, otherVote);
-  });
-
-  // Also check our own votes against theirs
-  votesRef.child(playerId).on('child_added', (snap) => {
-    const placeKey = snap.key;
-    const myVote = snap.val();
-
-    votesRef.child(otherPlayerId).child(placeKey).once('value', (otherSnap) => {
-      if (otherSnap.exists() && otherSnap.val() === true && myVote === true) {
-        triggerMatch(placeKey);
+// ═══ VOORSTEL EN BEVESTIGING ═══
+// Een match is een voorstel, geen besluit. Pas als de ander ja zegt op
+// precies dezelfde plek ligt het vast. Alles via transacties, zodat twee
+// tegelijk ingediende voorstellen nooit allebei doorgaan.
+async function propose(key) {
+  if (!sessionRef || !key) return;
+  closeShortlist();
+  try {
+    const res = await sessionRef.child('proposal').transaction(cur => {
+      if (cur && cur.key && !cur.declined) {
+        if (cur.accepted) return;
+        if (cur.key === key && cur.by !== playerId) return { ...cur, accepted: true, acceptedAt: Date.now() };
+        return;
       }
+      return { key, by: playerId, at: Date.now() };
     });
-  });
-
-  // Show waiting status
-  votesRef.on('value', (snap) => {
-    if (!snap.exists()) return;
-    const data = snap.val();
-    updateWaitingStatus(data);
-  });
+    if (!res.committed) toast(T.alVoorstel);
+  } catch (e) { console.error(e); toast(T.opslaanMislukt); }
 }
-
-function checkForMatch(placeKey, otherVote) {
-  if (!otherVote) return;
-
-  votesRef.child(playerId).child(placeKey).once('value', (mySnap) => {
-    if (mySnap.exists() && mySnap.val() === true) {
-      triggerMatch(placeKey);
-    }
-  });
+function answerProposal(ja) {
+  sessionRef.child('proposal').transaction(cur => {
+    if (!cur || !cur.key || cur.by === playerId || cur.accepted || cur.declined) return;
+    return ja ? { ...cur, accepted: true, acceptedAt: Date.now() } : { ...cur, declined: true, declinedAt: Date.now() };
+  }).catch(e => console.error(e));
 }
-
-function triggerMatch(placeKey) {
-  // Avoid duplicate matches
-  if (matches.includes(placeKey)) return;
-  matches.push(placeKey);
-
-  const place = places.find(p => p.name.replace(/[.#$/\[\]]/g, '_') === placeKey);
+function withdrawProposal() {
+  sessionRef.child('proposal').transaction(cur => (cur && cur.by === playerId && !cur.accepted && !cur.declined) ? null : undefined).catch(() => {});
+}
+function ackDecline() {
+  sessionRef.child('proposal').transaction(cur => (cur && cur.declined && cur.by === playerId) ? null : undefined).catch(() => {});
+}
+function toonVoorstel(p, modus) {
+  const place = byKey[p.key];
   if (!place) return;
-
-  matchQueue.push(place);
-  if (!showingMatch) showNextMatch();
+  voorstelOpen = true;
+  document.getElementById('match-overlay').classList.remove('active');
+  showingMatch = false;
+  document.getElementById('proposal-name').textContent = place.name;
+  document.getElementById('proposal-area').textContent = place.area || '';
+  const note = document.getElementById('proposal-note');
+  const acts = document.getElementById('proposal-actions');
+  const ov = document.getElementById('proposal-overlay');
+  if (ov.dataset.modus === modus && ov.dataset.key === p.key && ov.classList.contains('active')) return;
+  ov.dataset.modus = modus; ov.dataset.key = p.key;
+  acts.innerHTML = '';
+  const knop = (tekst, cls, fn) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn ' + cls; b.textContent = tekst; b.onclick = fn; acts.appendChild(b); };
+  if (modus === 'inkomend') {
+    note.textContent = T.voorstelVraag;
+    knop(T.jaHier, 'btn-primary', () => answerProposal(true));
+    knop(T.lieverNiet, 'btn-secondary', () => answerProposal(false));
+  } else if (modus === 'wachten') {
+    note.innerHTML = '';
+    note.append(T.wachtAntwoord); const dots = document.createElement('span'); dots.className = 'waiting-dots'; note.appendChild(dots);
+    knop(T.trekIn, 'btn-secondary', withdrawProposal);
+  } else {
+    note.textContent = T.afgewezen;
+    knop(T.verder, 'btn-primary', ackDecline);
+    knop(T.bekijkShortlist, 'btn-secondary', () => { ackDecline(); openShortlist(); });
+  }
+  ov.classList.add('active');
+}
+function sluitVoorstel() {
+  if (!voorstelOpen) return;
+  voorstelOpen = false;
+  const ov = document.getElementById('proposal-overlay');
+  ov.classList.remove('active'); ov.dataset.modus = ''; ov.dataset.key = '';
 }
 
-function showNextMatch() {
-  if (matchQueue.length === 0) {
-    showingMatch = false;
+// ═══ SHORTLIST ═══
+function openShortlist() {
+  const d = sessionData || {};
+  const pool = arr(d.pool);
+  const mijn = (d.votes && d.votes[playerId]) || {}, ander = (d.votes && d.votes[otherId]) || {};
+  tekenShortlist(pool.filter(k => mijn[k] === true && ander[k] === true), d);
+  document.getElementById('shortlist').classList.add('active');
+}
+function closeShortlist() {
+  document.getElementById('shortlist').classList.remove('active');
+}
+function tekenShortlist(matches, d) {
+  const list = document.getElementById('shortlist-list');
+  const tijden = (d && d.matches) || {};
+  const gesorteerd = [...matches].sort((a, b) => (tijden[a] || 0) - (tijden[b] || 0));
+  list.innerHTML = '';
+  if (!gesorteerd.length) {
+    list.innerHTML = `<p class="shortlist-leeg">${T.shortlistLeeg}</p>`;
     return;
   }
-  showingMatch = true;
-  const place = matchQueue.shift();
-
-  document.getElementById('match-place-name').textContent = place.name;
-  document.getElementById('match-area-label').textContent = place.area;
-  document.getElementById('match-maps-link').href =
-    `https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}`;
-
-  document.getElementById('match-overlay').classList.add('active');
-  spawnConfetti();
+  const p = d && d.proposal;
+  gesorteerd.forEach(key => {
+    const place = byKey[key];
+    if (!place) return;
+    const item = document.createElement('div');
+    item.className = 'shortlist-item';
+    const info = document.createElement('div');
+    const h = document.createElement('h3'); h.textContent = place.name;
+    const s = document.createElement('span'); s.textContent = place.area || '';
+    info.append(h, s);
+    const b = document.createElement('button'); b.type = 'button';
+    const openVoorstel = p && p.key === key && !p.declined && !p.accepted;
+    b.textContent = openVoorstel ? T.voorgesteld : T.hierEten;
+    b.disabled = !!openVoorstel;
+    b.onclick = () => propose(key);
+    item.append(info, b);
+    list.appendChild(item);
+  });
 }
 
-function dismissMatch() {
+// ═══ KLAAR ═══
+function toonDone(matches, anderKlaar, d) {
+  if (huidigScherm() !== 'done') showScreen('done');
+  const n = matches.length;
+  document.getElementById('done-label').textContent = anderKlaar ? T.doneLabelBeide : T.doneLabel;
+  document.getElementById('done-title').textContent = anderKlaar ? T.doneBeideKop(n) : T.doneWachtKop;
+  document.getElementById('done-sub').textContent = anderKlaar ? T.doneBeideSub(n) : T.doneWachtSub(n);
+  const acts = document.getElementById('done-actions');
+  const sleutel = `${anderKlaar}-${n > 0}-${playerId}`;
+  if (acts.dataset.sleutel === sleutel) return;
+  acts.dataset.sleutel = sleutel;
+  acts.innerHTML = '';
+  const knop = (tekst, cls, fn) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn ' + cls; b.textContent = tekst; b.onclick = fn; acts.appendChild(b); };
+  if (n > 0) knop(T.bekijkShortlist, 'btn-primary', openShortlist);
+  if (anderKlaar && n === 0) {
+    knop(T.nogEenRonde, 'btn-primary', () => startRonde(arr((sessionData || {}).pool)));
+    if (playerId === 'player1') knop(T.andereWijken, 'btn-secondary', () => { nieuweRondeMetFilter = true; showScreen('filter'); });
+  } else if (anderKlaar && n > 0) {
+    knop(T.nogEenRonde, 'btn-secondary', () => startRonde(arr((sessionData || {}).pool)));
+  }
+}
+
+// ═══ NIEUWE RONDE ═══
+// Alles van de ronde gaat weg; de volgordes worden opnieuw geschud zodra
+// beide telefoons het nieuwe rondenummer zien.
+function startRonde(pool) {
+  if (!sessionRef || !pool || !pool.length) return;
+  const d = sessionData || {};
+  nieuweRondeMetFilter = false;
+  sessionRef.update({
+    round: (d.round || 1) + 1,
+    pool,
+    'filter/wijken': gekozenWijken,
+    votes: null, matches: null, proposal: null, final: null, orders: null,
+  }).catch(e => { console.error(e); toast(T.opslaanMislukt); });
+}
+
+// ═══ AFGESPROKEN ═══
+function toonFinal(f) {
+  const place = byKey[f.key];
+  if (!place) return;
+  sluitVoorstel();
   document.getElementById('match-overlay').classList.remove('active');
-  setTimeout(showNextMatch, 200);
+  closeShortlist();
+  showingMatch = false; matchQueue = [];
+  document.getElementById('final-name').textContent = place.name;
+  document.getElementById('final-area').textContent = place.area || '';
+  document.getElementById('final-site').href = 'index.html?plek=' + encodeURIComponent(place.name);
+  document.getElementById('final-route').href = `https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}`;
+  if (huidigScherm() !== 'final') showScreen('final');
 }
 
-function updateWaitingStatus(data) {
-  const statusEl = document.getElementById('waiting-status');
-  if (currentIndex >= shuffledPlaces.length) return;
-
-  const currentPlace = shuffledPlaces[currentIndex];
-  const placeKey = currentPlace.name.replace(/[.#$/\[\]]/g, '_');
-
-  const myVotes = data[playerId] || {};
-  const otherVotes = data[otherPlayerId] || {};
-
-  // Count how many the other has swiped total
-  const otherCount = Object.keys(otherVotes).length;
-  const myCount = Object.keys(myVotes).length;
-
-  if (myCount > otherCount + 5) {
-    statusEl.textContent = 'Je partner is nog aan het swipen...';
-  } else {
-    statusEl.innerHTML = '&nbsp;';
-  }
-}
-
-// ═══ CONFETTI ═══
-function spawnConfetti() {
-  const container = document.getElementById('confetti-container');
-  container.innerHTML = '';
-  const colors = ['#733A48', '#a97c82', '#F2E5D8', '#A67C52', '#c9a45c', '#e8ddd8', '#481A30'];
-
-  for (let i = 0; i < 60; i++) {
-    const piece = document.createElement('div');
-    piece.className = 'confetti-piece';
-    piece.style.left = Math.random() * 100 + '%';
-    piece.style.animationDelay = (Math.random() * 0.8) + 's';
-    piece.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-
-    const size = 6 + Math.random() * 8;
-    piece.style.width = size + 'px';
-    piece.style.height = size + 'px';
-
-    if (Math.random() > 0.5) {
-      piece.style.borderRadius = '50%';
-    } else {
-      piece.style.borderRadius = '2px';
-    }
-
-    container.appendChild(piece);
-  }
-
-  // Clean up after animation
-  setTimeout(() => container.innerHTML = '', 3500);
-}
-
-// ═══ RESULTS ═══
-function showResults() {
-  // Wait a moment for any final matches
-  setTimeout(() => {
-    showScreen('results');
-    const list = document.getElementById('results-list');
-    list.innerHTML = '';
-
-    if (matches.length === 0) {
-      document.getElementById('results-sub').textContent = 'Geen matches deze keer... Probeer het nog eens!';
-      list.innerHTML = '<div class="no-matches">Misschien volgende keer meer geluk samen.</div>';
-      return;
-    }
-
-    document.getElementById('results-sub').textContent =
-      `${matches.length} ${matches.length === 1 ? 'match' : 'matches'} gevonden!`;
-
-    matches.forEach(placeKey => {
-      const place = places.find(p => p.name.replace(/[.#$/\[\]]/g, '_') === placeKey);
-      if (!place) return;
-
-      const card = document.createElement('div');
-      card.className = 'result-card';
-      card.innerHTML = `
-        <div class="result-info">
-          <h3>${place.name}</h3>
-          <span>${place.area}</span>
-        </div>
-        <a class="result-link" href="https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}" target="_blank">Breng me hier</a>
-      `;
-      list.appendChild(card);
-    });
-  }, 500);
-}
-
-// ═══ AUTO-CLEANUP (24h) ═══
-// On page load, clean old sessions if we happen to find them
+// ═══ OPSCHONEN (24 uur) ═══
 async function cleanOldSessions() {
+  if (!db) return;
   try {
-    const sessionsSnap = await db.ref('sessions').orderByChild('created')
-      .endAt(Date.now() - 86400000).limitToFirst(10).once('value');
-    sessionsSnap.forEach(child => {
-      child.ref.remove();
-    });
-  } catch(e) {
-    // Silently fail - not critical
-  }
+    const snap = await db.ref('sessions').orderByChild('created').endAt(Date.now() - SESSION_TTL).limitToFirst(10).once('value');
+    snap.forEach(child => { child.ref.remove(); });
+  } catch (e) { /* niet belangrijk */ }
 }
-cleanOldSessions();
+
+// ═══ START ═══
+(async function init() {
+  tekenPills();
+  if (!db) { showScreen('landing'); showConnectionError(T.offline); return; }
+  cleanOldSessions();
+  let urlCode = '';
+  try { urlCode = (new URL(location.href).searchParams.get('code') || '').toUpperCase(); } catch (e) {}
+  const saved = lees();
+  if (urlCode) {
+    if (saved && saved.code === urlCode && await hervat(saved)) return;
+    document.getElementById('join-input').value = /^[A-Z]{4}$/.test(urlCode) ? urlCode : '';
+    showScreen('join');
+    joinSession(urlCode);
+    return;
+  }
+  if (saved && await hervat(saved)) return;
+  showScreen('landing');
+})();
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4fa431dfb7d44411914d5d62b23cb821"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

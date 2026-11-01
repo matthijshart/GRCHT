@@ -1,6 +1,10 @@
 {
   // Regels voor Swipe & Dine (duo.html). Er is geen login: de sessiecode van
   // vier hoofdletters is het gedeelde geheim. Alles buiten /sessions is dicht.
+  //
+  // De huidige, al gepubliceerde regels staan nieuwe takken onder een sessie
+  // toe (er is geen 'alles-anders-dicht'-regel), dus Swipe & Dine werkt ook
+  // zonder deze versie te publiceren. Deze versie voegt alleen validatie toe.
   "rules": {
     "sessions": {
       ".indexOn": ["created"],
@@ -14,17 +18,53 @@
         ".write": "$code.matches(/^[A-Z]{4}$/)",
 
         "created": { ".validate": "newData.isNumber()" },
+        "round":   { ".validate": "newData.isNumber() && newData.val() >= 1" },
 
+        // Twee stoelen; een derde deelnemer komt er niet in.
         "players": {
           "$player": {
             ".validate": "$player.matches(/^player[12]$/) && newData.isBoolean()"
           }
         },
 
+        // Geheim per stoel, zodat je na een refresh je eigen plek terugkrijgt.
+        "tokens": {
+          "$player": {
+            ".validate": "$player.matches(/^player[12]$/) && newData.isString() && newData.val().length <= 64"
+          }
+        },
+
+        // Gekozen buurten en de plekken die daaruit volgen.
+        "filter": { "wijken": { "$i": { ".validate": "newData.isString()" } } },
+        "pool":   { "$i": { ".validate": "newData.isString()" } },
+
+        // Eigen volgorde per deelnemer per ronde.
+        "orders": {
+          "$player": {
+            ".validate": "$player.matches(/^player[12]$/)",
+            "round": { ".validate": "newData.isNumber()" },
+            "list":  { "$i": { ".validate": "newData.isNumber()" } }
+          }
+        },
+
         "votes": {
           "$player": {
+            ".validate": "$player.matches(/^player[12]$/)",
             "$place": { ".validate": "newData.isBoolean()" }
           }
+        },
+
+        // Wanneer een match ontstond (voor de volgorde van de shortlist).
+        "matches": { "$place": { ".validate": "newData.isNumber()" } },
+
+        // Eén voorstel tegelijk; pas definitief als de ander ja zegt.
+        "proposal": {
+          "key": { ".validate": "newData.isString()" },
+          "by":  { ".validate": "newData.val() == 'player1' || newData.val() == 'player2'" }
+        },
+        "final": {
+          "key": { ".validate": "newData.isString()" },
+          "at":  { ".validate": "newData.isNumber()" }
         }
       }
     }
