@@ -503,7 +503,7 @@ html.menu-open, html.menu-open body { overflow: hidden; }
   color: var(--ink); cursor: pointer; transition: all 0.2s;
   font-weight: 500; letter-spacing: 0.03em;
 }
-.filter-row button:focus-visible, .search-box:focus-within, .filter-reset:focus-visible {
+.filter-row button:focus-visible, .filter-reset:focus-visible {
   outline: 2px solid var(--gold); outline-offset: 2px;
 }
 .filter-row button:hover {
@@ -540,34 +540,7 @@ html.menu-open, html.menu-open body { overflow: hidden; }
   border-color: var(--olive);
 }
 
-/* ═══ ZOEKEN ═══ */
-.search-row { margin-bottom: 1.1rem; }
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  max-width: 480px;
-  padding: 0.75rem 1.1rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--white);
-  color: var(--ink-mid);
-  transition: border-color 0.2s;
-}
-.search-box:focus-within { border-color: var(--ink-mid); }
-.search-box svg { flex-shrink: 0; opacity: 0.7; }
-.search-box input {
-  flex: 1;
-  min-width: 0;
-  border: 0;
-  background: transparent;
-  font: inherit;
-  font-size: 0.95rem;
-  color: var(--text);
-  outline: none;
-}
-.search-box input::placeholder { color: var(--gray-light); }
-.search-box input::-webkit-search-cancel-button { -webkit-appearance: none; }
+/* ═══ FILTERSTATUS: TELLING EN WIS ALLES ═══ */
 .filter-status {
   display: flex;
   align-items: center;
@@ -1658,12 +1631,6 @@ html.menu-open, html.menu-open body { overflow: hidden; }
     <div class="section-head reveal">
       <h2>Alle plekken</h2>
     </div>
-    <div class="search-row reveal">
-      <label class="search-box" for="zoek">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="5.2"/><path d="M11 11l3.6 3.6"/></svg>
-        <input id="zoek" type="search" placeholder="Waar heb je zin in?" aria-label="Zoek een plek" autocomplete="off" enterkeyhint="search">
-      </label>
-    </div>
     <div class="filter-row area-row reveal" id="area-filters"></div>
     <div class="filter-row reveal" id="filters"></div>
     <div class="filter-status" id="filterStatus" hidden>
@@ -1862,7 +1829,6 @@ const places = [
   { name:"Bar Bonnie", area:"Oud-Zuid", hearts:0, note:"Moderne bruine kroeg. Bekend om de smashburger en de biefstuk", lat:52.3480,lng:4.8565, web:"", tags:["bar","burger","steak"] },
   { name:"'t Smalle", area:"Jordaan", hearts:0, note:"Biertje of broodje bal, altijd goed", lat:52.3758,lng:4.8838, web:"", tags:["caf\u00e9","bruin caf\u00e9"] },
   { name:"Papeneiland", area:"Jordaan", fav:true, note:"Terrasje als de zon schijnt", lat:52.3826,lng:4.8871, web:"", tags:["terras","caf\u00e9"] },
-  { name:"Bistro Feline", area:"Jordaan", hearts:0, note:"Michelin gids, neem de kreeftenorzo", lat:52.3769,lng:4.8832, web:"", tags:["restaurant","frans"] },
   { name:"La Perla", area:"Jordaan", hearts:0, note:"Gewoon gezellig pizza aan de bar", lat:52.3737,lng:4.8810, web:"", tags:["italiaans","pizza"] },
   { name:"De Pizzakamer", area:"De Pijp", hearts:0, note:"Houtoven pizza, terras, altijd goed", lat:52.3561,lng:4.8945, web:"", tags:["italiaans","pizza"] },
   { name:"Pilsvogel", area:"De Pijp", fav:true, note:"Terras op het plein, lekker biertje", lat:52.3555,lng:4.8937, web:"", tags:["bar","terras"] },
@@ -1885,6 +1851,7 @@ const places = [
   { name:"Bar Buuf", area:"De Pijp", hearts:0, note:"Buurtbistro met Parijse charme", lat:52.3512,lng:4.8915, web:"", tags:["restaurant","frans","wijn"] },
   { name:"'t Blauwe Theehuis", area:"Vondelpark", hearts:0, note:"Groot terras midden in het park. Een IJwit in het zonnetje", lat:52.3581,lng:4.8688, web:"", tags:["terras","borrel","caf\u00e9"] },
   { name:"Pazzi", area:"Jordaan", hearts:0, note:"Pizza uit de houtoven, dun en krokant", lat:52.3719,lng:4.8802, web:"", tags:["italiaans","pizza"] },
+  { name:"Ko Chang", area:"Jordaan", hearts:0, note:"Gewoon klein en gezellig, en echt een goede Thai", lat:52.3791,lng:4.8836, web:"", tags:["restaurant","aziatisch","thais"] },
 ];
 
 // ═══ MAP ═══
@@ -1922,9 +1889,6 @@ map.fitBounds(bounds, { padding: [30, 30] });
 const TEKST_PLEK = 'plek', TEKST_PLEKKEN = 'plekken', TEKST_NIETS = 'Niets gevonden';
 let activeArea = null;
 let activeTag = null;
-let zoekterm = '';
-// Zoeken zonder accenten en hoofdletters: 'cafe' vindt ook 'Café'.
-const normaliseer = t => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
 const areaGroups = {
   'Jordaan': ['Jordaan'],
@@ -1958,7 +1922,7 @@ wijkLabels.forEach(label => {
 });
 
 const allTags = [...new Set(places.flatMap(p => p.tags))].sort();
-const tagLabels = { restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wijn', italiaans:'Italiaans', frans:'Frans', vis:'Vis', oesters:'Oesters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terras', borrel:'Borrel', ontbijt:'Ontbijt', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Kaas', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Chic', aziatisch:'Aziatisch', bistro:'Bistro', 'bruin caf\u00e9':'Bruin caf\u00e9', caf\u00e9:'Caf\u00e9', fondue:'Fondue', indonesisch:'Indonesisch', industrieel:'Industrieel', pizza:'Pizza', spaans:'Spaans', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Zwitsers', 'natural wine':'Natural wine', burger:'Burger' };
+const tagLabels = { thais:'Thais', restaurant:'Restaurant', bar:'Bar', tapas:'Tapas', wijn:'Wijn', italiaans:'Italiaans', frans:'Frans', vis:'Vis', oesters:'Oesters', cocktails:'Cocktails', brunch:'Brunch', lunch:'Lunch', terras:'Terras', borrel:'Borrel', ontbijt:'Ontbijt', 'happy hour':'Happy Hour', steak:'Steak', snacks:'Snacks', kaas:'Kaas', pasta:'Pasta', '\u20ac\u20ac\u20ac':'\u20ac\u20ac\u20ac', chic:'Chic', aziatisch:'Aziatisch', bistro:'Bistro', 'bruin caf\u00e9':'Bruin caf\u00e9', caf\u00e9:'Caf\u00e9', fondue:'Fondue', indonesisch:'Indonesisch', industrieel:'Industrieel', pizza:'Pizza', spaans:'Spaans', speakeasy:'Speakeasy', sushi:'Sushi', zwitsers:'Zwitsers', 'natural wine':'Natural wine', burger:'Burger' };
 const filtersEl = document.getElementById('filters');
 const allBtn = document.createElement('button');
 allBtn.textContent = 'Alles';
@@ -1974,14 +1938,11 @@ showTags.forEach(tag => {
   filtersEl.appendChild(btn);
 });
 
-const zoekEl = document.getElementById('zoek');
 const filterStatus = document.getElementById('filterStatus');
 const filterCount = document.getElementById('filterCount');
 const geenResultaat = document.getElementById('geenResultaat');
-zoekEl.addEventListener('input', () => { zoekterm = normaliseer(zoekEl.value.trim()); applyFilters(); });
-zoekEl.addEventListener('keydown', e => { if (e.key === 'Enter') zoekEl.blur(); });
 document.getElementById('filterReset').onclick = () => {
-  activeArea = null; activeTag = null; zoekterm = ''; zoekEl.value = '';
+  activeArea = null; activeTag = null;
   applyFilters();
 };
 
@@ -2007,8 +1968,7 @@ function applyFilters() {
     row.querySelectorAll('.card').forEach(card => {
       const tags = card.dataset.tags.split(',');
       const tagMatch = !activeTag || tags.includes(activeTag);
-      const zoekMatch = !zoekterm || card.dataset.zoek.includes(zoekterm);
-      card.classList.toggle('hidden', !(tagMatch && zoekMatch));
+      card.classList.toggle('hidden', !tagMatch);
     });
     // Hide row if all cards are hidden
     if (areaMatch) {
@@ -2017,7 +1977,7 @@ function applyFilters() {
     }
   });
   // Een actief filter betekent 'laat maar zien': klap de overgebleven rijen open.
-  const filterActief = !!activeArea || !!activeTag || !!zoekterm;
+  const filterActief = !!activeArea || !!activeTag;
   document.querySelectorAll('.carousel-row').forEach(row => {
     toggleRow(row, filterActief && !row.classList.contains('hidden'));
   });
@@ -2083,7 +2043,6 @@ wijkOrder.forEach(wijk => {
     card.className = 'card';
     card.dataset.originalIndex = p.originalIndex;
     card.dataset.tags = p.tags.join(',');
-    card.dataset.zoek = normaliseer([p.name, p.area, wijk, p.note || '', ...p.tags.map(t => tagLabels[t] || t)].join(' '));
     card.onclick = () => {
       map.setView([p.lat, p.lng], 16, { animate: true });
       markers[p.originalIndex].openPopup();
@@ -2337,18 +2296,19 @@ if (statsEl) {
       nums.forEach(n => {
         const target = parseInt(n.dataset.count, 10);
         if (reduceMotion || target === 0) { n.textContent = target; return; }
-        const duration = 900;
+        // Rustig optellen: ruim twee seconden, eerst vlot en dan uitlopend.
+        const duration = 2400;
         let start = null;
         const step = ts => {
           if (!start) start = ts;
           const p = Math.min((ts - start) / duration, 1);
-          n.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+          n.textContent = Math.round(target * (1 - Math.pow(1 - p, 2.2)));
           if (p < 1) requestAnimationFrame(step);
         };
-        requestAnimationFrame(step);
+        setTimeout(() => requestAnimationFrame(step), 250);
       });
     });
-  }, { threshold: 0.4 });
+  }, { threshold: 0.6 });
   countObserver.observe(statsEl);
 }
 
